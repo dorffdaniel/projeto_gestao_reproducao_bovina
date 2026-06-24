@@ -1,0 +1,43 @@
+<div class="conteudo">
+    <div class="conteudo-cards">
+
+        <div class="card-informacao">
+            <h1>ReproMT</h1>
+            <h2>Mais controle. <span>Menos planilhas</span></h2>
+            <p>Gestão reprodutiva simplificada.</p>
+        </div>
+
+        <div class="card card-login">
+
+            <div class="mb-3 conteudo-inputs">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="seu email" [(ngModel)]="email">
+            </div>
+
+            <div class="mb-3 conteudo-inputs">
+                <label for="senha" class="form-label">Senha</label>
+                <input class="form-control" type="password" id="senha" [(ngModel)]="password" />
+                <p class="desc-senha">No minimo 8 caracteres, combinando letras, números e simbolos.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <a href="#" class="esqueceu-senha">Esqueceu a senha ?</a>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" (click)="login()">Entrar</button>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="conteudo-registrar">
+                        <p>Não tem uma conta ? <a href="#">Registrar</a></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

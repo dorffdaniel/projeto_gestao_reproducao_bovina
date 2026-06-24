@@ -1,0 +1,105 @@
+.conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #425D3C;
+
+    .conteudo-cards {
+        display: flex;
+        gap: 200px;
+
+        .card-informacao,
+        .card-login {
+            min-height: 600px;
+            min-width: 500px;
+            padding: 25px;
+        }
+
+        .card-informacao {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+
+            h1,
+            h2,
+            p {
+                margin: 0;
+            }
+
+            h1 {
+                font-size: 40px;
+                color: #000;
+            }
+
+            h2 {
+                font-size: 35px;
+                color: #f1f1f1;
+
+                span {
+                    color: #DAE281;
+                }
+            }
+
+            p {
+                font-size: 28px;
+            }
+        }
+
+        .card-login {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: #f1f1f1;
+            color: #000;
+            padding: 25px;
+
+            .conteudo-inputs {
+                margin: 0 !important;
+
+                input {
+                    height: 45px;
+                    border: 1px solid #DDE2EF;
+                }
+
+                .desc-senha{
+                    font-size: 13px;
+                    margin-top: 5px;
+                }
+            }
+
+            .esqueceu-senha{
+                color: #425D3C;
+                font-size: 15px;
+                text-decoration: none;
+            }
+
+            button{
+                background: #425D3C;
+                border: 2px solid #1C2B1A;
+                margin: 25px 0;
+                height: 45px;
+                border-radius: 25px;
+                font-size: 20px;
+            }
+
+            .conteudo-registrar{
+
+                p{
+                    font-size: 15px;
+                }
+
+                a{
+                    color: #425D3C;
+                    text-decoration: none;
+                }
+
+            }
+
+
+        }
+    }
+}
