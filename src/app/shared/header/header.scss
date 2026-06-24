@@ -1,0 +1,7 @@
+@use '../../styles/variaveis' as c; 
+
+.navbar {
+    border: 1px solid c.$border;
+    height: 80px;
+    background: #fff !important;
+}

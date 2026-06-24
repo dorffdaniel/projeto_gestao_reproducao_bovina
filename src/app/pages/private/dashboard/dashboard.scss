@@ -1,0 +1,39 @@
+@use '../../../styles/variaveis' as c; 
+
+.conteudo{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .conteudo-saudacao{
+        h1{
+            font-size: 22px;
+        }
+
+        p{
+            font-size: 14px;
+        }
+    }
+
+    .conteudo-cards{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+
+        .card{
+            padding: 25px;
+            border: 1px solid c.$border;
+            
+            h2{
+                font-size: 19px;
+            }
+        }
+
+    }
+
+
+
+
+
+
+}

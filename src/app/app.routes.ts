@@ -2,9 +2,20 @@ import { Routes } from '@angular/router';
 import { Login } from './pages/public/login/login';
 import { authGuard } from './guards/auth-guard';
 import { Dashboard } from './pages/private/dashboard/dashboard';
+import { MainLayout } from './layouts/main-layout/main-layout';
+import { Fazendas } from './pages/private/fazendas/fazendas';
+import { Lotes } from './pages/private/lotes/lotes';
 
 
 export const routes: Routes = [
-    { path: '', component: Login}, 
-    { path: 'dashboard', component: Dashboard, canActivate: [authGuard]}
+    { path: 'login', component: Login },
+    {
+        path: '', component: MainLayout, canActivate: [authGuard],
+        children: [
+            { path: 'dashboard', component: Dashboard },
+            { path: 'fazendas', component: Fazendas },
+            { path: 'lotes', component: Lotes }
+        ]
+    },
+    { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

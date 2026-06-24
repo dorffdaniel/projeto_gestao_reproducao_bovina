@@ -1,0 +1,29 @@
+@use '../../styles/variaveis' as c; 
+
+.layout {
+    width: 260px;
+    height: 100vh;
+    background: c.$primary;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    h2 {
+        font-size: 20px;
+        padding-top: 20px;
+        text-align: center;
+    }
+
+    .sidebar {
+        height: 100%;
+
+        a{
+            color: c.$text-light;
+            font-size: 19px;
+            padding-bottom: 25px;
+            cursor: pointer;
+        }
+    }
+
+
+}

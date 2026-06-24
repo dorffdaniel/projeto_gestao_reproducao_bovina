@@ -1,0 +1,36 @@
+@use '../../styles/variaveis' as c; 
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    background: c.$background;
+
+    app-sidebar {
+        width: 260px;
+        flex-shrink: 0;
+    }
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        app-header {
+            height: 70px;
+            flex-shrink: 0;
+        }
+
+        .page-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        app-footer {
+            height: 50px;
+            flex-shrink: 0;
+        }
+
+    }
+
+}
