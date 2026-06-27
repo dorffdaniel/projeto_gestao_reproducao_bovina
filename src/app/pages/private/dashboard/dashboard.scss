@@ -1,38 +1,134 @@
-@use '../../../styles/variaveis' as c; 
+@use '../../../styles/variaveis' as c;
 
-.conteudo{
+.conteudo {
     display: flex;
     flex-direction: column;
     gap: 16px;
 
-    .conteudo-saudacao{
-        h1{
+    .conteudo-saudacao {
+        h1 {
             font-size: 22px;
         }
 
-        p{
+        p {
             font-size: 14px;
         }
     }
 
-    .conteudo-cards{
+    .conteudo-cards {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 16px;
 
-        .card{
+        .card {
             padding: 25px;
             border: 1px solid c.$border;
-            
-            h2{
+
+            h2 {
                 font-size: 19px;
             }
         }
 
     }
 
+    .conteudo-dgs-atendimentos {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 25px;
+
+            h3 {
+                font-size: 18px;
+            }
+
+            .desc-pendentes {
+                display: flex;
+                flex-direction: column;
+
+                .descricao {
+                    margin: 0;
+                    color: c.$text-dark;
+                }
+
+                p {
+                    margin-bottom: 12px;
+                    color: #929666;
+                }
+
+                p:last-child {
+                    margin-bottom: 0px;
+                }
+
+                .atraso {
+                    color: red;
+                }
+
+            }
+
+            .cont-botao {
+                display: flex;
+                justify-content: end;
+
+                button {
+                    background: #425D3C;
+                    border: 2px solid #1C2B1A;
+                    height: 35px;
+                    border-radius: 25px;
+                    font-size: 17px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            .cont-info {
+
+                p {
+                    margin: 0;
+                    font-weight: 600;
+                }
+            }
+
+        }
 
 
+    }
+
+    .conteudo-protocolos-result {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 25px;
+
+            h3 {
+                font-size: 18px;
+            }
+
+            .cont-fazenda{
+                p{
+                    margin: 0;
+                }
+            }
+
+            .cont-recentes{
+                p{
+                    margin: 0;
+                }
+            }
+
+        }
+
+    }
 
 
 

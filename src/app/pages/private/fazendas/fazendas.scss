@@ -1,0 +1,28 @@
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .conteudo-botao-criar-fazenda {
+        margin: 15px 0;
+
+        button {
+            background: #425D3C;
+            border: 2px solid #1C2B1A;
+            height: 35px;
+            border-radius: 25px;
+            font-size: 17px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+
+    
+
+
+
+
+
+}

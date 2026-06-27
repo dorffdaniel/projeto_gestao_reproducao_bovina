@@ -1,7 +1,8 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand">Nome Projeto</a>
-        <form class="d-flex" role="search">
+        <form class="botoes">
+            <button class="btn btn-warning" (click)="efeitoDarkMode()">{{texto}}</button>
             <button class="btn btn-warning">detalhes</button>
             <button class="btn btn-danger" (click)="logout()">sair</button>
         </form>

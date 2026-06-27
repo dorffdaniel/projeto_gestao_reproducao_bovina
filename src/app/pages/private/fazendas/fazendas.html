@@ -1,1 +1,38 @@
-<p>fazendas works!</p>
+<div class="conteudo">
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-botao-criar-fazenda">
+                <button class="btn btn-primary">+ nova fazenda</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-tabela">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fazenda</th>
+                            <th scope="col">Proprietario</th>
+                            <th scope="col">Cidade</th>
+                            <th scope="col">Tipo Controle</th>
+                            <th scope="col">Acoes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @for(faz of fazendas(); track faz.id){
+                                <th>{{faz.nome}}</th>
+                                <th>{{faz.proprietario}}</th>
+                                <th>{{faz.cidade}}</th>
+                                <th>{{faz.estado}}</th>
+                                <th class="btn-detalhe">...</th>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
