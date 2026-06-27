@@ -22,11 +22,13 @@
                     <tbody>
                         <tr>
                             @for(faz of fazendas(); track faz.id){
-                                <th>{{faz.nome}}</th>
-                                <th>{{faz.proprietario}}</th>
-                                <th>{{faz.cidade}}</th>
-                                <th>{{faz.estado}}</th>
-                                <th class="btn-detalhe">...</th>
+                            <td>{{faz.nome}}</td>
+                            <td>{{faz.proprietario}}</td>
+                            <td>{{faz.cidade}}</td>
+                            <td>{{faz.estado}}</td>
+                            <td class="btn-detalhe">
+                                <button class="btn btn-sm btn-primary" (click)="verDetalhe(faz.id)">...</button>
+                            </td>
                             }
                         </tr>
                     </tbody>

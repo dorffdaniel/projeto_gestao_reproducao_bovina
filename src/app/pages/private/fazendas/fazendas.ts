@@ -1,5 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FazendasService } from '../../../services/fazendas-service'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +11,10 @@ import { FazendasService } from '../../../services/fazendas-service'
 })
 export class Fazendas implements OnInit{
 
-  constructor(private serv: FazendasService) { }
+  constructor(
+    private serv: FazendasService, 
+    private route: Router
+  ) { }
 
   fazendas = signal<any[]>([]); 
 
@@ -24,6 +28,11 @@ export class Fazendas implements OnInit{
     this.fazendas.set(data); 
     console.log(data)
     
+  }
+
+  verDetalhe(id: number) {
+    this.route.navigate(['/fazenda', id]); 
+
   }
 
 }
