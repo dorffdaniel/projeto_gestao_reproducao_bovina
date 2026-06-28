@@ -1,25 +1,26 @@
-.conteudo{
+.conteudo {
     display: flex;
     flex-direction: column;
     gap: 16px;
 
-    .conteudo-voltar{
+    .conteudo-voltar {
         margin-top: 10px;
-        button{
-            display: flex; 
+
+        button {
+            display: flex;
             justify-content: center;
             align-items: center;
             height: 28px;
         }
 
-        h2{
+        h2 {
             font-size: 18px;
         }
     }
 
-    .conteudo-inputs{}
+    .conteudo-inputs {}
 
-    .conteudo-botoes{
+    .conteudo-botoes {
         display: flex;
         justify-content: flex-end;
         gap: 8px;
@@ -27,5 +28,29 @@
 
     }
 
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050;
+    }
+
+    .modal-box {
+        background: white;
+        padding: 28px;
+        border-radius: 8px;
+        width: 450px;
+        max-width: 90%;
+
+        .conteudo-botoes-modal{
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+        }
+
+    }
 
 }

@@ -55,18 +55,31 @@
             <div class="conteudo-botoes">
                 @if(isOpen){
                 <button class="btn btn-warning" (click)="editarDadosFazenda()">Editar</button>
-                <button class="btn btn-danger">Apagar</button>
+                <button class="btn btn-danger" (click)="abrirModal()">Apagar</button>
                 }
 
                 @if(!isOpen){
                 <button class="btn btn-primary" (click)="salvarEditDadosFazenda()">Salvar</button>
                 <button class="btn btn-danger" (click)="cancelarEditFazenda()">Cancelar</button>
                 }
-
-
             </div>
         </div>
     </div>
+
+    @if (mostrarModal) {
+    <div class="modal-backdrop">
+        <div class="modal-box">
+
+            <p>Tem certeza que deseja apagar esta fazenda?</p>
+            <p>{{fazenda().nome}}</p>
+
+            <div class="conteudo-botoes-modal">
+                <button class="btn btn-secondary" (click)="fecharModal()">Cancelar</button>
+                <button class="btn btn-danger" (click)="apagarFazenda()">Apagar</button>
+            </div>
+        </div>
+    </div>
+    }
 
 
 </div>

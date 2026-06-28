@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FazendaCriar } from './fazenda-criar';
+import { FazendaNova } from './fazenda-nova';
 
-describe('FazendaCriar', () => {
-  let component: FazendaCriar;
-  let fixture: ComponentFixture<FazendaCriar>;
+describe('FazendaNova', () => {
+  let component: FazendaNova;
+  let fixture: ComponentFixture<FazendaNova>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FazendaCriar]
+      imports: [FazendaNova]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FazendaCriar);
+    fixture = TestBed.createComponent(FazendaNova);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

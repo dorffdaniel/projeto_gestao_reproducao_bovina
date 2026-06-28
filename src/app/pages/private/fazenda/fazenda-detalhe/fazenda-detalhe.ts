@@ -30,6 +30,7 @@ export class FazendaDetalhe implements OnInit {
   ativado: boolean = true;
   isOpen: boolean = true;
   idFazenda!: number;
+  mostrarModal = false; 
 
   ngOnInit(): void {
     this.getIdDetalheFazenda();
@@ -79,6 +80,18 @@ export class FazendaDetalhe implements OnInit {
 
   voltar() {
     this.naveg.navigate(['/fazendas']);
+  }
+
+  abrirModal() {
+    this.mostrarModal = true; 
+  }
+
+  fecharModal() {
+    this.mostrarModal = false; 
+  }
+
+  apagarFazenda() {
+    
   }
 
 }

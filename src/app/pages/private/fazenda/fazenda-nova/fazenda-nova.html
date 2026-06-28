@@ -1,0 +1,70 @@
+<div class="conteudo">
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-voltar">
+                <div class="d-flex align-items-center mb-3">
+                    <button class="btn btn-outline-secondary me-2" routerLink="/fazendas">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h2 class="mb-0">Criar nova fazenda</h2>
+                        <small class="text-body-secondary">
+                            Preencha os dados para cadastrar uma nova fazenda.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="row g-3 conteudo-inputs">
+
+                <div class="col-md-6">
+                    <label class="form-label">Fazenda</label>
+                    <input class="form-control" [(ngModel)]="fazenda().nome">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Proprietário</label>
+                    <input class="form-control" [(ngModel)]="fazenda().proprietario">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Telefone</label>
+                    <input class="form-control" [(ngModel)]="fazenda().telefone">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Cidade</label>
+                    <input class="form-control" [(ngModel)]="fazenda().cidade">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Estado</label>
+                    <input class="form-control" [(ngModel)]="fazenda().estado">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Tipo Controle</label>
+                    <select class="form-select" aria-label="Default select example" [(ngModel)]="fazenda().tipo_controle">
+                        <option value="-1">selecione</option>
+                        <option value="lote">Lote</option>
+                        <option value="individual">Individual</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-criar-fazenda">
+                <button class="btn btn-primary" (click)="criarFazenda()">Criar</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
