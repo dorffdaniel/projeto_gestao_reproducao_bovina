@@ -21,5 +21,26 @@ export class DetalheFazendaService {
 
   }
 
+  async salvarEdicaoFazenda(id: number, fazenda: any) {
+
+    const { data, error } = await supabase.from('fazendas').update({
+      nome: fazenda.nome,
+      proprietario: fazenda.proprietario,
+      telefone: fazenda.telefone,
+      cidade: fazenda.cidade,
+      estado: fazenda.estado
+    }).eq('id', id).select().single();  
+
+    if (error) {
+      console.log(error)
+      return; 
+    }
+
+    return data; 
+
+  }
+
+
+
 
 }

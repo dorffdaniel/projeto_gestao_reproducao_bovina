@@ -1,0 +1,72 @@
+<div class="conteudo">
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-voltar">
+                <div class="d-flex align-items-center mb-3">
+                    <button class="btn btn-outline-secondary me-2" (click)="voltar()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+
+                    <h2 class="m-0">Detalhe da Fazenda</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="row g-3 conteudo-inputs">
+
+                <div class="col-md-6">
+                    <label class="form-label">Fazenda</label>
+                    <input class="form-control" [(ngModel)]="fazenda().nome" [disabled]="ativado">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Proprietário</label>
+                    <input class="form-control" [(ngModel)]="fazenda().proprietario" [disabled]="ativado">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Telefone</label>
+                    <input class="form-control" [(ngModel)]="fazenda().telefone" [disabled]="ativado">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Cidade</label>
+                    <input class="form-control" [(ngModel)]="fazenda().cidade" [disabled]="ativado">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Estado</label>
+                    <input class="form-control" [(ngModel)]="fazenda().estado" [disabled]="ativado">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Tipo Controle</label>
+                    <input class="form-control" [(ngModel)]="fazenda().tipo_controle" [disabled]="ativado">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-botoes">
+                @if(isOpen){
+                <button class="btn btn-warning" (click)="editarDadosFazenda()">Editar</button>
+                <button class="btn btn-danger">Apagar</button>
+                }
+
+                @if(!isOpen){
+                <button class="btn btn-primary" (click)="salvarEditDadosFazenda()">Salvar</button>
+                <button class="btn btn-danger" (click)="cancelarEditFazenda()">Cancelar</button>
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

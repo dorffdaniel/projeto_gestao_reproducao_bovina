@@ -1,0 +1,31 @@
+.conteudo{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .conteudo-voltar{
+        margin-top: 10px;
+        button{
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            height: 28px;
+        }
+
+        h2{
+            font-size: 18px;
+        }
+    }
+
+    .conteudo-inputs{}
+
+    .conteudo-botoes{
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+
+
+    }
+
+
+}

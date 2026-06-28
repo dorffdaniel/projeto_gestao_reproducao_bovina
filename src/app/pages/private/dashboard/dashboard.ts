@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { PerfilService } from '../../../services/perfil-service';
 import { Router } from '@angular/router';
+import { DashboardService } from '../../../services/dashboard-service'
 
 
 @Component({
@@ -12,22 +13,27 @@ import { Router } from '@angular/router';
 })
 export class Dashboard implements OnInit {
 
-  constructor(private serv: PerfilService, private route: Router) { }
+  constructor(
+    private serv: PerfilService,
+    private route: Router, 
+    private dashServ: DashboardService
+  ) { }
 
   nome = signal<null | string>(null);
   msgSaudacao = signal<null | string>(null);
   dataHj = signal<null | string>(null);
+  totalFazendas = signal<null | number | undefined>(null); 
 
   ngOnInit(): void {
     this.getDadosUser();
     this.saudacao();
-
+    this.mostrarTotalFazendas(); 
   }
 
   async getDadosUser() {
     const dados = await this.serv.getPerfil();
 
-    const primeiro_nome = dados.nome.trim().split(' ')[0]; 
+    const primeiro_nome = dados.nome.trim().split(' ')[0];
     this.nome.set(primeiro_nome);
 
   }
@@ -41,7 +47,7 @@ export class Dashboard implements OnInit {
       year: 'numeric'
     });
 
-    this.dataHj.set(dataAtual); 
+    this.dataHj.set(dataAtual);
 
     const horas = data.getHours();
     let msg = 'Ola';
@@ -57,6 +63,11 @@ export class Dashboard implements OnInit {
     this.msgSaudacao.set(msg);
   }
 
+  async mostrarTotalFazendas() {
+
+    const data = await this.dashServ.getTotalFazendas(); 
+    this.totalFazendas.set(data?.length); 
+  }
 
 
 }

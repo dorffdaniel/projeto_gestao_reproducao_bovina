@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
-import { DetalheFazendaService } from '../../../services/detalhe-fazenda-service';
+import { DetalheFazendaService } from '../../../../services/detalhe-fazenda-service';
 import { FormsModule } from '@angular/forms';
 
 
@@ -23,26 +23,29 @@ export class FazendaDetalhe implements OnInit {
     proprietario: '',
     telefone: '',
     cidade: '',
-    estado: ''
+    estado: '',
+    tipo_controle: ''
   })
 
   ativado: boolean = true;
   isOpen: boolean = true;
+  idFazenda!: number;
 
   ngOnInit(): void {
     this.getIdDetalheFazenda();
+    this.mostrarFazenda();
   }
 
   getIdDetalheFazenda() {
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.mostrarFazenda(id);
+    this.idFazenda = id
   }
 
-  async mostrarFazenda(id: number) {
+  async mostrarFazenda() {
 
-    const data = await this.serv.getDetalheDazenda(id);
+    const data = await this.serv.getDetalheDazenda(this.idFazenda);
 
     if (!data) {
       this.naveg.navigate(['/fazendas']);
@@ -60,8 +63,22 @@ export class FazendaDetalhe implements OnInit {
   cancelarEditFazenda() {
     this.ativado = !this.ativado;
     this.isOpen = !this.isOpen;
+
+    this.getIdDetalheFazenda();
   }
 
 
+  async salvarEditDadosFazenda() {
+
+    const data = await this.serv.salvarEdicaoFazenda(this.idFazenda, this.fazenda());
+
+    this.fazenda.set(data);
+    this.ativado = true;
+  }
+
+
+  voltar() {
+    this.naveg.navigate(['/fazendas']);
+  }
 
 }
