@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Auth } from '../../services/auth';
 import { Router } from '@angular/router';
 import { DarkMode } from '../../services/dark-mode';
@@ -10,7 +10,7 @@ import { DarkMode } from '../../services/dark-mode';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header {
+export class Header implements OnInit {
 
 
   constructor(
@@ -19,7 +19,12 @@ export class Header {
     private dark: DarkMode
   ) { }
 
-  texto: string = 'Dark mode'
+  icone = 'fas fa-moon';
+
+  ngOnInit(): void {
+    this.estadoInicial(); 
+  }
+
 
   async logout() {
     const { error } = await this.serv.sair();
@@ -36,14 +41,21 @@ export class Header {
   efeitoDarkMode() {
     this.dark.adicionarToggle();
 
-    if (this.texto == 'Dark mode') {
-      this.texto = 'Light mode';
-    } else {
-      this.texto = 'Dark mode';
-    }
+    const tema = localStorage.getItem('tema');
+
+    this.icone = tema === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 
   }
 
+
+  estadoInicial() {
+    const tema = localStorage.getItem('tema');
+
+    this.icone =
+      tema === 'dark'
+        ? 'fas fa-sun'
+        : 'fas fa-moon';
+  }
 
 
 }
