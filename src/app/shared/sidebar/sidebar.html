@@ -1,4 +1,10 @@
-<div class="layout">
+<div class="layout" [class.open]="open">
+
+    <div class="conteudo-botao">
+        <button type="button" class="btn btn-danger d-lg-none" (click)="closeClick.emit()">
+            x
+        </button>
+    </div>
 
     <h2>logo</h2>
 
@@ -17,4 +23,5 @@
             </li>
         </ul>
     </aside>
+
 </div>

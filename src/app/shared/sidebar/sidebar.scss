@@ -1,4 +1,4 @@
-@use '../../styles/variaveis' as c; 
+@use '../../styles/variaveis' as c;
 
 .layout {
     width: 260px;
@@ -6,24 +6,67 @@
     background: c.$primary;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 10px;
+}
 
-    h2 {
-        font-size: 20px;
-        padding-top: 20px;
-        text-align: center;
+.conteudo-botao {
+    display: flex;
+    justify-content: end;
+    margin: 5px;
+
+    button {
+        background: none;
+    }
+}
+
+h2 {
+    font-size: 20px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.sidebar {
+    height: 100%;
+
+    a {
+        color: c.$text-light;
+        font-size: 19px;
+        padding-bottom: 25px;
+        cursor: pointer;
+    }
+}
+
+
+
+@media (max-width: 991px) {
+
+    .layout {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 260px;
+        height: 100vh;
+
+        transform: translateX(-100%);
+        transition: transform .3s ease;
+
+        z-index: 2000;
+
+        /* MUITO IMPORTANTE */
+        pointer-events: none;
     }
 
-    .sidebar {
-        height: 100%;
+    .layout.open {
+        transform: translateX(0);
 
-        a{
-            color: c.$text-light;
-            font-size: 19px;
-            padding-bottom: 25px;
-            cursor: pointer;
-        }
+        /* reativa clique quando aberto */
+        pointer-events: auto;
     }
+}
 
-
+@media (max-width: 480px) {
+    .layout {
+        width: 100%;
+    }
 }

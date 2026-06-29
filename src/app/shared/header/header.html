@@ -1,10 +1,24 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
+
+        <button type="button" class="btn btn-outline-dark d-lg-none" (click)="menuClick.emit()">
+
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
         <a class="navbar-brand">Nome Projeto</a>
-        <form class="botoes">
-            <button class="btn btn-success" (click)="efeitoDarkMode()"><i [class]="icone"></i></button>
-            <button class="btn btn-warning">detalhes</button>
-            <button class="btn btn-danger" (click)="logout()">sair</button>
-        </form>
+
+        <div class="botoes">
+
+            <button type="button" class="btn btn-success" (click)="efeitoDarkMode()">
+                <i [class]="icone"></i>
+            </button>
+
+            <button type="button" class="btn btn-warning">detalhes</button>
+
+            <button type="button" class="btn btn-danger" (click)="logout()">sair</button>
+
+        </div>
+
     </div>
 </nav>

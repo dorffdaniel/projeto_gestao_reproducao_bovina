@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, output } from '@angular/core';
 import { Auth } from '../../services/auth';
 import { Router } from '@angular/router';
 import { DarkMode } from '../../services/dark-mode';
@@ -22,7 +22,7 @@ export class Header implements OnInit {
   icone = 'fas fa-moon';
 
   ngOnInit(): void {
-    this.estadoInicial(); 
+    this.estadoInicial();
   }
 
 
@@ -56,6 +56,9 @@ export class Header implements OnInit {
         ? 'fas fa-sun'
         : 'fas fa-moon';
   }
+
+
+  menuClick = output<void>();
 
 
 }
