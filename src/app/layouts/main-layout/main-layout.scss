@@ -12,10 +12,24 @@ app-sidebar {
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-width: 0; /* IMPORTANTE */
+    min-width: 0;
+    min-height: 100vh;
 }
 
-/* MOBILE */
+app-header {
+    flex-shrink: 0;
+}
+
+.page-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+app-footer {
+    flex-shrink: 0;
+}
+
 @media (max-width: 991px) {
 
     app-sidebar {
@@ -24,7 +38,7 @@ app-sidebar {
         left: 0;
         height: 100vh;
         z-index: 2000;
-        width: 0; /* tira do fluxo */
+        width: 0;
     }
 
     .main-content {

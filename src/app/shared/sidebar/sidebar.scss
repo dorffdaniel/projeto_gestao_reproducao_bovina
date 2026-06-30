@@ -37,30 +37,22 @@ h2 {
 }
 
 
-
 @media (max-width: 991px) {
 
     .layout {
         position: fixed;
         top: 0;
         left: 0;
-
         width: 260px;
         height: 100vh;
-
         transform: translateX(-100%);
         transition: transform .3s ease;
-
         z-index: 2000;
-
-        /* MUITO IMPORTANTE */
         pointer-events: none;
     }
 
     .layout.open {
         transform: translateX(0);
-
-        /* reativa clique quando aberto */
         pointer-events: auto;
     }
 }

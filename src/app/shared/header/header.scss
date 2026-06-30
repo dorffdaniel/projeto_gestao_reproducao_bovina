@@ -1,13 +1,35 @@
-@use '../../styles/variaveis' as c; 
+@use '../../styles/variaveis' as c;
 
 .navbar {
     border: 1px solid c.$border;
     height: 80px;
     background: #fff !important;
 
-    .botoes{
+    .container-fluid {
         display: flex;
+        align-items: center;
+    }
+
+    .botoes {
+        display: flex;
+        justify-content: end;
+        width: 100%;
         gap: 10px;
+    }
+
+}
+
+@media (max-width: 991px) {
+
+    .navbar {
+        .container-fluid {
+            justify-content: space-between;
+        }
+
+        .botoes {
+            width: auto;
+        }
+
     }
 
 }
