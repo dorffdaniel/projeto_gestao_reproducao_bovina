@@ -2,7 +2,7 @@
 
 .navbar {
     border: 1px solid c.$border;
-    height: 80px;
+    height: 60px;
     background: #fff !important;
 
     .container-fluid {
@@ -14,7 +14,7 @@
         display: flex;
         justify-content: end;
         width: 100%;
-        gap: 10px;
+        gap: 25px;
     }
 
 }

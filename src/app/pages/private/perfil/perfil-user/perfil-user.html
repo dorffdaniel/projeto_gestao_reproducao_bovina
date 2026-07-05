@@ -1,0 +1,34 @@
+<div class="conteudo">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card-imagem">
+
+                <div class="img">
+                    @if(avatarUrl()){
+                    <img [src]="avatarUrl()">
+                    }@else {
+                    <div class="avatar-letra">
+                        {{inicial()}}
+                    </div>
+                    }
+
+
+                    <div class="cont-img">
+                        <h1>{{dadosPessoais()?.nome}}</h1>
+                        <p>{{dadosPessoais()?.email}}</p>
+                    </div>
+
+                </div>
+
+                <input #inputFile type="file" hidden accept="image/*" (change)="selecionarImg($event)">
+                <button class="btn btn-primary" (click)="acionarInputFile()">adicionar imagem</button>
+                <button class="remover" (click)="removerImagem()">remover imagem</button>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

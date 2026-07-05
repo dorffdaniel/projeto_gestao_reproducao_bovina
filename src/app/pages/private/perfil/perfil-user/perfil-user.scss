@@ -1,0 +1,54 @@
+.conteudo {
+    .card-imagem {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        border-bottom: 1px solid #000;
+        padding: 16px;
+
+        .img {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            img,
+            .avatar-letra {
+                width: 200px;
+                height: 180px;
+                border-radius: 50%;
+                background-color: rgb(138, 185, 171);
+                color: #fff;
+            }
+
+            .avatar-letra {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 72px;
+                font-weight: bold;
+            }
+
+            .cont-img {
+                h1 {
+                    font-size: 26px;
+                }
+            }
+
+
+        }
+
+        button {
+            width: 200px;
+        }
+
+        .remover {
+            border: none;
+            background: none;
+            text-decoration: underline;
+            text-underline-offset: 7px;
+        }
+
+
+
+    }
+}
