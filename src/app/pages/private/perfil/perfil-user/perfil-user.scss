@@ -1,3 +1,5 @@
+@use '../../../../styles/variaveis' as c;
+
 .conteudo {
     .card-imagem {
         display: flex;
@@ -10,6 +12,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            margin-bottom: 10px;
 
             img,
             .avatar-letra {
@@ -30,7 +33,7 @@
 
             .cont-img {
                 h1 {
-                    font-size: 26px;
+                    font-size: 24px;
                 }
             }
 
@@ -38,6 +41,14 @@
         }
 
         button {
+            background: c.$primary;
+            border: 2px solid #1C2B1A;
+            height: 35px;
+            border-radius: 25px;
+            font-size: 17px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 200px;
         }
 
