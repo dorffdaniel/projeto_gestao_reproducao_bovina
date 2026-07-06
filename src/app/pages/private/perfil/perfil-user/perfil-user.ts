@@ -100,6 +100,7 @@ export class PerfilUser implements OnInit {
     const data = await this.serv.getPerfil();
     this.userId = data.id;
     this.dadosPessoais.set(data);
+    console.log(data)
 
     if (data.nome) {
       this.inicial.set(data.nome.charAt(0).toUpperCase());

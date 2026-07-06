@@ -1,7 +1,6 @@
 <div class="conteudo">
     <div class="row">
         <div class="col-12">
-
             <div class="card-imagem">
 
                 <div class="img">
@@ -27,8 +26,30 @@
 
 
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-dados-pessoais">
+                <div class="cont-dados">
+                    <div class="card-dados">
+                        <p>Nome: </p>
+                        <span>{{dadosPessoais()?.nome}}</span>
+                    </div>
+                    <div class="card-dados">
+                        <p>Email: </p>
+                        <span>{{dadosPessoais()?.email}}</span>
+                    </div>
+                    <div class="card-dados">
+                        <p>Telefone: </p>
+                        <span>{{dadosPessoais()?.telefone}}</span>
+                    </div>
 
+                    <button class="btn btn-primary">editar</button>
 
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
