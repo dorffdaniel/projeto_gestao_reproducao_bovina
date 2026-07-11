@@ -18,7 +18,8 @@
         }
     }
 
-    .conteudo-inputs {}
+    .conteudo-inputs {
+    }
 
     .conteudo-botoes {
         display: flex;
@@ -27,6 +28,35 @@
 
 
     }
+
+    .conteudo-lote {
+        background: #ee8585;
+
+        h2 {
+            font-size: 18px;
+        }
+
+        .cont-botao {
+            display: flex;
+            justify-content: end;
+        }
+
+        .cont-formulario {
+            background: #ccc;
+            padding: 16px;
+            border-radius: 8px;
+
+            textarea {
+                min-height: 180px;
+                resize: none;
+            }
+
+        }
+
+
+    }
+
+
 
     .modal-backdrop {
         position: fixed;
@@ -45,7 +75,7 @@
         width: 450px;
         max-width: 90%;
 
-        .conteudo-botoes-modal{
+        .conteudo-botoes-modal {
             display: flex;
             justify-content: end;
             gap: 10px;

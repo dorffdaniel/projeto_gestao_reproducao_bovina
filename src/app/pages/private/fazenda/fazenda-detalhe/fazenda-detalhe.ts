@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-fazenda-detalhe',
+  standalone:true, 
   imports: [FormsModule],
   templateUrl: './fazenda-detalhe.html',
   styleUrl: './fazenda-detalhe.scss',
@@ -31,6 +32,8 @@ export class FazendaDetalhe implements OnInit {
   isOpen: boolean = true;
   idFazenda!: number;
   mostrarModal = false; 
+  mostrarFormLote = signal(false); 
+
 
   ngOnInit(): void {
     this.getIdDetalheFazenda();
@@ -93,5 +96,17 @@ export class FazendaDetalhe implements OnInit {
   apagarFazenda() {
     
   }
+
+  abrirFormCadastrarLote() {
+    this.mostrarFormLote.set(true); 
+  }
+
+  fecharFormCadastrarLote() {
+    this.mostrarFormLote.set(false); 
+
+
+  }
+
+
 
 }
