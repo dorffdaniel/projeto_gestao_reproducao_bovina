@@ -21,32 +21,61 @@
         <div class="col-12">
             <div class="row g-3 conteudo-inputs">
 
-                <div class="col-md-6">
-                    <label class="form-label">Fazenda</label>
-                    <input class="form-control" [(ngModel)]="fazenda().nome">
-                </div>
+                <form #form="ngForm" (ngSubmit)="criarFazenda(form)">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3 cont-input">
+                                <label class="form-label">Fazenda</label>
+                                <input class="form-control" [(ngModel)]="fazenda().nome" name="nome" required
+                                    #nome="ngModel">
 
-                <div class="col-md-6">
-                    <label class="form-label">Proprietário</label>
-                    <input class="form-control" [(ngModel)]="fazenda().proprietario">
-                </div>
+                                @if(nome.invalid && (nome.touched || tentouSalvar()) ){
+                                <span class="text-erro">Campo nome é obrigatorio</span>
+                                }
 
-                <div class="col-md-6">
-                    <label class="form-label">Telefone</label>
-                    <input class="form-control" [(ngModel)]="fazenda().telefone">
-                </div>
+                            </div>
 
-                <div class="col-md-6">
-                    <label class="form-label">Cidade</label>
-                    <input class="form-control" [(ngModel)]="fazenda().cidade">
-                </div>
+                            <div class="mb-3 cont-input">
+                                <label class="form-label">Proprietário</label>
+                                <input class="form-control" [(ngModel)]="fazenda().proprietario" name="proprietario"
+                                    required #prop="ngModel">
 
-                <div class="col-md-6">
-                    <label class="form-label">Estado</label>
-                    <input class="form-control" [(ngModel)]="fazenda().estado">
-                </div>
+                                @if(prop.invalid && (prop.touched || tentouSalvar()) ){
+                                <span class="text-erro">Campo proprietario é obrigatorio</span>
+                                }
 
-               <!--  <div class="col-md-6">
+                            </div>
+
+                            <div class="mb-3 cont-input">
+                                <label class="form-label">Telefone (opcional)</label>
+                                <input class="form-control" [(ngModel)]="fazenda().telefone" name="telefone">
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 cont-input">
+                                <label class="form-label">Cidade (opcional)</label>
+                                <input class="form-control" [(ngModel)]="fazenda().cidade" name="cidade">
+                            </div>
+
+                            <div class="mb-3 cont-input">
+                                <label class="form-label">Estado (opcional)</label>
+                                <input class="form-control" [(ngModel)]="fazenda().estado" name="estado">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary" [disabled]="desabilitarBtn()">
+                            {{desabilitarBtn() ? 'Salvando ...' : 'Criar'}}
+                        </button>
+                    </div>
+
+                </form>
+
+                <!--  <div class="col-md-6">
                     <label class="form-label">Tipo Controle</label>
                     <select class="form-select" aria-label="Default select example" [(ngModel)]="fazenda().tipo_controle">
                         <option value="-1">selecione</option>
@@ -55,13 +84,6 @@
                     </select>
                 </div> -->
 
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="conteudo-criar-fazenda">
-                <button class="btn btn-primary" (click)="criarFazenda()">Criar</button>
             </div>
         </div>
     </div>

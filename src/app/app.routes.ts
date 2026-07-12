@@ -7,6 +7,7 @@ import { Fazendas } from './pages/private/fazenda/fazendas/fazendas';
 import { FazendaDetalhe } from './pages/private/fazenda/fazenda-detalhe/fazenda-detalhe';
 import { FazendaNova } from './pages/private/fazenda/fazenda-nova/fazenda-nova';
 import { PerfilUser } from './pages/private/perfil/perfil-user/perfil-user';
+import { GerenciarLotes } from './pages/private/lotes/gerenciar-lotes/gerenciar-lotes';
 
 
 export const routes: Routes = [
@@ -18,7 +19,8 @@ export const routes: Routes = [
             { path: 'fazendas', component: Fazendas },
             { path: 'fazenda/:id', component: FazendaDetalhe },
             { path: 'fazendas/nova', component: FazendaNova },
-            { path: 'perfil', component: PerfilUser }
+            { path: 'perfil', component: PerfilUser },
+            { path: 'lote', component: GerenciarLotes }
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

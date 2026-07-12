@@ -1,51 +1,61 @@
 import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { FazendasService } from '../../../../services/fazendas-service';
 
 
 @Component({
   selector: 'app-fazenda-nova',
-  standalone: true, 
+  standalone: true,
   imports: [RouterLink, FormsModule],
   templateUrl: './fazenda-nova.html',
   styleUrl: './fazenda-nova.scss',
 })
 export class FazendaNova {
 
-
+  constructor(
+    private serv: FazendasService, 
+    private route: Router 
+  ) { }
 
   fazenda = signal({
-    nome: '', 
-    proprietario: '', 
-    telefone: '', 
-    cidade: '', 
-    estado: '' 
-  }); 
+    nome: '',
+    proprietario: '',
+    telefone: '',
+    cidade: '',
+    estado: ''
+  });
+
+  tentouSalvar = signal(false);
+  desabilitarBtn = signal(false);
 
 
-  criarFazenda() {
+  async criarFazenda(form: NgForm) {
 
-    if (!this.verificarCampos()) {
-      console.log("campos em falta"); 
-      return; 
+    this.tentouSalvar.set(true);
+
+    if (form.invalid) {
+      return;
     }
 
-    console.log(this.fazenda().nome)
-    console.log(this.fazenda().proprietario)
-    console.log(this.fazenda().telefone)
-    console.log(this.fazenda().cidade)
-    console.log(this.fazenda().estado)
+    this.desabilitarBtn.set(true);
+
+    try {
+      const data = await this.serv.cadastrarFazenda(this.fazenda());
+
+      setTimeout(() => {
+        
+      }, 1500);
+
+    } catch (error) {
+
+    } finally {
+      this.desabilitarBtn.set(false);
+
+    }
 
   }
 
-  verificarCampos() {
-    
-    if (!this.fazenda().nome || !this.fazenda().proprietario || !this.fazenda().telefone || !this.fazenda().cidade || !this.fazenda().estado) {
-      return false; 
-    }
-
-    return true; 
-  }
 
 
 }

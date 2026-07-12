@@ -18,5 +18,21 @@
         }
     }
 
-    
+    .conteudo-inputs {
+
+        .cont-input {
+            min-height: 100px;
+        }
+
+        .text-erro {
+            display: block;
+            margin-top: 4px;
+            color: #f31313;
+            font-size: 12px;
+        }
+
+    }
+
+
+
 }

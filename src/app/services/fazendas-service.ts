@@ -20,7 +20,7 @@ export class FazendasService {
 
     const { data, error } = await supabase.from('fazendas').select('*').eq('perfil_id', user.id)
 
-     if (error) {
+    if (error) {
       console.log(error);
       return;
     }
@@ -28,5 +28,33 @@ export class FazendasService {
     return data;
 
   }
+
+  async cadastrarFazenda(fazenda: any) {
+
+    const session = await this.ser.getUser();
+
+    const user = session?.data?.user;
+
+    if (!user?.id) {
+      throw new Error("Usuario não autenticado");
+    }
+
+    const { data, error } = await supabase.from('fazendas').insert({
+      nome: fazenda.nome,
+      proprietario: fazenda.proprietario,
+      telefone: fazenda.telefone,
+      cidade: fazenda.cidade,
+      estado: fazenda.estado,
+      perfil_id: user?.id
+    }).select();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+
+  }
+
 
 }
