@@ -19,17 +19,11 @@ export class FazendaNova {
     proprietario: '', 
     telefone: '', 
     cidade: '', 
-    estado: '', 
-    tipo_controle: '' 
+    estado: '' 
   }); 
 
 
   criarFazenda() {
-
-    if (!this.verificarSelect()) {
-      console.log("selecione um tipo controle valido")
-      return; 
-    }
 
     if (!this.verificarCampos()) {
       console.log("campos em falta"); 
@@ -41,21 +35,12 @@ export class FazendaNova {
     console.log(this.fazenda().telefone)
     console.log(this.fazenda().cidade)
     console.log(this.fazenda().estado)
-    console.log(this.fazenda().tipo_controle)
 
   }
 
   verificarCampos() {
     
-    if (!this.fazenda().nome || !this.fazenda().proprietario || !this.fazenda().telefone || !this.fazenda().cidade || !this.fazenda().estado || !this.fazenda().tipo_controle) {
-      return false; 
-    }
-
-    return true; 
-  }
-
-  verificarSelect() {
-    if (this.fazenda().tipo_controle == '-1') {
+    if (!this.fazenda().nome || !this.fazenda().proprietario || !this.fazenda().telefone || !this.fazenda().cidade || !this.fazenda().estado) {
       return false; 
     }
 

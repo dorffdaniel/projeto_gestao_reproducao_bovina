@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-fazenda-detalhe',
-  standalone:true, 
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './fazenda-detalhe.html',
   styleUrl: './fazenda-detalhe.scss',
@@ -24,20 +24,30 @@ export class FazendaDetalhe implements OnInit {
     proprietario: '',
     telefone: '',
     cidade: '',
-    estado: '',
-    tipo_controle: ''
+    estado: ''
   })
+
+  lote = signal({
+    nome: '',
+    categoria: '',
+    quantidade: '',
+    observacao: '',
+  });
 
   ativado: boolean = true;
   isOpen: boolean = true;
   idFazenda!: number;
-  mostrarModal = false; 
-  mostrarFormLote = signal(false); 
+  mostrarModal = false;
+  mostrarFormLote = signal(false);
+  esconderBtn = signal(false);
+  existeLotes = signal(false);
+  LotesArr = signal<any>([]); 
 
 
   ngOnInit(): void {
     this.getIdDetalheFazenda();
     this.mostrarFazenda();
+    this.mostrarLotes();
   }
 
   getIdDetalheFazenda() {
@@ -86,25 +96,74 @@ export class FazendaDetalhe implements OnInit {
   }
 
   abrirModal() {
-    this.mostrarModal = true; 
+    this.mostrarModal = true;
   }
 
   fecharModal() {
-    this.mostrarModal = false; 
+    this.mostrarModal = false;
   }
 
   apagarFazenda() {
-    
+
   }
 
   abrirFormCadastrarLote() {
-    this.mostrarFormLote.set(true); 
+    this.mostrarFormLote.set(true);
+    this.esconderBtn.set(true);
   }
 
   fecharFormCadastrarLote() {
-    this.mostrarFormLote.set(false); 
+    this.mostrarFormLote.set(false);
+    this.esconderBtn.set(false);
+  }
 
 
+  async mostrarLotes() {
+
+    const data = await this.serv.getLotes(this.idFazenda);
+
+    if (data?.length != 0) {
+      this.existeLotes.set(true);
+    }
+    console.log("lotes ", data);
+    this.LotesArr.set(data); 
+
+  }
+
+  async cadastrarNovoLote() {
+
+    if (!this.verificarCamposLotes()) {
+      console.log("err888");
+      return;
+    }
+
+    const payload = {
+      fazenda_id: this.idFazenda,
+      ... this.lote()
+    }
+
+    const data = await this.serv.cadastrarLote(payload);
+
+    console.log(data);
+    this.mostrarLotes();
+    this.mostrarFormLote.set(false);
+    this.esconderBtn.set(false);
+
+  }
+
+  verificarCamposLotes() {
+
+    if (!this.lote().nome || !this.lote().categoria || !this.lote().quantidade) {
+      return false;
+    }
+
+    return true;
+
+  }
+  
+  gerenciarLote(loteId: number) {
+    
+    
   }
 
 
