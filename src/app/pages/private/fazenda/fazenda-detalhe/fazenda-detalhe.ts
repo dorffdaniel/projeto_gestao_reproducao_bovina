@@ -34,6 +34,12 @@ export class FazendaDetalhe implements OnInit {
     observacao: '',
   });
 
+  mensagem = signal({
+    texto: '', 
+    tipo: ''
+  }); 
+
+
   ativado: boolean = true;
   isOpen: boolean = true;
   idFazenda!: number;
@@ -41,7 +47,7 @@ export class FazendaDetalhe implements OnInit {
   mostrarFormLote = signal(false);
   esconderBtn = signal(false);
   existeLotes = signal(false);
-  LotesArr = signal<any>([]); 
+  LotesArr = signal<any>([]);
 
 
   ngOnInit(): void {
@@ -51,7 +57,6 @@ export class FazendaDetalhe implements OnInit {
   }
 
   getIdDetalheFazenda() {
-
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.idFazenda = id
@@ -88,6 +93,19 @@ export class FazendaDetalhe implements OnInit {
 
     this.fazenda.set(data);
     this.ativado = true;
+    this.isOpen = !this.isOpen;
+    this.mensagem.set({
+      texto: 'Salvo com sucesso.', 
+      tipo: 'sucesso'
+    })
+
+    setTimeout(() => {
+      this.mensagem.set({
+        texto: '', 
+        tipo: ''
+      })
+    }, 1500);
+
   }
 
 
@@ -126,7 +144,7 @@ export class FazendaDetalhe implements OnInit {
       this.existeLotes.set(true);
     }
     console.log("lotes ", data);
-    this.LotesArr.set(data); 
+    this.LotesArr.set(data);
 
   }
 
@@ -160,10 +178,10 @@ export class FazendaDetalhe implements OnInit {
     return true;
 
   }
-  
+
   gerenciarLote(loteId: number) {
-    
-    
+
+
   }
 
 

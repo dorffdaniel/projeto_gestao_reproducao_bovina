@@ -26,6 +26,11 @@ export class FazendaNova {
     estado: ''
   });
 
+  mensagem = signal({
+    texto: '', 
+    tipo: ''
+  }); 
+
   tentouSalvar = signal(false);
   desabilitarBtn = signal(false);
 
@@ -43,11 +48,22 @@ export class FazendaNova {
     try {
       const data = await this.serv.cadastrarFazenda(this.fazenda());
 
+      this.mensagem.set({
+        texto: 'Fazenda Cadastrada com sucesso.', 
+        tipo: 'sucesso'
+      })
+
       setTimeout(() => {
-        
+        this.route.navigate(['/fazendas']); 
       }, 1500);
 
     } catch (error) {
+
+      this.mensagem.set({
+        texto: 'Não foi possível cadastrar a fazenda. Tente novamente.',
+        tipo: 'erro'
+      })
+
 
     } finally {
       this.desabilitarBtn.set(false);

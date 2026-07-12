@@ -18,7 +18,27 @@
         }
     }
 
-    .conteudo-inputs {}
+    .conteudo-inputs {
+
+        .sucesso,
+        .erro {
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sucesso {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .erro {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+    }
 
     .conteudo-botoes {
         display: flex;
@@ -63,7 +83,7 @@
 
     }
 
-    .conteudo-tabela{
+    .conteudo-tabela {
         margin-top: 20px;
     }
 

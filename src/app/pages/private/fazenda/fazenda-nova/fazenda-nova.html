@@ -67,6 +67,24 @@
 
                     </div>
 
+                    @if(mensagem().texto){
+
+                        @switch (mensagem().tipo) {
+                            @case ('sucesso') {
+                                <div class="sucesso">
+                                    {{mensagem().texto}}
+                                </div>
+                            }
+                            @case ('erro') {
+                                <div class="erro">
+                                    {{mensagem().texto}}
+                                </div>
+                            }
+                        }
+
+                    }
+                    
+
                     <div class="d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-primary" [disabled]="desabilitarBtn()">
                             {{desabilitarBtn() ? 'Salvando ...' : 'Criar'}}
