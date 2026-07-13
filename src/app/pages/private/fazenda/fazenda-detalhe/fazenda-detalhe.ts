@@ -35,9 +35,9 @@ export class FazendaDetalhe implements OnInit {
   });
 
   mensagem = signal({
-    texto: '', 
+    texto: '',
     tipo: ''
-  }); 
+  });
 
 
   ativado: boolean = true;
@@ -58,6 +58,10 @@ export class FazendaDetalhe implements OnInit {
 
   getIdDetalheFazenda() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!id) {
+      this.naveg.navigate(['/fazendas'])
+    }
 
     this.idFazenda = id
   }
@@ -95,13 +99,13 @@ export class FazendaDetalhe implements OnInit {
     this.ativado = true;
     this.isOpen = !this.isOpen;
     this.mensagem.set({
-      texto: 'Salvo com sucesso.', 
+      texto: 'Salvo com sucesso.',
       tipo: 'sucesso'
     })
 
     setTimeout(() => {
       this.mensagem.set({
-        texto: '', 
+        texto: '',
         tipo: ''
       })
     }, 1500);
@@ -180,7 +184,7 @@ export class FazendaDetalhe implements OnInit {
   }
 
   gerenciarLote(loteId: number) {
-
+    this.naveg.navigate(['/lote', loteId]);
 
   }
 

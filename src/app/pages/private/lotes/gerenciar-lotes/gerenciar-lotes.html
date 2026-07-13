@@ -1,1 +1,101 @@
-<p>gerenciar-lotes works!</p>
+<div class="conteudo">
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-voltar">
+                <div class="d-flex align-items-center mb-3">
+                    <button class="btn btn-outline-secondary me-2" (click)="voltar()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+
+                    <h2 class="m-0">Gerenciar Lote</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-detalhe-lote">
+                @for(lot of dadosLote(); track lot.id){
+                <div class="card-lote">
+                    <p>Nome: <span>{{lot?.nome}}</span></p>
+                    <p>Categoria: <span>{{lot?.categoria}}</span> </p>
+                    <p>Animais: <span>{{lot?.total_animais}}</span></p>
+                    <p>Observações: <span>{{lot?.observacoes}}</span></p>
+                </div>
+                }
+
+                <div class="cont-botoes">
+                    <button class="btn btn-warning" (click)="editarLote()">editar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-protocolo">
+                <div class="cont-titulo">
+                    <h2>Protocolo</h2>
+
+                    <button class="btn btn-primary" (click)="abrirFormCadastrarProtocolo()"
+                        [hidden]="esconderBtn()">Cadastrar</button>
+                </div>
+
+                @if(mostrarFormProtocolo()){
+                <div class="cont-formulario">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="data" class="form-label">Data</label>
+                                <input type="date" class="form-control" id="data" [(ngModel)]="protocolo().data_inicio"
+                                    name="data_inicio">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="hora" class="form-label">Hora inicio</label>
+                                <input type="time" class="form-control" [(ngModel)]="protocolo().hora_inicio"
+                                    name="hora_inicio" id="hora">
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="animais" class="form-label">Quantidade de animais</label>
+                                <input type="number" class="form-control" id="animais" min="1"
+                                    [(ngModel)]="protocolo().total_animais" name="total_animais">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+
+                            <select id="status" class="form-select" [(ngModel)]="protocolo().status" name="status">
+
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="Em andamento">Em andamento</option>
+                                <option value="Finalizado">Finalizado</option>
+                                <option value="Cancelado">Cancelado</option>
+
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4 gap-4">
+                            <button class="btn btn-success" (click)="cadastrarNovoProtocolo()">Salvar</button>
+                            <button class="btn btn-danger" (click)="fecharFormCadastrarProtocolo()">Cancelar</button>
+                        </div>
+
+                    </form>
+
+                </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

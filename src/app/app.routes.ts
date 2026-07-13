@@ -20,7 +20,7 @@ export const routes: Routes = [
             { path: 'fazenda/:id', component: FazendaDetalhe },
             { path: 'fazendas/nova', component: FazendaNova },
             { path: 'perfil', component: PerfilUser },
-            { path: 'lote', component: GerenciarLotes }
+            { path: 'lote/:id', component: GerenciarLotes }
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }
