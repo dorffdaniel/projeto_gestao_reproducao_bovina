@@ -9,7 +9,7 @@ export class GerenciarLoteService {
 
   async getDadaosLote(idlote: number) {
     
-    const { data, error } = await supabase.from('lotes').select('*').eq('id', idlote); 
+    const { data, error } = await supabase.from('lotes').select('*').eq('id', idlote).single(); 
 
     if (error) {
       throw error; 

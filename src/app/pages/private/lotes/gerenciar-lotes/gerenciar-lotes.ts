@@ -63,8 +63,6 @@ export class GerenciarLotes implements OnInit {
   }
 
 
-
-
   voltar() {
     // de momento fica assim depois volta mesmo para pagina anterior.
     this.naveg.navigate(['/fazendas'])
@@ -87,9 +85,36 @@ export class GerenciarLotes implements OnInit {
 
 
   cadastrarNovoProtocolo() {
+
+   /*  if (!this.verificartCamposProtocolo()) {
+      console.log("erro campos em falta"); 
+      return
+    } */
     
+
+    console.log("id lote", this.dadosLote()!.id); 
+    console.log("fazenda ", this.dadosLote()!.fazenda_id); 
+
+    const payload = {
+      ... this.protocolo(),
+      lote_id: this.dadosLote().id,
+      status: "Em andamento"
+    }
+
+
+
+
   }
 
+  verificartCamposProtocolo() {
+    
+    if (!this.protocolo().data_inicio || !this.protocolo().hora_inicio || !this.protocolo().total_animais) {
+      return false; 
+    }
+
+    return true; 
+
+  }
 
 
 
