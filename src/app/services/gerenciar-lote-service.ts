@@ -20,5 +20,27 @@ export class GerenciarLoteService {
   }
 
 
+  async registrarProtocolo(payload: any) {
+    
+    const { data, error } = await supabase.from('protocolos').insert(payload); 
+
+    if (error) {
+      throw error
+    }
+
+    return data; 
+  }
+
+  async getDadosProtocolos(lote_id: number) {
+    
+    const { data, error } = await supabase.from('protocolos').select('*').eq('lote_id', lote_id).order('data_inicio', { ascending: false });
+    
+    if (error) {
+      throw error
+    }
+
+    return data; 
+  }
+
 
 }

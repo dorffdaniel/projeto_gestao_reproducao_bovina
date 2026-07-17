@@ -31,6 +31,19 @@
     </div>
     <div class="row">
         <div class="col-12">
+
+            @if(mensagem().texto){
+
+            @switch (mensagem().tipo) {
+            @case ('sucesso') {
+            <div class="sucesso">
+                {{mensagem().texto}}
+            </div>
+            }
+            }
+
+            }
+
             <div class="conteudo-protocolo">
                 <div class="cont-titulo">
                     <h2>Protocolo</h2>
@@ -42,7 +55,9 @@
                 @if(mostrarFormProtocolo()){
                 <div class="cont-formulario">
                     <form>
+
                         <div class="row">
+
                             <div class="col-md-6 mb-3">
                                 <label for="data" class="form-label">Data</label>
                                 <input type="date" class="form-control" id="data" [(ngModel)]="protocolo().data_inicio"
@@ -50,14 +65,15 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label for="hora" class="form-label">Hora inicio</label>
-                                <input type="time" class="form-control" [(ngModel)]="protocolo().hora_inicio"
-                                    name="hora_inicio" id="hora">
+                                <label for="hora" class="form-label">Hora de início</label>
+                                <input type="time" class="form-control" id="hora" [(ngModel)]="protocolo().hora_inicio"
+                                    name="hora_inicio">
                             </div>
 
                         </div>
 
                         <div class="row">
+
                             <div class="col-md-6 mb-3">
                                 <label for="animais" class="form-label">Quantidade de animais</label>
                                 <input type="number" class="form-control" id="animais" min="1"
@@ -66,18 +82,62 @@
 
                         </div>
 
-                        <div class="d-flex justify-content-end mt-4 gap-4">
-                            <button class="btn btn-success" (click)="cadastrarNovoProtocolo()">Salvar</button>
-                            <button class="btn btn-danger" (click)="fecharFormCadastrarProtocolo()">Cancelar</button>
+                        <div class="row">
+
+                            <div class="col-12 mb-3">
+                                <label for="observacoes" class="form-label">Observações</label>
+                                <textarea id="observacoes" class="form-control" rows="4"
+                                    [(ngModel)]="protocolo().observacoes" name="observacoes">
+                                </textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <button type="button" class="btn btn-danger" (click)="fecharFormCadastrarProtocolo()">
+                                Cancelar
+                            </button>
+
+                            <button type="button" class="btn btn-success" (click)="cadastrarNovoProtocolo()">
+                                Salvar
+                            </button>
                         </div>
 
                     </form>
-
                 </div>
                 }
 
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-protocolos-registrados">
+
+                @if(protocolosRegistrados()){
+                @for(prot of protocolosRegistrados(); track prot.id){
+                <div class="card-protocolo">
+                    <div class="card-titulo">
+                        <span class="bolinha" [class.andamento]="prot?.status === 'Em andamento'"
+                            [class.finalizado]="prot?.status === 'Finalizado'"
+                            [class.cancelado]="prot?.status === 'Cancelado'"></span>
+                        <p>Protocolo</p>
+                    </div>
+
+                    <p>Data inicio: <span>{{prot?.data_inicio}}</span></p>
+                    <p>Hora: <span>{{prot?.hora_inicio }}</span></p>
+                    <p>Animais: <span>{{prot?.total_animais }}</span></p>
+                    <p>Status: <span>{{prot?.status}}</span></p>
+
+                </div>
+                }
+                }@else {
+                <p>Nenhum protocolo cadastrado para este lote</p>
+                }
 
             </div>
+
+
         </div>
     </div>
 

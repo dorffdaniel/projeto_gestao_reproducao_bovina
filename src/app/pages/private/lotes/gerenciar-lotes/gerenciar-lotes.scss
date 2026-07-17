@@ -28,6 +28,24 @@
         }
     }
 
+    .sucesso,
+    .erro {
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 17px;
+    }
+
+    .sucesso {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .erro {
+        background: #f8d7da;
+        color: #842029;
+    }
+
     .conteudo-protocolo {
         background: #233824;
         border-radius: 8px;
@@ -52,10 +70,61 @@
             background: #ccc;
             padding: 16px;
             border-radius: 8px;
+
+        }
+    }
+
+
+    .conteudo-protocolos-registrados {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+
+        .card-protocolo {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 20px 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+
+
+            .card-titulo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .bolinha {
+                    width: 15px;
+                    height: 15px;
+                    border-radius: 50%;
+                    display: inline-block;
+                }
+
+                .andamento {
+                    background: #198754;
+                }
+
+                .finalizado {
+                    background: #6c757d;
+                }
+
+                .cancelado {
+                    background: #dc3545;
+                }
+
+                p {
+                    margin: 0;
+                }
+            }
+
+            p {
+                margin: 0;
+            }
+
         }
 
     }
-
 
 
 }

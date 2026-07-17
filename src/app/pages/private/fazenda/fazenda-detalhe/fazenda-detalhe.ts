@@ -93,22 +93,29 @@ export class FazendaDetalhe implements OnInit {
 
   async salvarEditDadosFazenda() {
 
-    const data = await this.serv.salvarEdicaoFazenda(this.idFazenda, this.fazenda());
+    try {
+      const data = await this.serv.salvarEdicaoFazenda(this.idFazenda, this.fazenda());
 
-    this.fazenda.set(data);
-    this.ativado = true;
-    this.isOpen = !this.isOpen;
-    this.mensagem.set({
-      texto: 'Salvo com sucesso.',
-      tipo: 'sucesso'
-    })
+      this.fazenda.set(data);
+      this.ativado = true;
+      this.isOpen = !this.isOpen;
 
-    setTimeout(() => {
       this.mensagem.set({
-        texto: '',
-        tipo: ''
+        texto: 'Salvo com sucesso.',
+        tipo: 'sucesso'
       })
-    }, 1500);
+
+      setTimeout(() => {
+        this.mensagem.set({
+          texto: '',
+          tipo: ''
+        })
+      }, 1500);
+    } catch (error) {
+
+      console.log(error); 
+
+    }
 
   }
 

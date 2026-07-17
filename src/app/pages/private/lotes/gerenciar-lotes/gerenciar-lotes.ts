@@ -20,22 +20,30 @@ export class GerenciarLotes implements OnInit {
 
   idLote!: number;
   dadosLote = signal<any | null>(null);
-  esconderBtn = signal(false); 
-  mostrarFormProtocolo = signal(false); 
-
-  protocolo = signal({
-    data_inicio: '', 
-    hora_inicio: '', 
-    total_animais: '', 
-    status: '', 
-    observacoes: ''
-  })
-
+  esconderBtn = signal(false);
+  mostrarFormProtocolo = signal(false);
+  protocolo = signal(this.criarProtocoloVazio());
+  protocolosRegistrados = signal<any>([]); 
 
   ngOnInit(): void {
     this.getIdlote();
     this.mostrarDadosLote();
   }
+
+  private criarProtocoloVazio() {
+    return {
+      data_inicio: '',
+      hora_inicio: '',
+      total_animais: '',
+      status: '',
+      observacoes: ''
+    };
+  }
+
+  mensagem = signal({
+    texto: '',
+    tipo: ''
+  });
 
 
   getIdlote() {
@@ -56,6 +64,8 @@ export class GerenciarLotes implements OnInit {
       console.log(data);
       this.dadosLote.set(data);
 
+      await this.obterProtocolosRegistrados();
+
     } catch (error) {
       console.log(error);
     }
@@ -73,49 +83,87 @@ export class GerenciarLotes implements OnInit {
   }
 
   abrirFormCadastrarProtocolo() {
-    this.mostrarFormProtocolo.set(true); 
-    this.esconderBtn.set(true); 
+    this.mostrarFormProtocolo.set(true);
+    this.esconderBtn.set(true);
   }
 
 
   fecharFormCadastrarProtocolo() {
-    this.mostrarFormProtocolo.set(false); 
-    this.esconderBtn.set(false); 
+    this.mostrarFormProtocolo.set(false);
+    this.esconderBtn.set(false);
   }
 
 
-  cadastrarNovoProtocolo() {
+  async cadastrarNovoProtocolo() {
 
-   /*  if (!this.verificartCamposProtocolo()) {
-      console.log("erro campos em falta"); 
+    if (!this.verificartCamposProtocolo()) {
+      console.log("erro campos em falta");
       return
-    } */
-    
-
-    console.log("id lote", this.dadosLote()!.id); 
-    console.log("fazenda ", this.dadosLote()!.fazenda_id); 
+    }
 
     const payload = {
       ... this.protocolo(),
-      lote_id: this.dadosLote().id,
+      fazenda_id: this.dadosLote()!.fazenda_id,
+      lote_id: this.dadosLote()!.id,
       status: "Em andamento"
     }
 
+    try {
+      const data = await this.serv.registrarProtocolo(payload);
+
+      this.fecharFormCadastrarProtocolo();
+      this.limparFormulario();
+
+      this.mensagem.set({
+        texto: 'Protocolo registrado com sucesso',
+        tipo: 'sucesso'
+      })
+
+      this.obterProtocolosRegistrados()
+
+      setTimeout(() => {
+        this.mensagem.set({
+          texto: '',
+          tipo: ''
+        })
+      }, 1500);
 
 
-
-  }
-
-  verificartCamposProtocolo() {
-    
-    if (!this.protocolo().data_inicio || !this.protocolo().hora_inicio || !this.protocolo().total_animais) {
-      return false; 
+    } catch (error) {
+      console.log(error);
     }
 
-    return true; 
+  }
+
+  async obterProtocolosRegistrados() {
+    
+    try {
+      const loteId = this.dadosLote()!.id
+
+      const data = await this.serv.getDadosProtocolos(loteId); 
+      this.protocolosRegistrados.set(data); 
+      console.log("prot", data); 
+
+    } catch (error) {
+      console.log(error); 
+    }
 
   }
 
+
+
+  verificartCamposProtocolo() {
+
+    if (!this.protocolo().data_inicio || !this.protocolo().hora_inicio || !this.protocolo().total_animais) {
+      return false;
+    }
+
+    return true;
+  }
+
+  limparFormulario() {
+    this.protocolo.set(this.criarProtocoloVazio());
+  }
 
 
 }
