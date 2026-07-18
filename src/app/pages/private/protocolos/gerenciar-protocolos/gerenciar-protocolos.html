@@ -1,0 +1,52 @@
+<div class="conteudo">
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-voltar">
+                <div class="d-flex align-items-center mb-3">
+                    <button class="btn btn-outline-secondary me-2" (click)="voltar()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+
+                    <h2 class="m-0">Gerenciar Protocolo</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-dados-protocolo">
+                <div class="card-dados">
+                    <p>Data inicio <span>{{dadosProtocolo()?.data_inicio}}</span></p>
+                    <p>Status <span>{{dadosProtocolo()?.status}}</span></p>
+                </div>
+
+                <div class="cont-botoes">
+                    <button class="btn btn-warning" (click)="editarProt()">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-etapas-protocolos">
+                <h2>Acompanhe as etapas do protocolo e registre cada procedimento conforme o andamento do manejo.</h2>
+                <div class="card-form-estapa-protocolo">
+                    <div class="card-etapa-protocolo">
+                        <div class="card-titulo">
+                            <span class="bolinha"></span>
+                            <p>D0</p>
+                        </div>
+
+                        <button class="btn btn-primary">Cadastrar</button>
+                    </div>
+
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -113,25 +113,36 @@
     <div class="row">
         <div class="col-12">
             <div class="conteudo-protocolos-registrados">
-
                 @if(protocolosRegistrados()){
-                @for(prot of protocolosRegistrados(); track prot.id){
-                <div class="card-protocolo">
-                    <div class="card-titulo">
-                        <span class="bolinha" [class.andamento]="prot?.status === 'Em andamento'"
-                            [class.finalizado]="prot?.status === 'Finalizado'"
-                            [class.cancelado]="prot?.status === 'Cancelado'"></span>
-                        <p>Protocolo</p>
+                <h3>Protocolos</h3>
+                <div class="conteudo-cards-protocolos">
+                    @for(prot of protocolosRegistrados(); track prot.id){
+                    <div class="card-protocolo">
+                        <div class="card-titulo">
+                            <span class="bolinha" [class.andamento]="prot?.status === 'Em andamento'"
+                                [class.finalizado]="prot?.status === 'Finalizado'"
+                                [class.cancelado]="prot?.status === 'Cancelado'"></span>
+                            <p>{{prot?.status}}</p>
+                        </div>
+
+                        <p>Data inicio: <span>{{prot?.data_inicio}}</span></p>
+                        <p>Hora: <span>{{prot?.hora_inicio }}</span></p>
+                        <p>Animais: <span>{{prot?.total_animais }}</span></p>
+                        <!-- <p>Status: <span>{{prot?.status}}</span></p> -->
+
+                        <div class="cont-botao">
+                        <button class="btn btn-primary" (click)="gerenciarProtocolo(prot.id)">Gerenciar</button>
                     </div>
 
-                    <p>Data inicio: <span>{{prot?.data_inicio}}</span></p>
-                    <p>Hora: <span>{{prot?.hora_inicio }}</span></p>
-                    <p>Animais: <span>{{prot?.total_animais }}</span></p>
-                    <p>Status: <span>{{prot?.status}}</span></p>
+                    </div>
+                    }
+
+                    
 
                 </div>
                 }
-                }@else {
+
+                @if(!protocolosRegistrados()){
                 <p>Nenhum protocolo cadastrado para este lote</p>
                 }
 

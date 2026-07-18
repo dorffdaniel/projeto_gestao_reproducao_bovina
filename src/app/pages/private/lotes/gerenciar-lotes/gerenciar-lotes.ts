@@ -15,7 +15,8 @@ export class GerenciarLotes implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private naveg: Router,
-    private serv: GerenciarLoteService
+    private serv: GerenciarLoteService, 
+    private router: Router
   ) { }
 
   idLote!: number;
@@ -151,7 +152,6 @@ export class GerenciarLotes implements OnInit {
   }
 
 
-
   verificartCamposProtocolo() {
 
     if (!this.protocolo().data_inicio || !this.protocolo().hora_inicio || !this.protocolo().total_animais) {
@@ -165,5 +165,8 @@ export class GerenciarLotes implements OnInit {
     this.protocolo.set(this.criarProtocoloVazio());
   }
 
+  gerenciarProtocolo(protocolo_id: number) {
+    this.router.navigate(['/protocolo', protocolo_id]); 
+  }
 
 }

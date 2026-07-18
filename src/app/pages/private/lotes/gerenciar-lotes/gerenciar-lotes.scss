@@ -76,53 +76,75 @@
 
 
     .conteudo-protocolos-registrados {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
 
-        .card-protocolo {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 20px 15px;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
+        h3{
+            font-size: 17px;
+        }
 
+        .conteudo-cards-protocolos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
 
-            .card-titulo {
+            .card-protocolo {
                 display: flex;
-                align-items: center;
-                gap: 10px;
+                flex-direction: column;
+                gap: 8px;
+                padding: 20px 15px;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
 
-                .bolinha {
-                    width: 15px;
-                    height: 15px;
-                    border-radius: 50%;
-                    display: inline-block;
-                }
 
-                .andamento {
-                    background: #198754;
-                }
+                .card-titulo {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
 
-                .finalizado {
-                    background: #6c757d;
-                }
+                    .bolinha {
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 50%;
+                        display: inline-block;
+                    }
 
-                .cancelado {
-                    background: #dc3545;
+                    .andamento {
+                        background: #198754;
+                    }
+
+                    .finalizado {
+                        background: #6c757d;
+                    }
+
+                    .cancelado {
+                        background: #dc3545;
+                    }
+
+                    p {
+                        margin: 0;
+                    }
                 }
 
                 p {
                     margin: 0;
+                    color: #6c757d;
                 }
-            }
 
-            p {
-                margin: 0;
+                span {
+                    color: #212529;
+                }
+
+                .cont-botao{
+                    display: flex;
+                    justify-content: end;
+                }
+
             }
 
         }
+
 
     }
 

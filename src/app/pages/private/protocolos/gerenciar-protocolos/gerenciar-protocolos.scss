@@ -1,0 +1,62 @@
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .conteudo-voltar {
+        margin-top: 10px;
+
+        button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 28px;
+        }
+
+        h2 {
+            font-size: 18px;
+        }
+    }
+
+    .conteudo-etapas-protocolos {
+
+        h2 {
+            font-size: 17px;
+        }
+
+        .card-form-estapa-protocolo {
+            .card-etapa-protocolo {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                padding: 15px;
+
+                .card-titulo {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+
+                    .bolinha {
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 50%;
+                        display: inline-block;
+                        background: #198754;
+                    }
+
+                    p {
+                        margin: 0;
+                    }
+                }
+
+            }
+
+        }
+
+        
+    }
+
+
+}
