@@ -26,20 +26,26 @@ export class GerenciarProtocolos implements OnInit {
     aberto: false
   })
 
-  evento_protocolo = signal({
-    data: '',
-    hora_inicio: '',
-    observacoes: '',
-  });
+  evento_protocolo = signal(this.colunasProtocolo());
+  evento_d0 = signal(this.colunasEventoD0())
 
-  evento_d0 = signal({
-    peso: '',
-    ecc: '',
-    ava: '',
-    indutor: '',
-    medicamento: ''
-  })
+  private colunasProtocolo() {
+    return {
+      data: '',
+      hora_inicio: '',
+      observacoes: '',
+    }
+  }
 
+  private colunasEventoD0() {
+    return {
+      peso: '',
+      ecc: '',
+      ava: '',
+      indutor: '',
+      medicamento: ''
+    }
+  }
 
   ngOnInit(): void {
     this.getIdProtocolo();
@@ -116,6 +122,7 @@ export class GerenciarProtocolos implements OnInit {
       }
 
       await this.serv.registrarDadosD0(payloadD0);
+      this.limparCampos('D0')
 
     } catch (error) {
       console.log(error)
@@ -124,5 +131,19 @@ export class GerenciarProtocolos implements OnInit {
   }
 
 
+  limparCampos(tipo: 'D0' | 'D7') {
+    
+    switch (tipo) {
+      case 'D0':
+        this.evento_protocolo.set(this.colunasProtocolo()); 
+        this.evento_d0.set(this.colunasEventoD0()); 
+        
+        break;
+    
+      default:
+        break;
+    }
+
+  }
 
 }
