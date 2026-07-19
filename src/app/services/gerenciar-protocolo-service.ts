@@ -18,5 +18,28 @@ export class GerenciarProtocoloService {
 
   }
 
+  async registrarEventoD0(payload: any) {
+    
+    const { data, error } = await supabase.from('eventos_protocolo').insert(payload) .select().single(); 
+
+    if (error) {
+      throw error
+    }
+
+    return data; 
+
+  }
+
+  async registrarDadosD0(payload: any) {
+    
+    const { data, error } = await supabase.from('evento_d0').insert(payload); 
+
+    if (error) {
+      throw error
+    }
+
+    return data; 
+  }
+
 
 }

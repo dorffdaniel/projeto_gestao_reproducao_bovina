@@ -19,19 +19,24 @@
     }
 
     .conteudo-etapas-protocolos {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
 
         h2 {
             font-size: 17px;
         }
 
-        .card-form-estapa-protocolo {
+        .card-form-etapa-protocolo {
             .card-etapa-protocolo {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                background: #fff;
                 border: 1px solid #e9ecef;
-                border-radius: 8px;
-                padding: 15px;
+                border-radius: 10px;
+                padding: 18px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
 
                 .card-titulo {
                     display: flex;
@@ -53,9 +58,19 @@
 
             }
 
+            .cont-formulario {
+                margin-top: 12px;
+                background: #ffffff;
+                border: 1px solid #dee2e6;
+                border-radius: 10px;
+                padding: 20px;
+            }
+
+
+
         }
 
-        
+
     }
 
 
