@@ -9,24 +9,39 @@
 
         <div class="card card-login">
 
-            <div class="mb-3 conteudo-inputs">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="seu email" [(ngModel)]="email">
-            </div>
-
-            <div class="mb-3 conteudo-inputs">
-                <label for="senha" class="form-label">Senha</label>
-                <input class="form-control" type="password" id="senha" [(ngModel)]="password" />
-                <p class="desc-senha">No minimo 8 caracteres, combinando letras, números e simbolos.</p>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <a href="#" class="esqueceu-senha">Esqueceu a senha ?</a>
+            <form (ngSubmit)="login()">
+                <div class="mb-3 conteudo-inputs">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail cadastrado"
+                        [(ngModel)]="Formlogin.email" name="email">
                 </div>
-            </div>
 
-            <button class="btn btn-primary" (click)="login()">Entrar</button>
+                <div class="mb-3 conteudo-inputs">
+                    <label for="senha" class="form-label">Senha</label>
+                    <div class="conteudo-olho">
+                        <input class="form-control" [type]="mostrarSenha ? 'text': 'password'" id="senha"
+                            [(ngModel)]="Formlogin.password" name="password" placeholder="Digite sua senha cadastrada"
+                            (focus)="aFocar()" (blur)="saiuFoco()" />
+
+                        @if(mostrarIconeOlho()){
+                        <i class="fas olho" (mousedown)="$event.preventDefault()" (click)="ativarCampo()"
+                            [class.fa-eye-slash]="mostrarSenha" [class.fa-eye]="!mostrarSenha"></i>
+                        }
+
+                    </div>
+
+                    <p class="desc-senha">No minimo 8 caracteres, combinando letras, números e simbolos.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <a href="#" class="esqueceu-senha">Esqueceu a senha ?</a>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Entrar</button>
+
+            </form>
 
             <div class="row">
                 <div class="col-12">
@@ -37,10 +52,19 @@
             </div>
 
             @if(msgErro()){
-                <p class="msgErr">{{msgErro()}}</p>
+            <p class="msgErr">{{msgErro()}}</p>
             }
 
+
         </div>
+
+        @if(isLoading()){
+        <div class="loading-overlay">
+            <div class="spinner-border text-primary spinner-loading" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+        </div>
+        }
 
     </div>
 </div>

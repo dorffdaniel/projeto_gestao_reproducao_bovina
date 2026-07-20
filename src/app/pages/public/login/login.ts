@@ -19,18 +19,25 @@ export class Login {
   ) { }
 
   msgErro = signal<null | string>(null);
+  mostrarSenha = false; 
+  focadoNaSenha = false; 
+  isLoading = signal(false); 
 
-  email: string = '';
-  password: string = '';
+  Formlogin = {
+    email: '', 
+    password: ''
+  }
 
   async login() {
 
-    if (!this.email || !this.password) {
+    if (!this.Formlogin.email || !this.Formlogin.password) {
       this.msgErro.set('Campos vazios'); 
       return; 
     }
 
-    const { data, error } = await this.serv.entrar(this.email, this.password)
+    this.isLoading.set(true); 
+
+    const { data, error } = await this.serv.entrar(this.Formlogin)
 
     if (error) {
       if (error.status == 400) {
@@ -39,8 +46,25 @@ export class Login {
       return;
     }
 
+    this.isLoading.set(false); 
     this.route.navigate(['/dashboard']);
-    console.log('usuario logado ', data);
+    
+  }
+
+  ativarCampo() {
+    this.mostrarSenha = !this.mostrarSenha; 
+  }
+
+  aFocar() {
+    this.focadoNaSenha = true; 
+  }
+
+  saiuFoco() {
+    this.focadoNaSenha = false; 
+  }
+
+  mostrarIconeOlho() {
+    return this.focadoNaSenha && this.Formlogin.password.length > 0
   }
 
 

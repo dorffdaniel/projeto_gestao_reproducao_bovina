@@ -26,6 +26,21 @@
             </div>
         </div>
     </div>
+    <div class="mb-4">
+        <div class="d-flex justify-content-between mb-1">
+            <span>Progresso do protocolo</span>
+            <span>{{barraProgresso()}}%</span>
+        </div>
+
+        <div class="progress" style="height: 10px;">
+            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="barraProgresso()">
+            </div>
+        </div>
+
+        <small class="text-muted">
+            {{barraProgresso() / 25}} de 4 etapas concluídas
+        </small>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="conteudo-etapas-protocolos">
@@ -51,8 +66,8 @@
 
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Data</label>
-                                    <input type="date" class="form-control"
-                                        [(ngModel)]="evento_protocolo().data" name="data_realizacao">
+                                    <input type="date" class="form-control" [(ngModel)]="evento_protocolo().data"
+                                        name="data_realizacao">
                                 </div>
 
                                 <div class="col-md-6 mb-3">

@@ -42,4 +42,17 @@ export class GerenciarProtocoloService {
   }
 
 
+  async obterEventosProtocolo(idProtocolo: number) {
+    
+    const { data, error } = await supabase.from('eventos_protocolo').select('*').eq('protocolo_id', idProtocolo); 
+
+    if (error) {
+      throw error
+    }
+
+    return data; 
+
+  }
+
+
 }

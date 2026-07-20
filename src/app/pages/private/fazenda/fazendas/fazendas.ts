@@ -18,22 +18,32 @@ export class Fazendas implements OnInit {
   ) { }
 
   fazendas = signal<any[]>([]);
+  isLoadin = signal(false);  
 
   ngOnInit(): void {
     this.mostraFazendas()
   }
 
   async mostraFazendas() {
+
+    this.isLoadin.set(true); 
+
     const data: any = await this.serv.getFazendas();
 
     this.fazendas.set(data);
+    this.isLoadin.set(false); 
     console.log(data)
 
   }
 
   verDetalhe(id: number) {
     this.route.navigate(['/fazenda', id]);
-
   }
+
+  mostrarLoding() {
+    return this.isLoadin() && this.fazendas.length == 0
+  }
+
+
 
 }

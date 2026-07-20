@@ -19,12 +19,22 @@
     }
 
 
-    .conteudo-tabela{
-        
+    .conteudo-tabela {}
+
+    .loading-overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(37, 36, 36, 0.274);
+        z-index: 9999;
     }
 
-
-
-
+    .spinner-loading {
+        width: 6rem;
+        height: 6rem;
+        color: #a3a7a2 !important;
+    }
 
 }

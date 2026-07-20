@@ -21,6 +21,7 @@ export class GerenciarProtocolos implements OnInit {
   idProtocolo!: number;
   dadosProtocolo = signal<any>(null);
   esconderBtn = signal(false);
+  barraProgresso = signal(0); 
   abrirForm = signal({
     tipo: '',
     aberto: false
@@ -50,6 +51,7 @@ export class GerenciarProtocolos implements OnInit {
   ngOnInit(): void {
     this.getIdProtocolo();
     this.mostrarDadosProtocolo();
+    this.mostrarEventoD0(); 
   }
 
   getIdProtocolo() {
@@ -129,6 +131,39 @@ export class GerenciarProtocolos implements OnInit {
     }
 
   }
+
+
+  async mostrarEventoD0() {
+    
+    const eventos = await this.serv.obterEventosProtocolo(this.idProtocolo); 
+    const d0 = eventos.find(e => e.tipo_evento == 'D0'); 
+    const d7 = eventos.find(e => e.tipo_evento == 'D7'); 
+    const ia = eventos.find(e => e.tipo_evento == 'IA'); 
+    const dg = eventos.find(e => e.tipo_evento == 'DG'); 
+
+    let progresso = 0; 
+
+    if (d0) {
+      progresso += 25; 
+    }
+
+    if (d7) {
+      progresso += 25
+    }
+
+    if (ia) {
+      progresso += 25
+    }
+
+    if (dg) {
+      progresso += 25
+    }
+
+    this.barraProgresso.set(progresso); 
+  }
+
+
+
 
 
   limparCampos(tipo: 'D0' | 'D7') {

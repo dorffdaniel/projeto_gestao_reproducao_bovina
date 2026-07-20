@@ -22,7 +22,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 20px;
+            gap: 5px;
 
             h1,
             h2,
@@ -38,6 +38,7 @@
             h2 {
                 font-size: 35px;
                 color: #f1f1f1;
+                margin-top: 15px;
 
                 span {
                     color: #DAE281;
@@ -59,17 +60,35 @@
             border-radius: 10px;
 
             .conteudo-inputs {
-                margin: 0 !important;
 
                 input {
                     height: 45px;
                     border: 1px solid #DDE2EF;
                 }
 
+                .conteudo-olho {
+                    position: relative;
+                }
+
+                .conteudo-olho input {
+                    padding-right: 45px;
+                }
+
+                .conteudo-olho i {
+                    position: absolute;
+                    top: 50%;
+                    right: 15px;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                }
+
+
                 .desc-senha {
                     font-size: 13px;
                     margin-top: 5px;
                 }
+
+
             }
 
             .esqueceu-senha {
@@ -85,6 +104,7 @@
                 height: 45px;
                 border-radius: 25px;
                 font-size: 20px;
+                width: 100%;
             }
 
             .conteudo-registrar {
@@ -107,6 +127,23 @@
             }
 
         }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(37, 36, 36, 0.274);
+            z-index: 9999;
+        }
+
+        .spinner-loading {
+            width: 6rem;
+            height: 6rem;
+            color: #a3a7a2 !important;
+        }
+
     }
 }
 

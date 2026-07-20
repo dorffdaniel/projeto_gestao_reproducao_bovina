@@ -48,6 +48,7 @@ export class FazendaDetalhe implements OnInit {
   esconderBtn = signal(false);
   existeLotes = signal(false);
   LotesArr = signal<any>([]);
+  isLoading = signal(false); // ainda nao apliquei nesta pagina.
 
 
   ngOnInit(): void {
