@@ -5,53 +5,63 @@ import { supabase } from '../core/supabase.client';
   providedIn: 'root',
 })
 export class GerenciarProtocoloService {
-  
+
   async obterDadosProtocolo(idProtocolo: number) {
-    
-    const { data, error } = await supabase.from('protocolos').select('*').eq('id', idProtocolo).single(); 
+
+    const { data, error } = await supabase.from('protocolos').select(`*, lotes( id, nome ), fazendas(id, nome)`).eq('id', idProtocolo).single();
 
     if (error) {
       throw error
     }
 
-    return data; 
-
+    return data;
   }
 
   async registrarEventoD0(payload: any) {
-    
-    const { data, error } = await supabase.from('eventos_protocolo').insert(payload) .select().single(); 
+
+    const { data, error } = await supabase.from('eventos_protocolo').insert(payload).select().single();
 
     if (error) {
       throw error
     }
 
-    return data; 
+    return data;
 
   }
 
   async registrarDadosD0(payload: any) {
-    
-    const { data, error } = await supabase.from('evento_d0').insert(payload); 
+
+    const { data, error } = await supabase.from('evento_d0').insert(payload);
 
     if (error) {
       throw error
     }
 
-    return data; 
+    return data;
   }
 
 
   async obterEventosProtocolo(idProtocolo: number) {
-    
-    const { data, error } = await supabase.from('eventos_protocolo').select('*').eq('protocolo_id', idProtocolo); 
+
+    const { data, error } = await supabase.from('eventos_protocolo').select('*').eq('protocolo_id', idProtocolo);
 
     if (error) {
       throw error
     }
 
-    return data; 
+    return data;
+  }
 
+  async obterEventoD0Registrado(idProtocolo: number) {
+
+    const { data, error } = await supabase.from('eventos_protocolo').select(`*, evento_d0(*)`).eq('protocolo_id', idProtocolo).eq('tipo_evento', 'D0')
+      .single();
+
+    if (error) {
+      throw error; 
+    }
+
+    return data; 
   }
 
 

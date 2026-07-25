@@ -1,6 +1,7 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GerenciarProtocoloService } from '../../../../services/gerenciar-protocolo-service';
+import { PerfilService } from '../../../../services/perfil-service';
 import { FormsModule } from '@angular/forms';
 
 
@@ -15,7 +16,8 @@ export class GerenciarProtocolos implements OnInit {
   constructor(
     private rota: ActivatedRoute,
     private route: Router,
-    private serv: GerenciarProtocoloService
+    private serv: GerenciarProtocoloService, 
+    private perfiServ: PerfilService
   ) { }
 
   idProtocolo!: number;
@@ -26,10 +28,15 @@ export class GerenciarProtocolos implements OnInit {
     tipo: '',
     aberto: false
   })
+  existeEventoRegistrado = signal({
+    tipo: '', 
+    existe: false
+  })
 
   evento_protocolo = signal(this.colunasProtocolo());
   evento_d0 = signal(this.colunasEventoD0())
   isLoading = signal(false);
+  nomeResponsavel = signal<string | null>(null); 
 
   private colunasProtocolo() {
     return {
@@ -50,9 +57,11 @@ export class GerenciarProtocolos implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mostrarDadosperfilResponsavel(); 
     this.getIdProtocolo();
     this.mostrarDadosProtocolo();
-    this.mostrarEventoD0();
+    this.mostrarEventosRegistrados();
+    this.mostrarEventoD0(); 
   }
 
   voltarPaginaAnterior() {
@@ -60,6 +69,18 @@ export class GerenciarProtocolos implements OnInit {
 
     if (pag) {
       this.route.navigateByUrl(pag);
+    }
+  }
+
+  async mostrarDadosperfilResponsavel() {
+    
+    try {
+      const data = await this.perfiServ.getPerfil();      
+      const primNome = data.nome.split(' ')[0]; 
+      this.nomeResponsavel.set(primNome); 
+
+    } catch (error) {
+      console.log(error)
     }
 
   }
@@ -82,7 +103,7 @@ export class GerenciarProtocolos implements OnInit {
       const data = await this.serv.obterDadosProtocolo(this.idProtocolo);
 
       this.dadosProtocolo.set(data);
-      console.log("Dados prot: ", data)
+      console.log("Dados protocolo aqui: ", data)
 
     } catch (error) {
       console.log(error); 
@@ -145,8 +166,7 @@ export class GerenciarProtocolos implements OnInit {
 
   }
 
-
-  async mostrarEventoD0() {
+  async mostrarEventosRegistrados() {
 
     const eventos = await this.serv.obterEventosProtocolo(this.idProtocolo);
     const d0 = eventos.find(e => e.tipo_evento == 'D0');
@@ -156,27 +176,34 @@ export class GerenciarProtocolos implements OnInit {
 
     let progresso = 0;
 
-    if (d0) {
-      progresso += 25;
-    }
-
-    if (d7) {
-      progresso += 25
-    }
-
-    if (ia) {
-      progresso += 25
-    }
-
-    if (dg) {
-      progresso += 25
-    }
+    if (d0) progresso += 25;
+    
+    if (d7) progresso += 25
+  
+    if (ia) progresso += 25
+  
+    if (dg) progresso += 25
 
     this.barraProgresso.set(progresso);
   }
 
+  async mostrarEventoD0() {
+  
+    try {
+      const data = await this.serv.obterEventoD0Registrado(this.idProtocolo)
 
+      console.log("d0 registrado ", data); 
 
+      this.existeEventoRegistrado.set({
+        tipo: 'D0', 
+        existe: true
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  
+  }
 
 
   limparCampos(tipo: 'D0' | 'D7') {

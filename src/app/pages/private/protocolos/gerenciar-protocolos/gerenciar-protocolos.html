@@ -15,47 +15,117 @@
     <div class="row">
         <div class="col-12">
             <div class="conteudo-dados-protocolo">
-                <div class="card-dados">
-                    <p>Data inicio <span>{{dadosProtocolo()?.data_inicio}}</span></p>
-                    <p>Status <span>{{dadosProtocolo()?.status}}</span></p>
+                <div class="cont-titulo-porcentagem">
+                    <div>
+                        <h2>Gerenciamento de protocolo</h2>
+                        <div class="cont-titulo-protocolo">
+                            <h1>Protocolo IATF - {{dadosProtocolo()?.lotes?.nome }}</h1>
+                            <div class="cont-status-protocolo">
+                                <i class="fas fa-regular fa-heart-pulse"></i>
+                                <span>Em andamento</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="porcentagem-conclusao">
+                        <p>CONCLUSÃO</p>
+                        <span>{{barraProgresso()}}%</span>
+                        <p>{{barraProgresso() / 25}} de 4 etapas concluídas</p>
+                    </div>
                 </div>
 
-                <div class="cont-botoes">
-                    <button class="btn btn-warning" (click)="editarProt()">Editar</button>
+                <p>Acompanhamento estruturado das etapas do protocolo reprodutivo, com evolução visual e resumo rápido
+                    dos registros.</p>
+
+                <div class="cont-cards-titulo">
+                    <div class="card-titulo">
+                        <p>Protocolo</p>
+                        <span>Sincronização IATF</span>
+                    </div>
+                    <div class="card-titulo">
+                        <p>Responsável</p>
+                        <span>Dr(a). {{nomeResponsavel()}}</span>
+                    </div>
+                    <div class="card-titulo">
+                        <p>Total de animais</p>
+                        <span>{{dadosProtocolo()?.total_animais}}</span>
+                    </div>
+                    <div class="card-titulo">
+                        <p>Fazenda</p>
+                        <span>{{dadosProtocolo()?.fazendas?.nome}}</span>
+                    </div>
+
                 </div>
+
+                <div class="d-flex justify-content-between mb-1">
+                    <span>Progresso do protocolo</span>
+                    <span>{{barraProgresso()}}%</span>
+                </div>
+
+                <div class="progress" style="height: 10px;">
+                    <div class="progress-bar bg-success" role="progressbar" [style.width.%]="barraProgresso()">
+                    </div>
+                </div>
+
+                <!-- <small class="text-muted">
+                    {{barraProgresso() / 25}} de 4 etapas concluídas
+                </small> -->
             </div>
         </div>
     </div>
-    <div class="mb-4">
-        <div class="d-flex justify-content-between mb-1">
-            <span>Progresso do protocolo</span>
-            <span>{{barraProgresso()}}%</span>
-        </div>
 
-        <div class="progress" style="height: 10px;">
-            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="barraProgresso()">
-            </div>
-        </div>
-
-        <small class="text-muted">
-            {{barraProgresso() / 25}} de 4 etapas concluídas
-        </small>
-    </div>
     <div class="row">
         <div class="col-12">
             <div class="conteudo-etapas-protocolos">
-                <h2>Acompanhe as etapas do protocolo e registre cada procedimento conforme o andamento do manejo.</h2>
+                <h3>Fluxo operacional</h3>
+                <h2>Etapas do Protocolo</h2>
+                <p class="descricao">Apenas a próxima etapa liberada permite novo cadastro. As seguintes permanecem
+                    bloqueadas até a
+                    conclusão da etapa anterior.</p>
                 <div class="card-form-etapa-protocolo">
-                    <div class="card-etapa-protocolo">
+
+                    <!--   @if(existeEventoRegistrado().tipo == 'D0' && existeEventoRegistrado().existe){
+                    <div class="card-evento-d0-registrado">
                         <div class="card-titulo">
                             <span class="bolinha"></span>
-                            <p>D0</p>
+                            <p>D0 . concluido </p>
                         </div>
 
-                        <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('D0')"
-                            [hidden]="esconderBtn()">Cadastrar</button>
                     </div>
 
+                    }@else { -->
+                    <div class="card-etapa-protocolo">
+                        <div class="card-titulo">
+                            <div class="card-icone">
+                                <span class="icone"><i class="fa-solid fa-syringe"></i></span>
+                                <div>
+                                    <p>D0</p>
+                                    <span>Próxima etapa disponível para registro no protocolo.</span>
+                                </div>
+                            </div>
+
+                            <div class="status-estapa-protocolo">
+                                <span>Disponivel</span>
+                            </div>
+                        </div>
+                        <div class="descricao-etapa-protocolo">
+                            <div class="card-icone">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <p>Cadastro pendente</p>
+                            </div>
+                            <p>Esta é a próxima etapa liberada. Ao registrar este evento, as próximas etapas serão
+                                automaticamente habilitadas conforme a sequência do protocolo.</p>
+                        </div>
+
+                        <div class="cont-btn-abrir-form-cadastro-evento">
+                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('D0')"
+                                [hidden]="esconderBtn()"> <i class="fas fa-regular fa-circle-plus"></i>
+                                Cadastrar</button>
+                        </div>
+                    </div>
+                    <!-- } -->
+
+                    <!-- formulario cadastrar D0 -->
                     @if(abrirForm().tipo == 'D0' && abrirForm().aberto){
                     <div class="cont-formulario">
                         <form>
@@ -139,7 +209,7 @@
                         </form>
                     </div>
                     }
-
+                    <!-- fim formulario cadastrar D0 -->
                 </div>
 
 
