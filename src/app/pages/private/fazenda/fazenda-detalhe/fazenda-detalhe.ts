@@ -39,7 +39,6 @@ export class FazendaDetalhe implements OnInit {
     tipo: ''
   });
 
-
   ativado: boolean = true;
   isOpen: boolean = true;
   idFazenda!: number;
@@ -48,7 +47,7 @@ export class FazendaDetalhe implements OnInit {
   esconderBtn = signal(false);
   existeLotes = signal(false);
   LotesArr = signal<any>([]);
-  isLoading = signal(false); // ainda nao apliquei nesta pagina.
+  isLoading = signal(false);
 
 
   ngOnInit(): void {
@@ -69,14 +68,24 @@ export class FazendaDetalhe implements OnInit {
 
   async mostrarFazenda() {
 
-    const data = await this.serv.getDetalheDazenda(this.idFazenda);
+    this.isLoading.set(true);
 
-    if (!data) {
-      this.naveg.navigate(['/fazendas']);
-      return;
+    try {
+      const data = await this.serv.getDetalheDazenda(this.idFazenda);
+
+      if (!data) {
+        this.naveg.navigate(['/fazendas']);
+        return;
+      }
+
+      this.fazenda.set(data);
+
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.isLoading.set(false);
     }
 
-    this.fazenda.set(data);
   }
 
   editarDadosFazenda() {
@@ -114,7 +123,7 @@ export class FazendaDetalhe implements OnInit {
       }, 1500);
     } catch (error) {
 
-      console.log(error); 
+      console.log(error);
 
     }
 
@@ -192,10 +201,10 @@ export class FazendaDetalhe implements OnInit {
   }
 
   gerenciarLote(loteId: number) {
+    const url = this.naveg.url; 
+    sessionStorage.setItem("gerenciar_detalhe_fazenda", url); 
     this.naveg.navigate(['/lote', loteId]);
-
+    
   }
-
-
 
 }

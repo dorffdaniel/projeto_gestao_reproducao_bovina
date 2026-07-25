@@ -21,7 +21,7 @@ export class GerenciarProtocolos implements OnInit {
   idProtocolo!: number;
   dadosProtocolo = signal<any>(null);
   esconderBtn = signal(false);
-  barraProgresso = signal(0); 
+  barraProgresso = signal(0);
   abrirForm = signal({
     tipo: '',
     aberto: false
@@ -29,6 +29,7 @@ export class GerenciarProtocolos implements OnInit {
 
   evento_protocolo = signal(this.colunasProtocolo());
   evento_d0 = signal(this.colunasEventoD0())
+  isLoading = signal(false);
 
   private colunasProtocolo() {
     return {
@@ -51,7 +52,16 @@ export class GerenciarProtocolos implements OnInit {
   ngOnInit(): void {
     this.getIdProtocolo();
     this.mostrarDadosProtocolo();
-    this.mostrarEventoD0(); 
+    this.mostrarEventoD0();
+  }
+
+  voltarPaginaAnterior() {
+    const pag = sessionStorage.getItem("gerenciar_detalhe_lote");
+
+    if (pag) {
+      this.route.navigateByUrl(pag);
+    }
+
   }
 
   getIdProtocolo() {
@@ -66,10 +76,19 @@ export class GerenciarProtocolos implements OnInit {
 
   async mostrarDadosProtocolo() {
 
-    const data = await this.serv.obterDadosProtocolo(this.idProtocolo);
+    this.isLoading.set(true);
 
-    this.dadosProtocolo.set(data);
-    console.log("Dados prot: ", data)
+    try {
+      const data = await this.serv.obterDadosProtocolo(this.idProtocolo);
+
+      this.dadosProtocolo.set(data);
+      console.log("Dados prot: ", data)
+
+    } catch (error) {
+      console.log(error); 
+    } finally {
+      this.isLoading.set(false);
+    }
 
   }
 
@@ -86,12 +105,6 @@ export class GerenciarProtocolos implements OnInit {
 
     this.esconderBtn.set(true);
   }
-
-
-  voltar() {
-    alert("em andamento")
-  }
-
 
   fecharFormCadastrarEventoProtocolo(tipo: 'D0' | 'D7' | 'D9') {
     this.abrirForm.set({
@@ -134,17 +147,17 @@ export class GerenciarProtocolos implements OnInit {
 
 
   async mostrarEventoD0() {
-    
-    const eventos = await this.serv.obterEventosProtocolo(this.idProtocolo); 
-    const d0 = eventos.find(e => e.tipo_evento == 'D0'); 
-    const d7 = eventos.find(e => e.tipo_evento == 'D7'); 
-    const ia = eventos.find(e => e.tipo_evento == 'IA'); 
-    const dg = eventos.find(e => e.tipo_evento == 'DG'); 
 
-    let progresso = 0; 
+    const eventos = await this.serv.obterEventosProtocolo(this.idProtocolo);
+    const d0 = eventos.find(e => e.tipo_evento == 'D0');
+    const d7 = eventos.find(e => e.tipo_evento == 'D7');
+    const ia = eventos.find(e => e.tipo_evento == 'IA');
+    const dg = eventos.find(e => e.tipo_evento == 'DG');
+
+    let progresso = 0;
 
     if (d0) {
-      progresso += 25; 
+      progresso += 25;
     }
 
     if (d7) {
@@ -159,7 +172,7 @@ export class GerenciarProtocolos implements OnInit {
       progresso += 25
     }
 
-    this.barraProgresso.set(progresso); 
+    this.barraProgresso.set(progresso);
   }
 
 
@@ -167,14 +180,14 @@ export class GerenciarProtocolos implements OnInit {
 
 
   limparCampos(tipo: 'D0' | 'D7') {
-    
+
     switch (tipo) {
       case 'D0':
-        this.evento_protocolo.set(this.colunasProtocolo()); 
-        this.evento_d0.set(this.colunasEventoD0()); 
-        
+        this.evento_protocolo.set(this.colunasProtocolo());
+        this.evento_d0.set(this.colunasEventoD0());
+
         break;
-    
+
       default:
         break;
     }

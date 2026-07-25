@@ -25,6 +25,7 @@ export class GerenciarLotes implements OnInit {
   mostrarFormProtocolo = signal(false);
   protocolo = signal(this.criarProtocoloVazio());
   protocolosRegistrados = signal<any>([]); 
+  isLoading = signal(false); 
 
   ngOnInit(): void {
     this.getIdlote();
@@ -46,6 +47,16 @@ export class GerenciarLotes implements OnInit {
     tipo: ''
   });
 
+  voltarPaginaAnterior() {
+    
+    const pag = sessionStorage.getItem("gerenciar_detalhe_fazenda"); 
+
+    if (pag) {
+      this.router.navigateByUrl(pag); 
+    }
+
+  }
+
 
   getIdlote() {
     const id = Number(this.route.snapshot.paramMap.get('id'))
@@ -59,6 +70,8 @@ export class GerenciarLotes implements OnInit {
 
   async mostrarDadosLote() {
 
+    this.isLoading.set(true); 
+
     try {
       const data = await this.serv.getDadaosLote(this.idLote);
 
@@ -69,14 +82,10 @@ export class GerenciarLotes implements OnInit {
 
     } catch (error) {
       console.log(error);
+    } finally {
+      this.isLoading.set(false); 
     }
 
-  }
-
-
-  voltar() {
-    // de momento fica assim depois volta mesmo para pagina anterior.
-    this.naveg.navigate(['/fazendas'])
   }
 
   editarLote() {
@@ -166,6 +175,9 @@ export class GerenciarLotes implements OnInit {
   }
 
   gerenciarProtocolo(protocolo_id: number) {
+    const url = this.router.url; 
+    sessionStorage.setItem("gerenciar_detalhe_lote", url); 
+
     this.router.navigate(['/protocolo', protocolo_id]); 
   }
 

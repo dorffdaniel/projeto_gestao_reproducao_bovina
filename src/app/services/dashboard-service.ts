@@ -29,5 +29,17 @@ export class DashboardService {
 
   }
 
+  async getProtocolosAtivo() {
+    
+    const {data, error} = await supabase.from('protocolos').select('*'); 
+
+    if(error){
+      throw error; 
+    }
+
+    return data; 
+
+  }
+
 
 }
