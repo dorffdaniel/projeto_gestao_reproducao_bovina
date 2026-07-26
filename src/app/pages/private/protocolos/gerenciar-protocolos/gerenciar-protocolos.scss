@@ -143,26 +143,105 @@
 
         .card-form-etapa-protocolo {
 
-            /* .card-evento-d0-registrado {
+            .card-evento-registrado {
+                display: flex;
+                flex-direction: column;
+                padding: 18px;
+                gap: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: 10px;
+
                 .card-titulo {
                     display: flex;
+                    justify-content: space-between;
                     align-items: center;
-                    gap: 8px;
+                    width: 100%;
 
-                    .bolinha {
-                        width: 15px;
-                        height: 15px;
-                        border-radius: 50%;
-                        display: inline-block;
-                        background: #198754;
+                    .card-icone {
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+
+                        .icone {
+                            padding: 15px;
+                            border-radius: 22px;
+                            text-align: center;
+                        }
+
+                        p {
+                            color: #243042;
+                            font-weight: 700;
+                            font-size: 18px;
+                        }
+
                     }
 
-                    p {
-                        margin: 0;
+                    .status-estapa-protocolo {
+                        padding: 10px 15px;
+                        border-radius: 20px;
+                        font-weight: 700;
                     }
+
                 }
+
+                .cont-card-evento-registrado {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 20px;
+
+                    .card-input {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 20px;
+                        border: 1px solid #6f8096;
+                        border-radius: 20px;
+                        background: #fafcff;
+
+                        label{
+                            font-weight: 500;
+                            font-size: 17px;
+                            color: #70859e;
+                        }
+
+                        input{
+                            height: 55px;
+                            border: none;
+                            outline: none;
+                            background: #fafcff;
+                            font-size: 19px;
+                            font-weight: 700;
+                        }
+
+                    }
+
+                }
+
+                .cont-btn-editar{
+                    display: flex;
+                    justify-content: end;
+
+                    button{
+                        padding: 12px 25px;
+                        font-size: 18px;
+                        background: none;
+                        border: 1px solid #70859e;
+                        color: #243042;
+                        border-radius: 20px;
+                    }
+
+                    .cont-botoes-acoes{
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+
+
+                }
+
+
             }
-          */
+
 
             .card-etapa-protocolo {
                 display: flex;
@@ -187,9 +266,7 @@
                         gap: 15px;
 
                         .icone {
-                            color: #d98a4e;
                             padding: 15px;
-                            background: #fff4de;
                             border-radius: 22px;
                             text-align: center;
                         }
@@ -200,28 +277,10 @@
                             font-size: 18px;
                         }
 
-                        span {
-                            color: #75899e;
-                        }
-
                     }
-
-                    /*  .bolinha {
-                        width: 15px;
-                        height: 15px;
-                        border-radius: 50%;
-                        display: inline-block;
-                        background: #198754;
-                    }
-
-                    p {
-                        margin: 0;
-                    } */
 
                     .status-estapa-protocolo {
-                        color: #d98a4e;
                         padding: 10px 15px;
-                        background: #fff4de;
                         border-radius: 20px;
                         font-weight: 700;
                     }
@@ -233,7 +292,7 @@
                     flex-direction: column;
                     padding: 25px;
                     gap: 10px;
-                    border: 1px solid #ebcf83;
+                    border: 1px solid;
                     border-radius: 20px;
                     width: 100%;
 
@@ -241,10 +300,6 @@
                         display: flex;
                         align-items: center;
                         gap: 8px;
-
-                        i {
-                            color: #d98a4e;
-                        }
 
                         p {
                             color: #6f8096;
@@ -271,6 +326,58 @@
                 }
 
             }
+
+            .card-disponivel {
+
+                .icone,
+                .status-estapa-protocolo {
+                    color: #d98a4e;
+                    background: #fff4de;
+                }
+
+                .descricao-etapa-protocolo {
+                    border-color: #ebcf83;
+
+                    i {
+                        color: #d98a4e;
+                    }
+                }
+            }
+
+            .card-concluido {
+
+                .icone,
+                .status-estapa-protocolo {
+                    color: #198754;
+                    background: #d1f5df;
+                }
+
+                .descricao-etapa-protocolo {
+                    border-color: #9fe2b5;
+
+                    i {
+                        color: #198754;
+                    }
+                }
+            }
+
+            .card-bloqueado {
+
+                .icone,
+                .status-estapa-protocolo {
+                    color: #6c757d;
+                    background: #f1f3f5;
+                }
+
+                .descricao-etapa-protocolo {
+                    border-color: #dee2e6;
+
+                    i {
+                        color: #6c757d;
+                    }
+                }
+            }
+
 
             .cont-formulario {
                 margin-top: 12px;

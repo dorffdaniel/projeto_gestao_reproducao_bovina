@@ -83,18 +83,76 @@
                     bloqueadas até a
                     conclusão da etapa anterior.</p>
                 <div class="card-form-etapa-protocolo">
-
-                    <!--   @if(existeEventoRegistrado().tipo == 'D0' && existeEventoRegistrado().existe){
-                    <div class="card-evento-d0-registrado">
+                    @if(estadoD0() == 'Concluido'){
+                    <div class="card-evento-registrado card-concluido">
                         <div class="card-titulo">
-                            <span class="bolinha"></span>
-                            <p>D0 . concluido </p>
+                            <div class="card-icone">
+                                <span class="icone"><i class="fa-solid fa-syringe"></i></span>
+                                <div>
+                                    <p>D0</p>
+                                    <span>Registro concluído com resumo dos dados aplicados.</span>
+                                </div>
+                            </div>
+
+                            <div class="status-estapa-protocolo">
+                                <span>{{estadoD0()}}</span>
+                            </div>
+                        </div>
+
+                        <div class="cont-card-evento-registrado">
+
+                            <div class="card-input">
+                                <label for="">Data</label>
+                                <input type="date" [(ngModel)]="dadosEventoD0Registrado().data" [disabled]="(desabilitarBtnD0())">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Hora</label>
+                                <input type="time" [(ngModel)]="dadosEventoD0Registrado().hora_inicio" [disabled]="(desabilitarBtnD0())">
+                            </div>
+
+
+                            <div class="card-input">
+                                <label for="">Peso</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].peso" [disabled]="(desabilitarBtnD0())">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Ecc</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].ecc" [disabled]="(desabilitarBtnD0())">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Ava</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].ava" [disabled]="(desabilitarBtnD0())">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Indutor</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].indutor" [disabled]="(desabilitarBtnD0())">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Medicamento</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].medicamento" [disabled]="(desabilitarBtnD0())">
+                            </div>
+
+                        </div>
+                        <div class="cont-btn-editar">
+                            
+                            <button [hidden]="!esconderBtnEditar()" class="btn btn-primary" (click)="editarEvento('D0')"> <i class="fa-regular fa-pen-to-square"></i> Editar</button>
+
+                            <div class="cont-botoes-acoes" [hidden]="esconderBtnEditar()">
+                                <button class="btn btn-primary" (click)="cancelarEdit('D0')">Cancelar</button>
+                                <button class="btn btn-primary">Salvar</button>
+                            </div>
+
                         </div>
 
                     </div>
 
-                    }@else { -->
-                    <div class="card-etapa-protocolo">
+                    }@else {
+                    <div [class]="getClasseCard(estadoD0())" class="card-etapa-protocolo">
                         <div class="card-titulo">
                             <div class="card-icone">
                                 <span class="icone"><i class="fa-solid fa-syringe"></i></span>
@@ -105,7 +163,7 @@
                             </div>
 
                             <div class="status-estapa-protocolo">
-                                <span>Disponivel</span>
+                                <span>{{estadoD0()}}</span>
                             </div>
                         </div>
                         <div class="descricao-etapa-protocolo">
@@ -123,7 +181,7 @@
                                 Cadastrar</button>
                         </div>
                     </div>
-                    <!-- } -->
+                    }
 
                     <!-- formulario cadastrar D0 -->
                     @if(abrirForm().tipo == 'D0' && abrirForm().aberto){
@@ -212,18 +270,150 @@
                     <!-- fim formulario cadastrar D0 -->
                 </div>
 
-
                 <div class="card-form-etapa-protocolo mt-4">
-                    <div class="card-etapa-protocolo">
+
+                    <div [class]="getClasseCard(estadoD7())" class="card-etapa-protocolo">
                         <div class="card-titulo">
-                            <!-- <span class="bolinha"></span> -->
-                            <i class="fas fa-regular fa-lock"></i>
-                            <p>D7/D9</p>
+                            <div class="card-icone">
+                                <span class="icone"><i class="fa-solid fa-clipboard"></i></span>
+                                <div>
+                                    <p>D7/D9</p>
+                                    @if(estadoD7() == 'Bloqueado'){
+                                    <span>Etapa futura com liberação condicionada à conclusão anterior.</span>
+                                    }@else {
+                                    <span>Próxima etapa disponível para registro no protocolo.</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="status-estapa-protocolo">
+                                <span>{{estadoD7()}}</span>
+                            </div>
+                        </div>
+                        <div class="descricao-etapa-protocolo">
+                            <div class="card-icone">
+                                @if(estadoD7() == 'Bloqueado'){
+                                <i class="fas fa-regular fa-lock"></i>
+                                <p>Aguardando etapa anterior</p>
+                                }@else {
+                                <i class="fa-solid fa-circle-info"></i>
+                                <p>Cadastro pendente</p>
+                                }
+                            </div>
+                            @if(estadoD7() == 'Bloqueado'){
+                            <p>Aguardando a conclusão da etapa anterior para liberar este registro.</p>
+                            }@else {
+                            <p>Esta é a próxima etapa liberada. Ao registrar este evento, as próximas etapas serão
+                                automaticamente habilitadas conforme a sequência do protocolo.</p>
+                            }
+
                         </div>
 
-                        <span>Aguardando conclusão do D0</span>
-                        <!-- <button class="btn btn-primary"
-                            (click)="abrirFormCadastrarEventoProtocolo('D7')">Cadastrar</button> -->
+                        @if(estadoD7() != 'Bloqueado'){
+                        <div class="cont-btn-abrir-form-cadastro-evento">
+                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('D0')"
+                                [hidden]="esconderBtn()"> <i class="fas fa-regular fa-circle-plus"></i>
+                                Cadastrar</button>
+                        </div>
+                        }
+
+                    </div>
+
+                    @if(abrirForm().tipo == 'D7' && abrirForm().aberto){
+                    <div class="cont-formulario">
+                        <!-- <form>
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="data" class="form-label">Data</label>
+                                    <input type="date" class="form-control" id="data"
+                                        [(ngModel)]="evento_protocolo().data_realizacao" name="data_inicio">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="hora" class="form-label">Hora de início</label>
+                                    <input type="time" class="form-control" id="hora"
+                                        [(ngModel)]="evento_protocolo().hora_inicio" name="hora_inicio">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-12 mb-3">
+                                    <label for="observacoes" class="form-label">Observações</label>
+                                    <textarea id="observacoes" class="form-control" rows="4"
+                                        [(ngModel)]="evento_protocolo().observacoes" name="observacoes">
+                                </textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-3 mt-4">
+                                <button type="button" class="btn btn-danger"
+                                    (click)="fecharFormCadastrarEventoProtocolo('D7')">
+                                    Cancelar
+                                </button>
+
+                                <button type="button" class="btn btn-success" (click)="cadastrarNovoEventoProtocolo()">
+                                    Salvar
+                                </button>
+                            </div>
+
+                        </form> -->
+                    </div>
+                    }
+
+                </div>
+
+                <!-- conteudo registro IA -->
+                <div class="card-form-etapa-protocolo mt-4">
+
+                    <div [class]="getClasseCard(estadoIA())" class="card-etapa-protocolo">
+                        <div class="card-titulo">
+                            <div class="card-icone">
+                                <span class="icone"><i class="fa-solid fa-syringe"></i></span>
+                                <div>
+                                    <p>IA</p>
+                                    @if(estadoIA() == 'Bloqueado'){
+                                    <span>Etapa futura com liberação condicionada à conclusão anterior.</span>
+                                    }@else {
+                                    <span>Próxima etapa disponível para registro no protocolo.</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="status-estapa-protocolo">
+                                <span>{{estadoIA()}}</span>
+                            </div>
+                        </div>
+                        <div class="descricao-etapa-protocolo">
+                            <div class="card-icone">
+                                @if(estadoIA() == 'Bloqueado'){
+                                <i class="fas fa-regular fa-lock"></i>
+                                <p>Aguardando etapa anterior</p>
+                                }@else {
+                                <i class="fa-solid fa-circle-info"></i>
+                                <p>Cadastro pendente</p>
+                                }
+                            </div>
+                            @if(estadoIA() == 'Bloqueado'){
+                            <p>Aguardando a conclusão da etapa anterior para liberar este registro.</p>
+                            }@else {
+                            <p>Esta é a próxima etapa liberada. Ao registrar este evento, as próximas etapas serão
+                                automaticamente habilitadas conforme a sequência do protocolo.</p>
+                            }
+
+                        </div>
+
+                        @if(estadoIA() != 'Bloqueado'){
+                        <div class="cont-btn-abrir-form-cadastro-evento">
+                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('D0')"
+                                [hidden]="esconderBtn()"> <i class="fas fa-regular fa-circle-plus"></i>
+                                Cadastrar</button>
+                        </div>
+                        }
+
                     </div>
 
                     @if(abrirForm().tipo == 'D7' && abrirForm().aberto){
