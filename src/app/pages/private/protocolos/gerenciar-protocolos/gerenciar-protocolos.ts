@@ -33,8 +33,14 @@ export class GerenciarProtocolos implements OnInit {
     existe: false
   })
 
+  mensagem = signal({
+    texto: '',
+    tipo: ''
+  });
+
   evento_protocolo = signal(this.colunasProtocolo());
   evento_d0 = signal(this.colunasEventoD0())
+  evento_d7 = signal(this.colunasEventoD7());
   isLoading = signal(false);
   nomeResponsavel = signal<string | null>(null);
   estadoD0 = signal('Disponivel');
@@ -42,8 +48,10 @@ export class GerenciarProtocolos implements OnInit {
   estadoIA = signal('Bloqueado');
   estadoDG = signal('Bloqueado');
   dadosEventoD0Registrado = signal<any | null>(null);
+  dadosEventoD7Registrado = signal<any | null>(null);
   desabilitarBtnD0 = signal(true);
   esconderBtnEditar = signal(true);
+  esconderMsgEdit = signal(true);
 
   private colunasProtocolo() {
     return {
@@ -63,12 +71,27 @@ export class GerenciarProtocolos implements OnInit {
     }
   }
 
+  private colunasEventoD7() {
+    return {
+      peso: '',
+      ecc: '',
+      ava: '',
+      resultado_ciclo: '',
+      implante_retirado: null as boolean | null,
+      medicacao: '',
+      implante: '',
+      resultado_implante: ''
+    }
+  }
+
+
   ngOnInit(): void {
     this.mostrarDadosperfilResponsavel();
     this.getIdProtocolo();
     this.mostrarDadosProtocolo();
     this.mostrarEventosRegistrados();
     this.mostrarEventoD0();
+    this.mostrarEventoD7();
   }
 
   voltarPaginaAnterior() {
@@ -121,7 +144,7 @@ export class GerenciarProtocolos implements OnInit {
   }
 
 
-  abrirFormCadastrarEventoProtocolo(tipo: 'D0' | 'D7' | 'D9') {
+  abrirFormCadastrarEventoProtocolo(tipo: 'D0' | 'D7' | 'D9' | 'IA' | 'DG') {
 
     this.abrirForm.set({
       tipo: tipo,
@@ -131,7 +154,7 @@ export class GerenciarProtocolos implements OnInit {
     this.esconderBtn.set(true);
   }
 
-  fecharFormCadastrarEventoProtocolo(tipo: 'D0' | 'D7' | 'D9') {
+  fecharFormCadastrarEventoProtocolo(tipo: 'D0' | 'D7' | 'D9' | 'IA' | 'DG') {
     this.abrirForm.set({
       tipo: tipo,
       aberto: false
@@ -150,7 +173,7 @@ export class GerenciarProtocolos implements OnInit {
     }
 
     try {
-      const evento = await this.serv.registrarEventoD0(payload);
+      const evento = await this.serv.registrarEvento(payload);
 
       if (!evento) {
         return;
@@ -162,7 +185,10 @@ export class GerenciarProtocolos implements OnInit {
       }
 
       await this.serv.registrarDadosD0(payloadD0);
+      this.fecharFormCadastrarEventoProtocolo('D0')
       this.limparCampos('D0')
+      this.mostrarEventosRegistrados(); 
+      this.mostrarEventoD0(); 
 
     } catch (error) {
       console.log(error)
@@ -196,10 +222,15 @@ export class GerenciarProtocolos implements OnInit {
     try {
       const data = await this.serv.obterEventoD0Registrado(this.idProtocolo)
 
-      console.log("d0 registrado ", data);
       this.estadoD0.set('Concluido');
       this.estadoD7.set('Disponivel')
-      this.dadosEventoD0Registrado.set(data);
+
+      const evento = {
+        ...data,
+        evento_d0: data.evento_d0[0]
+      }
+
+      this.dadosEventoD0Registrado.set(evento);
 
     } catch (error) {
       console.log(error)
@@ -226,7 +257,12 @@ export class GerenciarProtocolos implements OnInit {
     if (tipo == 'D0') {
       this.desabilitarBtnD0.set(false);
       this.esconderBtnEditar.set(false);
+      this.esconderMsgEdit.set(false)
     }
+
+    setTimeout(() => {
+      this.esconderMsgEdit.set(true)
+    }, 2000);
 
   }
 
@@ -239,6 +275,98 @@ export class GerenciarProtocolos implements OnInit {
 
   }
 
+  async salvarEventoD0() {
+
+    try {
+
+      await this.serv.atualizarEventoProtocolo({
+        id: this.dadosEventoD0Registrado().id,
+        data: this.dadosEventoD0Registrado().data,
+        hora_inicio: this.dadosEventoD0Registrado().hora_inicio,
+        observacoes: this.dadosEventoD0Registrado().observacoes
+      });
+
+      await this.serv.atualizarEventoD0({
+        id: this.dadosEventoD0Registrado().evento_d0.id,
+        peso: this.dadosEventoD0Registrado().evento_d0.peso,
+        ecc: this.dadosEventoD0Registrado().evento_d0.ecc,
+        ava: this.dadosEventoD0Registrado().evento_d0.ava,
+        indutor: this.dadosEventoD0Registrado().evento_d0.indutor,
+        medicamento: this.dadosEventoD0Registrado().evento_d0.medicamento,
+      });
+
+      this.mensagem.set({
+        texto: 'Salvo com sucesso.',
+        tipo: 'sucesso'
+      })
+
+      setTimeout(() => {
+        this.mensagem.set({
+          texto: '',
+          tipo: ''
+        })
+      }, 1500);
+
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  async cadastrarNovoEventoD7() {
+
+    const payload = {
+      ... this.evento_protocolo(),
+      protocolo_id: this.idProtocolo,
+      status: 'Em andamento',
+      tipo_evento: 'D7'
+    }
+
+    try {
+      const evento = await this.serv.registrarEvento(payload);
+
+      if (!evento) {
+        return;
+      }
+
+      const payloadD7 = {
+        ...this.evento_d7(),
+        evento_protocolo_id: evento.id
+      }
+
+      await this.serv.registrarDadosD7(payloadD7);
+      this.limparCampos('D7')
+      this.fecharFormCadastrarEventoProtocolo('D7')
+      this.mostrarEventosRegistrados(); 
+      this.mostrarEventoD7(); 
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+  async mostrarEventoD7() {
+
+    try {
+      const data = await this.serv.obterEventoD7Registrado(this.idProtocolo)
+
+      this.estadoD7.set('Concluido');
+      this.estadoIA.set('Disponivel')
+
+      const evento = {
+        ...data,
+        evento_retirada_implante: data.evento_retirada_implante[0]
+      }
+
+      this.dadosEventoD7Registrado.set(evento);
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
 
   limparCampos(tipo: 'D0' | 'D7') {
@@ -249,7 +377,12 @@ export class GerenciarProtocolos implements OnInit {
         this.evento_d0.set(this.colunasEventoD0());
 
         break;
+      case 'D7':
+        this.evento_protocolo.set(this.colunasProtocolo());
+        this.evento_d7.set(this.colunasEventoD7());
+        break; 
 
+      
       default:
         break;
     }

@@ -103,48 +103,71 @@
 
                             <div class="card-input">
                                 <label for="">Data</label>
-                                <input type="date" [(ngModel)]="dadosEventoD0Registrado().data" [disabled]="(desabilitarBtnD0())">
+                                <input type="date" [(ngModel)]="dadosEventoD0Registrado().data"
+                                    [disabled]="(desabilitarBtnD0())">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Hora</label>
-                                <input type="time" [(ngModel)]="dadosEventoD0Registrado().hora_inicio" [disabled]="(desabilitarBtnD0())">
+                                <input type="time" [(ngModel)]="dadosEventoD0Registrado().hora_inicio"
+                                    [disabled]="(desabilitarBtnD0())">
                             </div>
 
 
                             <div class="card-input">
                                 <label for="">Peso</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].peso" [disabled]="(desabilitarBtnD0())">
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.peso"
+                                    [disabled]="(desabilitarBtnD0())">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Ecc</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].ecc" [disabled]="(desabilitarBtnD0())">
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.ecc"
+                                    [disabled]="(desabilitarBtnD0())">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Ava</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].ava" [disabled]="(desabilitarBtnD0())">
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.ava"
+                                    [disabled]="(desabilitarBtnD0())">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Indutor</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].indutor" [disabled]="(desabilitarBtnD0())">
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.indutor"
+                                    [disabled]="(desabilitarBtnD0())">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Medicamento</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0[0].medicamento" [disabled]="(desabilitarBtnD0())">
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.medicamento"
+                                    [disabled]="(desabilitarBtnD0())">
                             </div>
 
                         </div>
+
+                        <!--  <p class="msg-editar-liberado" [hidden]="esconderMsgEdit()">Os campos acima ja podem ser
+                            alterados.</p> -->
+
+                        @if(mensagem().texto){
+
+                        @switch (mensagem().tipo) {
+                        @case ('sucesso') {
+                        <div class="sucesso">
+                            {{mensagem().texto}}
+                        </div>
+                        }
+                        }
+                        }
+
                         <div class="cont-btn-editar">
-                            
-                            <button [hidden]="!esconderBtnEditar()" class="btn btn-primary" (click)="editarEvento('D0')"> <i class="fa-regular fa-pen-to-square"></i> Editar</button>
+                            <button [hidden]="!esconderBtnEditar()" class="btn btn-primary"
+                                (click)="editarEvento('D0')"> <i class="fa-regular fa-pen-to-square"></i>
+                                Editar</button>
 
                             <div class="cont-botoes-acoes" [hidden]="esconderBtnEditar()">
                                 <button class="btn btn-primary" (click)="cancelarEdit('D0')">Cancelar</button>
-                                <button class="btn btn-primary">Salvar</button>
+                                <button class="btn btn-primary" (click)="salvarEventoD0()">Salvar</button>
                             </div>
 
                         </div>
@@ -311,7 +334,7 @@
 
                         @if(estadoD7() != 'Bloqueado'){
                         <div class="cont-btn-abrir-form-cadastro-evento">
-                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('D0')"
+                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('D7')"
                                 [hidden]="esconderBtn()"> <i class="fas fa-regular fa-circle-plus"></i>
                                 Cadastrar</button>
                         </div>
@@ -321,46 +344,124 @@
 
                     @if(abrirForm().tipo == 'D7' && abrirForm().aberto){
                     <div class="cont-formulario">
-                        <!-- <form>
+                        <form>
+
+                            <h5 class="mb-3">Informações do evento</h5>
+
                             <div class="row">
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="data" class="form-label">Data</label>
-                                    <input type="date" class="form-control" id="data"
-                                        [(ngModel)]="evento_protocolo().data_realizacao" name="data_inicio">
+                                    <label class="form-label">Data</label>
+                                    <input type="date" class="form-control" [(ngModel)]="evento_protocolo().data"
+                                        name="data">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="hora" class="form-label">Hora de início</label>
-                                    <input type="time" class="form-control" id="hora"
-                                        [(ngModel)]="evento_protocolo().hora_inicio" name="hora_inicio">
+                                    <label class="form-label">Hora</label>
+                                    <input type="time" class="form-control" [(ngModel)]="evento_protocolo().hora_inicio"
+                                        name="hora_inicio">
+                                </div>
+
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Observações</label>
+                                <textarea class="form-control" rows="3" [(ngModel)]="evento_protocolo().observacoes"
+                                    name="observacoes">
+        </textarea>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h5 class="mb-3">Dados da retirada do implante</h5>
+
+                            <div class="row">
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Peso (kg)</label>
+                                    <input type="number" class="form-control" [(ngModel)]="evento_d7().peso"
+                                        name="peso">
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">ECC</label>
+                                    <input type="number" class="form-control" [(ngModel)]="evento_d7().ecc" name="ecc">
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">AVA</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_d7().ava" name="ava">
                                 </div>
 
                             </div>
 
                             <div class="row">
 
-                                <div class="col-12 mb-3">
-                                    <label for="observacoes" class="form-label">Observações</label>
-                                    <textarea id="observacoes" class="form-control" rows="4"
-                                        [(ngModel)]="evento_protocolo().observacoes" name="observacoes">
-                                </textarea>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Implante retirado</label>
+                                    <select class="form-select" [(ngModel)]="evento_d7().implante_retirado"
+                                        name="implante_retirado">
+
+                                        <option [ngValue]="null">Selecione</option>
+                                        <option [ngValue]="true">Sim</option>
+                                        <option [ngValue]="false">Não</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Resultado do ciclo</label>
+                                    <select class="form-select" [(ngModel)]="evento_d7().resultado_ciclo"
+                                        name="resultado_ciclo">
+
+                                        <option value="">Selecione</option>
+                                        <option value="Ciclando">Ciclando</option>
+                                        <option value="Não ciclando">Não ciclando</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Implante</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_d7().implante"
+                                        name="implante">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Resultado do implante</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_d7().resultado_implante"
+                                        name="resultado_implante">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Medicação</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_d7().medicacao"
+                                        name="medicacao">
                                 </div>
 
                             </div>
 
                             <div class="d-flex justify-content-end gap-3 mt-4">
+
                                 <button type="button" class="btn btn-danger"
                                     (click)="fecharFormCadastrarEventoProtocolo('D7')">
                                     Cancelar
                                 </button>
 
-                                <button type="button" class="btn btn-success" (click)="cadastrarNovoEventoProtocolo()">
+                                <button type="button" class="btn btn-success" (click)="cadastrarNovoEventoD7()">
                                     Salvar
                                 </button>
+
                             </div>
 
-                        </form> -->
+                        </form>
                     </div>
                     }
 

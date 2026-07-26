@@ -17,7 +17,8 @@ export class GerenciarProtocoloService {
     return data;
   }
 
-  async registrarEventoD0(payload: any) {
+  // registro de todos os eventos
+  async registrarEvento(payload: any) {
 
     const { data, error } = await supabase.from('eventos_protocolo').insert(payload).select().single();
 
@@ -58,11 +59,57 @@ export class GerenciarProtocoloService {
       .single();
 
     if (error) {
-      throw error; 
+      throw error;
     }
 
-    return data; 
+    return data;
   }
+
+  // sempre atualizo os eventos aqui.
+  async atualizarEventoProtocolo(payload: any) {
+
+    const { id, ...dados } = payload; 
+
+    const { error } = await supabase.from('eventos_protocolo').update(dados).eq('id', id); 
+
+    if (error) throw error; 
+
+  }
+
+
+  async atualizarEventoD0(payload: any) {
+    
+    const { id, ...dados } = payload; 
+    
+    const { error } = await supabase.from('evento_d0').update(dados).eq('id', id); 
+
+    if (error) throw error; 
+
+  }
+
+
+  async registrarDadosD7(payload: any) {
+    
+    const {data, error} = await supabase.from('evento_retirada_implante').insert(payload); 
+
+    if (error) throw error; 
+
+    return data; 
+
+  }
+
+  async obterEventoD7Registrado(idProtocolo: number) {
+    
+    const { data, error } = await supabase.from('eventos_protocolo').select(`*, evento_retirada_implante(*)`).eq('protocolo_id', idProtocolo).eq('tipo_evento', 'D7')
+      .single()
+    
+    if (error) throw error; 
+
+    return data; 
+
+  }
+
+
 
 
 }
