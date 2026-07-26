@@ -33,6 +33,7 @@ export class GerenciarProtocolos implements OnInit {
     existe: false
   })
 
+  // mensagem quando edito e fica abaixo dos campos
   mensagem = signal({
     texto: '',
     tipo: ''
@@ -49,9 +50,20 @@ export class GerenciarProtocolos implements OnInit {
   estadoDG = signal('Bloqueado');
   dadosEventoD0Registrado = signal<any | null>(null);
   dadosEventoD7Registrado = signal<any | null>(null);
-  desabilitarBtnD0 = signal(true);
   esconderBtnEditar = signal(true);
   esconderMsgEdit = signal(true);
+  // mensagem alerta canto superior
+  mostrarAlerta = signal({
+    texto: '',
+    existe: false
+  });
+
+  editando = signal({
+    D0: false,
+    D7: false,
+    IA: false,
+    DG: false
+  });
 
   private colunasProtocolo() {
     return {
@@ -187,8 +199,19 @@ export class GerenciarProtocolos implements OnInit {
       await this.serv.registrarDadosD0(payloadD0);
       this.fecharFormCadastrarEventoProtocolo('D0')
       this.limparCampos('D0')
-      this.mostrarEventosRegistrados(); 
-      this.mostrarEventoD0(); 
+      this.mostrarEventosRegistrados();
+      this.mostrarEventoD0();
+
+      this.mostrarAlerta.set({
+        texto: 'D0 cadastrado com sucesso',
+        existe: true
+      });
+      setTimeout(() => {
+        this.mostrarAlerta.set({
+          texto: '',
+          existe: false
+        });
+      }, 2000);
 
     } catch (error) {
       console.log(error)
@@ -252,26 +275,33 @@ export class GerenciarProtocolos implements OnInit {
 
   }
 
-  editarEvento(tipo: string) {
+  editarEvento(tipo: 'D0' | 'D7' | 'IA' | 'DG') {
 
-    if (tipo == 'D0') {
-      this.desabilitarBtnD0.set(false);
-      this.esconderBtnEditar.set(false);
-      this.esconderMsgEdit.set(false)
-    }
+    this.esconderBtnEditar.set(false);
+    this.esconderMsgEdit.set(false);
+
+    this.editando.update(valor => ({
+      ...valor,
+      [tipo]: true
+    }));
 
     setTimeout(() => {
-      this.esconderMsgEdit.set(true)
+      this.esconderMsgEdit.set(true);
     }, 2000);
 
   }
 
-  cancelarEdit(tipo: string) {
+  desabilitarCampos(tipo: 'D0' | 'D7' | 'IA' | 'DG') {
+    return !this.editando()[tipo];
+  }
 
-    if (tipo == 'D0') {
-      this.desabilitarBtnD0.set(true);
-      this.esconderBtnEditar.set(true);
-    }
+  cancelarEdit(tipo: 'D0' | 'D7' | 'IA' | 'DG') {
+    this.esconderBtnEditar.set(true);
+
+    this.editando.update(valor => ({
+      ...valor,
+      [tipo]: false
+    }));
 
   }
 
@@ -338,8 +368,19 @@ export class GerenciarProtocolos implements OnInit {
       await this.serv.registrarDadosD7(payloadD7);
       this.limparCampos('D7')
       this.fecharFormCadastrarEventoProtocolo('D7')
-      this.mostrarEventosRegistrados(); 
-      this.mostrarEventoD7(); 
+      this.mostrarEventosRegistrados();
+      this.mostrarEventoD7();
+
+      this.mostrarAlerta.set({
+        texto: 'D7 cadastrado com sucesso',
+        existe: true
+      });
+      setTimeout(() => {
+        this.mostrarAlerta.set({
+          texto: '',
+          existe: false
+        });
+      }, 2000);
 
     } catch (error) {
       console.log(error)
@@ -380,9 +421,9 @@ export class GerenciarProtocolos implements OnInit {
       case 'D7':
         this.evento_protocolo.set(this.colunasProtocolo());
         this.evento_d7.set(this.colunasEventoD7());
-        break; 
+        break;
 
-      
+
       default:
         break;
     }

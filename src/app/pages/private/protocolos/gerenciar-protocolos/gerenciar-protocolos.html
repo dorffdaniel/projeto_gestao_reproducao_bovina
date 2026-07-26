@@ -104,44 +104,44 @@
                             <div class="card-input">
                                 <label for="">Data</label>
                                 <input type="date" [(ngModel)]="dadosEventoD0Registrado().data"
-                                    [disabled]="(desabilitarBtnD0())">
+                                    [disabled]="(desabilitarCampos('D0'))">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Hora</label>
                                 <input type="time" [(ngModel)]="dadosEventoD0Registrado().hora_inicio"
-                                    [disabled]="(desabilitarBtnD0())">
+                                    [disabled]="(desabilitarCampos('D0'))">
                             </div>
 
 
                             <div class="card-input">
                                 <label for="">Peso</label>
                                 <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.peso"
-                                    [disabled]="(desabilitarBtnD0())">
+                                    [disabled]="(desabilitarCampos('D0'))">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Ecc</label>
                                 <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.ecc"
-                                    [disabled]="(desabilitarBtnD0())">
+                                    [disabled]="(desabilitarCampos('D0'))">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Ava</label>
                                 <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.ava"
-                                    [disabled]="(desabilitarBtnD0())">
+                                    [disabled]="(desabilitarCampos('D0'))">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Indutor</label>
                                 <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.indutor"
-                                    [disabled]="(desabilitarBtnD0())">
+                                    [disabled]="(desabilitarCampos('D0'))">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Medicamento</label>
                                 <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.medicamento"
-                                    [disabled]="(desabilitarBtnD0())">
+                                    [disabled]="(desabilitarCampos('D0'))">
                             </div>
 
                         </div>
@@ -295,6 +295,98 @@
 
                 <div class="card-form-etapa-protocolo mt-4">
 
+                    @if(estadoD7() == 'Concluido'){
+                    <div class="card-evento-registrado card-concluido">
+                        <div class="card-titulo">
+                            <div class="card-icone">
+                                <span class="icone"><i class="fa-solid fa-clipboard"></i></span>
+                                <div>
+                                    <p>D7</p>
+                                    <span>Registro concluído com resumo dos dados aplicados.</span>
+                                </div>
+                            </div>
+
+                            <div class="status-estapa-protocolo">
+                                <span>{{estadoD7()}}</span>
+                            </div>
+                        </div>
+
+                        <div class="cont-card-evento-registrado">
+
+                            <div class="card-input">
+                                <label for="">Data</label>
+                                <input type="date" [(ngModel)]="dadosEventoD7Registrado().data"
+                                    [disabled]="(desabilitarCampos('D7'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Hora</label>
+                                <input type="time" [(ngModel)]="dadosEventoD7Registrado().hora_inicio"
+                                    [disabled]="(desabilitarCampos('D7'))">
+                            </div>
+
+
+                            <div class="card-input">
+                                <label for="">Peso</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.peso"
+                                    [disabled]="(desabilitarCampos('D7'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Ecc</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.ecc"
+                                    [disabled]="(desabilitarCampos('D7'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Ava</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.ava"
+                                    [disabled]="(desabilitarCampos('D7'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Indutor</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.indutor"
+                                    [disabled]="(desabilitarCampos('D7'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Medicamento</label>
+                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.medicamento"
+                                    [disabled]="(desabilitarCampos('D7'))">
+                            </div>
+
+                        </div>
+
+                        <!--  <p class="msg-editar-liberado" [hidden]="esconderMsgEdit()">Os campos acima ja podem ser
+                            alterados.</p> -->
+
+                        @if(mensagem().texto){
+
+                        @switch (mensagem().tipo) {
+                        @case ('sucesso') {
+                        <div class="sucesso">
+                            {{mensagem().texto}}
+                        </div>
+                        }
+                        }
+                        }
+
+                        <div class="cont-btn-editar">
+                            <button [hidden]="!esconderBtnEditar()" class="btn btn-primary"
+                                (click)="editarEvento('D7')"> <i class="fa-regular fa-pen-to-square"></i>
+                                Editar</button>
+
+                            <div class="cont-botoes-acoes" [hidden]="esconderBtnEditar()">
+                                <button class="btn btn-primary" (click)="cancelarEdit('D7')">Cancelar</button>
+                                <button class="btn btn-primary">Salvar</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    }@else {
                     <div [class]="getClasseCard(estadoD7())" class="card-etapa-protocolo">
                         <div class="card-titulo">
                             <div class="card-icone">
@@ -341,6 +433,7 @@
                         }
 
                     </div>
+                    }
 
                     @if(abrirForm().tipo == 'D7' && abrirForm().aberto){
                     <div class="cont-formulario">
@@ -368,7 +461,7 @@
                                 <label class="form-label">Observações</label>
                                 <textarea class="form-control" rows="3" [(ngModel)]="evento_protocolo().observacoes"
                                     name="observacoes">
-        </textarea>
+                                </textarea>
                             </div>
 
                             <hr class="my-4">
@@ -576,5 +669,14 @@
         </div>
     </div>
     }
+
+    <!-- mensagem alerta canto superior -->
+   @if(mostrarAlerta().existe){
+     <div class="toast show toast-custom">
+        <div class="toast-body">
+           {{mostrarAlerta().texto}}
+        </div>
+    </div>
+   }
 
 </div>
