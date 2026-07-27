@@ -42,6 +42,7 @@ export class GerenciarProtocolos implements OnInit {
   evento_protocolo = signal(this.colunasProtocolo());
   evento_d0 = signal(this.colunasEventoD0())
   evento_d7 = signal(this.colunasEventoD7());
+  evento_ia = signal(this.colunasEventoIA());
   isLoading = signal(false);
   nomeResponsavel = signal<string | null>(null);
   estadoD0 = signal('Disponivel');
@@ -50,7 +51,7 @@ export class GerenciarProtocolos implements OnInit {
   estadoDG = signal('Bloqueado');
   dadosEventoD0Registrado = signal<any | null>(null);
   dadosEventoD7Registrado = signal<any | null>(null);
-  esconderBtnEditar = signal(true);
+  dadosEventoIARegistrado = signal<any | null>(null);
   esconderMsgEdit = signal(true);
   // mensagem alerta canto superior
   mostrarAlerta = signal({
@@ -58,7 +59,7 @@ export class GerenciarProtocolos implements OnInit {
     existe: false
   });
 
-  editando = signal({
+  estadoEdicao = signal({
     D0: false,
     D7: false,
     IA: false,
@@ -96,6 +97,18 @@ export class GerenciarProtocolos implements OnInit {
     }
   }
 
+  private colunasEventoIA() {
+    return {
+      semen: '',
+      partida: '',
+      animais_cio: '',
+      gnrh: '',
+      resultado: ''
+    }
+
+
+  }
+
 
   ngOnInit(): void {
     this.mostrarDadosperfilResponsavel();
@@ -104,6 +117,7 @@ export class GerenciarProtocolos implements OnInit {
     this.mostrarEventosRegistrados();
     this.mostrarEventoD0();
     this.mostrarEventoD7();
+    this.mostrarEventoIA(); 
   }
 
   voltarPaginaAnterior() {
@@ -277,34 +291,27 @@ export class GerenciarProtocolos implements OnInit {
 
   editarEvento(tipo: 'D0' | 'D7' | 'IA' | 'DG') {
 
-    this.esconderBtnEditar.set(false);
-    this.esconderMsgEdit.set(false);
-
-    this.editando.update(valor => ({
+    this.estadoEdicao.update(valor => ({
       ...valor,
       [tipo]: true
     }));
 
-    setTimeout(() => {
-      this.esconderMsgEdit.set(true);
-    }, 2000);
-
   }
 
   desabilitarCampos(tipo: 'D0' | 'D7' | 'IA' | 'DG') {
-    return !this.editando()[tipo];
+    return !this.estadoEdicao()[tipo];
   }
 
   cancelarEdit(tipo: 'D0' | 'D7' | 'IA' | 'DG') {
-    this.esconderBtnEditar.set(true);
 
-    this.editando.update(valor => ({
+    this.estadoEdicao.update(valor => ({
       ...valor,
       [tipo]: false
     }));
 
   }
 
+  // salvando edit
   async salvarEventoD0() {
 
     try {
@@ -409,8 +416,69 @@ export class GerenciarProtocolos implements OnInit {
 
   }
 
+  // FALTA EDITAR OS DADOS DO D7
 
-  limparCampos(tipo: 'D0' | 'D7') {
+
+  async cadastrarNovoEventoIA() {
+
+    const payload = {
+      ... this.evento_protocolo(),
+      protocolo_id: this.idProtocolo,
+      status: 'Em andamento',
+      tipo_evento: 'IA'
+    }
+
+    try {
+
+      const evento = await this.serv.registrarEvento(payload);
+
+      if (!evento) return;
+
+      const payloadIA = {
+        ... this.evento_ia(),
+        evento_protocolo_id: evento.id
+      }
+
+      await this.serv.registrarDadosIA(payloadIA);
+      this.limparCampos('IA')
+      this.fecharFormCadastrarEventoProtocolo('IA')
+      this.mostrarEventosRegistrados();
+      this.mostrarEventoIA(); 
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  async mostrarEventoIA() {
+
+    try {
+      const data = await this.serv.obterEventoIARegistrado(this.idProtocolo)
+
+      this.estadoIA.set('Concluido');
+      this.estadoDG.set('Disponivel')
+
+      const evento = {
+        ...data,
+        evento_ia: data.evento_ia[0]
+      }
+
+      console.log("IA", evento); 
+
+      this.dadosEventoIARegistrado.set(evento);
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+
+
+
+
+  limparCampos(tipo: 'D0' | 'D7' | 'IA') {
 
     switch (tipo) {
       case 'D0':
@@ -421,6 +489,10 @@ export class GerenciarProtocolos implements OnInit {
       case 'D7':
         this.evento_protocolo.set(this.colunasProtocolo());
         this.evento_d7.set(this.colunasEventoD7());
+        break;
+      case 'IA':
+        this.evento_protocolo.set(this.colunasProtocolo());
+        this.evento_ia.set(this.colunasEventoIA());
         break;
 
 

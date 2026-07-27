@@ -161,11 +161,11 @@
                         }
 
                         <div class="cont-btn-editar">
-                            <button [hidden]="!esconderBtnEditar()" class="btn btn-primary"
-                                (click)="editarEvento('D0')"> <i class="fa-regular fa-pen-to-square"></i>
+                            <button [hidden]="estadoEdicao().D0" class="btn btn-primary" (click)="editarEvento('D0')">
+                                <i class="fa-regular fa-pen-to-square"></i>
                                 Editar</button>
 
-                            <div class="cont-botoes-acoes" [hidden]="esconderBtnEditar()">
+                            <div class="cont-botoes-acoes" [hidden]="!estadoEdicao().D0">
                                 <button class="btn btn-primary" (click)="cancelarEdit('D0')">Cancelar</button>
                                 <button class="btn btn-primary" (click)="salvarEventoD0()">Salvar</button>
                             </div>
@@ -328,32 +328,62 @@
 
                             <div class="card-input">
                                 <label for="">Peso</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.peso"
+                                <input type="number"
+                                    [(ngModel)]="dadosEventoD7Registrado().evento_retirada_implante.peso"
                                     [disabled]="(desabilitarCampos('D7'))">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Ecc</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.ecc"
+                                <input type="text" [(ngModel)]="dadosEventoD7Registrado().evento_retirada_implante.ecc"
                                     [disabled]="(desabilitarCampos('D7'))">
                             </div>
 
                             <div class="card-input">
                                 <label for="">Ava</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.ava"
+                                <input type="text" [(ngModel)]="dadosEventoD7Registrado().evento_retirada_implante.ava"
                                     [disabled]="(desabilitarCampos('D7'))">
                             </div>
 
                             <div class="card-input">
-                                <label for="">Indutor</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.indutor"
-                                    [disabled]="(desabilitarCampos('D7'))">
+                                <label>Implante retirado</label>
+
+                                <select
+                                    [(ngModel)]="dadosEventoD7Registrado().evento_retirada_implante.implante_retirado"
+                                    [disabled]="desabilitarCampos('D7')">
+
+                                    <option [ngValue]="true">Sim</option>
+                                    <option [ngValue]="false">Não</option>
+
+                                </select>
                             </div>
 
                             <div class="card-input">
-                                <label for="">Medicamento</label>
-                                <input type="text" [(ngModel)]="dadosEventoD0Registrado().evento_d0.medicamento"
-                                    [disabled]="(desabilitarCampos('D7'))">
+                                <label>Resultado do ciclo</label>
+                                <input type="text"
+                                    [(ngModel)]="dadosEventoD7Registrado().evento_retirada_implante.resultado_ciclo"
+                                    [disabled]="desabilitarCampos('D7')">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Implante</label>
+                                <input type="text"
+                                    [(ngModel)]="dadosEventoD7Registrado().evento_retirada_implante.implante"
+                                    [disabled]="desabilitarCampos('D7')">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Resultado do implante</label>
+                                <input type="text"
+                                    [(ngModel)]="dadosEventoD7Registrado().evento_retirada_implante.resultado_implante"
+                                    [disabled]="desabilitarCampos('D7')">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Medicação</label>
+                                <input type="text"
+                                    [(ngModel)]="dadosEventoD7Registrado().evento_retirada_implante.medicacao"
+                                    [disabled]="desabilitarCampos('D7')">
                             </div>
 
                         </div>
@@ -373,11 +403,11 @@
                         }
 
                         <div class="cont-btn-editar">
-                            <button [hidden]="!esconderBtnEditar()" class="btn btn-primary"
-                                (click)="editarEvento('D7')"> <i class="fa-regular fa-pen-to-square"></i>
+                            <button [hidden]="estadoEdicao().D7" class="btn btn-primary" (click)="editarEvento('D7')">
+                                <i class="fa-regular fa-pen-to-square"></i>
                                 Editar</button>
 
-                            <div class="cont-botoes-acoes" [hidden]="esconderBtnEditar()">
+                            <div class="cont-botoes-acoes" [hidden]="!estadoEdicao().D7">
                                 <button class="btn btn-primary" (click)="cancelarEdit('D7')">Cancelar</button>
                                 <button class="btn btn-primary">Salvar</button>
                             </div>
@@ -602,7 +632,7 @@
 
                         @if(estadoIA() != 'Bloqueado'){
                         <div class="cont-btn-abrir-form-cadastro-evento">
-                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('D0')"
+                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('IA')"
                                 [hidden]="esconderBtn()"> <i class="fas fa-regular fa-circle-plus"></i>
                                 Cadastrar</button>
                         </div>
@@ -610,48 +640,99 @@
 
                     </div>
 
-                    @if(abrirForm().tipo == 'D7' && abrirForm().aberto){
+                    @if(abrirForm().tipo == 'IA' && abrirForm().aberto){
                     <div class="cont-formulario">
-                        <!-- <form>
+                        <form>
+
+                            <h5 class="mb-3">Informações do evento</h5>
+
                             <div class="row">
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="data" class="form-label">Data</label>
-                                    <input type="date" class="form-control" id="data"
-                                        [(ngModel)]="evento_protocolo().data_realizacao" name="data_inicio">
+                                    <label class="form-label">Data</label>
+                                    <input type="date" class="form-control" [(ngModel)]="evento_protocolo().data"
+                                        name="data">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="hora" class="form-label">Hora de início</label>
-                                    <input type="time" class="form-control" id="hora"
-                                        [(ngModel)]="evento_protocolo().hora_inicio" name="hora_inicio">
+                                    <label class="form-label">Hora</label>
+                                    <input type="time" class="form-control" [(ngModel)]="evento_protocolo().hora_inicio"
+                                        name="hora_inicio">
+                                </div>
+
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Observações</label>
+                                <textarea class="form-control" rows="3" [(ngModel)]="evento_protocolo().observacoes"
+                                    name="observacoes">
+                                </textarea>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h5 class="mb-3">Dados da inseminação</h5>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Sêmen</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_ia().semen"
+                                        name="semen">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Partida</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_ia().partida"
+                                        name="partida">
                                 </div>
 
                             </div>
 
                             <div class="row">
 
-                                <div class="col-12 mb-3">
-                                    <label for="observacoes" class="form-label">Observações</label>
-                                    <textarea id="observacoes" class="form-control" rows="4"
-                                        [(ngModel)]="evento_protocolo().observacoes" name="observacoes">
-                                </textarea>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Animais em cio</label>
+                                    <input type="number" class="form-control" [(ngModel)]="evento_ia().animais_cio"
+                                        name="animais_cio">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">GNRH</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_ia().gnrh" name="gnrh">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Resultado</label>
+                                    <select class="form-select" [(ngModel)]="evento_ia().resultado" name="resultado">
+
+                                        <option value="">Selecione</option>
+                                        <option value="Realizada">Realizada</option>
+                                        <option value="Não realizada">Não realizada</option>
+
+                                    </select>
                                 </div>
 
                             </div>
 
                             <div class="d-flex justify-content-end gap-3 mt-4">
+
                                 <button type="button" class="btn btn-danger"
-                                    (click)="fecharFormCadastrarEventoProtocolo('D7')">
+                                    (click)="fecharFormCadastrarEventoProtocolo('IA')">
                                     Cancelar
                                 </button>
 
-                                <button type="button" class="btn btn-success" (click)="cadastrarNovoEventoProtocolo()">
+                                <button type="button" class="btn btn-success" (click)="cadastrarNovoEventoIA()">
                                     Salvar
                                 </button>
+
                             </div>
 
-                        </form> -->
+                        </form>
                     </div>
                     }
 

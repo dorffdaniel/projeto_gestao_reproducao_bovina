@@ -68,47 +68,67 @@ export class GerenciarProtocoloService {
   // sempre atualizo os eventos aqui.
   async atualizarEventoProtocolo(payload: any) {
 
-    const { id, ...dados } = payload; 
+    const { id, ...dados } = payload;
 
-    const { error } = await supabase.from('eventos_protocolo').update(dados).eq('id', id); 
+    const { error } = await supabase.from('eventos_protocolo').update(dados).eq('id', id);
 
-    if (error) throw error; 
+    if (error) throw error;
 
   }
 
 
   async atualizarEventoD0(payload: any) {
-    
-    const { id, ...dados } = payload; 
-    
-    const { error } = await supabase.from('evento_d0').update(dados).eq('id', id); 
 
-    if (error) throw error; 
+    const { id, ...dados } = payload;
+
+    const { error } = await supabase.from('evento_d0').update(dados).eq('id', id);
+
+    if (error) throw error;
 
   }
 
 
   async registrarDadosD7(payload: any) {
-    
-    const {data, error} = await supabase.from('evento_retirada_implante').insert(payload); 
 
-    if (error) throw error; 
+    const { data, error } = await supabase.from('evento_retirada_implante').insert(payload);
 
-    return data; 
+    if (error) throw error;
+
+    return data;
 
   }
 
   async obterEventoD7Registrado(idProtocolo: number) {
-    
+
     const { data, error } = await supabase.from('eventos_protocolo').select(`*, evento_retirada_implante(*)`).eq('protocolo_id', idProtocolo).eq('tipo_evento', 'D7')
       .single()
-    
-    if (error) throw error; 
 
-    return data; 
+    if (error) throw error;
+
+    return data;
 
   }
 
+  async registrarDadosIA(payload: any) {
+
+    const { data, error } = await supabase.from('evento_ia').insert(payload);
+
+    if (error) throw error;
+
+    return data;
+  }
+
+
+  async obterEventoIARegistrado(idProtocolo: number) {
+
+    const { data, error } = await supabase.from('eventos_protocolo').select(`*, evento_ia(*)`).eq('protocolo_id', idProtocolo).eq('tipo_evento', 'IA')
+      .single()
+
+    if (error) throw error;
+
+    return data;
+
+  }
 
 
 
