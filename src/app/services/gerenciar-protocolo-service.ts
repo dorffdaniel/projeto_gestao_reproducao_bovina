@@ -130,6 +130,29 @@ export class GerenciarProtocoloService {
 
   }
 
+  async registrarDadosDG(payload: any) {
+
+    const { data, error } = await supabase.from('evento_dg').insert(payload);
+
+    if (error) throw error;
+
+    return data;
+  }
+
+
+  async obterEventoDGRegistrado(idProtocolo: number) {
+
+    const { data, error } = await supabase.from('eventos_protocolo').select(`*, evento_dg(*)`).eq('protocolo_id', idProtocolo).eq('tipo_evento', 'DG')
+      .maybeSingle(); 
+
+    if (error) throw error;
+
+    return data;
+
+  }
+
+
+
 
 
 }

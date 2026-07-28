@@ -55,12 +55,22 @@
                     display: flex;
                     align-items: center;
                     gap: 8px;
-                    background: #e8f1ff;
                     padding: 12px;
                     border-radius: 25px;
+                }
+
+                .status-andamento {
+                    background: #e8f1ff;
                     border: 1px solid #4f7bff;
                     color: #4f7bff;
                 }
+
+                .status-concluido {
+                    background: #e8f8ee;
+                    border: 1px solid #2e9d57;
+                    color: #2e9d57;
+                }
+
             }
 
             .porcentagem-conclusao {

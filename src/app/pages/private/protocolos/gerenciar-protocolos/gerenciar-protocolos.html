@@ -20,10 +20,17 @@
                         <h2>Gerenciamento de protocolo</h2>
                         <div class="cont-titulo-protocolo">
                             <h1>Protocolo IATF - {{dadosProtocolo()?.lotes?.nome }}</h1>
-                            <div class="cont-status-protocolo">
+                            @if(!protocoloConcluido()){
+                            <div class="cont-status-protocolo status-andamento">
                                 <i class="fas fa-regular fa-heart-pulse"></i>
                                 <span>Em andamento</span>
                             </div>
+                            }@else {
+                            <div class="cont-status-protocolo status-concluido">
+                                <i class="fas fa-regular fa-heart-pulse"></i>
+                                <span>Concluido</span>
+                            </div>
+                            }
                         </div>
                     </div>
 
@@ -83,7 +90,7 @@
                     bloqueadas até a
                     conclusão da etapa anterior.</p>
                 <div class="card-form-etapa-protocolo">
-                    @if(estadoD0() == 'Concluido'){
+                    @if(estadoD0() == 'Concluido' && dadosEventoD0Registrado()){
                     <div class="card-evento-registrado card-concluido">
                         <div class="card-titulo">
                             <div class="card-icone">
@@ -295,7 +302,7 @@
 
                 <div class="card-form-etapa-protocolo mt-4">
 
-                    @if(estadoD7() == 'Concluido'){
+                    @if(estadoD7() == 'Concluido' && dadosEventoD7Registrado()){
                     <div class="card-evento-registrado card-concluido">
                         <div class="card-titulo">
                             <div class="card-icone">
@@ -592,7 +599,97 @@
 
                 <!-- conteudo registro IA -->
                 <div class="card-form-etapa-protocolo mt-4">
+                    @if(estadoIA() == 'Concluido' && dadosEventoIARegistrado()){
+                    <div class="card-evento-registrado card-concluido">
+                        <div class="card-titulo">
+                            <div class="card-icone">
+                                <span class="icone"><i class="fa-solid fa-syringe"></i></span>
+                                <div>
+                                    <p>IA</p>
+                                    <span>Registro concluído com resumo dos dados aplicados.</span>
+                                </div>
+                            </div>
 
+                            <div class="status-estapa-protocolo">
+                                <span>{{estadoIA()}}</span>
+                            </div>
+                        </div>
+
+                        <div class="cont-card-evento-registrado">
+
+                            <div class="card-input">
+                                <label for="">Data</label>
+                                <input type="date" [(ngModel)]="dadosEventoIARegistrado().data"
+                                    [disabled]="(desabilitarCampos('IA'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Hora</label>
+                                <input type="time" [(ngModel)]="dadosEventoIARegistrado().hora_inicio"
+                                    [disabled]="(desabilitarCampos('IA'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Semen</label>
+                                <input type="text" [(ngModel)]="dadosEventoIARegistrado().evento_ia.semen"
+                                    [disabled]="(desabilitarCampos('IA'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Partida</label>
+                                <input type="text" [(ngModel)]="dadosEventoIARegistrado().evento_ia.partida"
+                                    [disabled]="(desabilitarCampos('IA'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Animais cio</label>
+                                <input type="number" [(ngModel)]="dadosEventoIARegistrado().evento_ia.animais_cio"
+                                    [disabled]="desabilitarCampos('IA')">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Gnrh</label>
+                                <input type="text" [(ngModel)]="dadosEventoIARegistrado().evento_ia.gnrh"
+                                    [disabled]="desabilitarCampos('IA')">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Resultado</label>
+                                <input type="text" [(ngModel)]="dadosEventoIARegistrado().evento_ia.resultado"
+                                    [disabled]="desabilitarCampos('IA')">
+                            </div>
+
+                        </div>
+
+                        <!--  <p class="msg-editar-liberado" [hidden]="esconderMsgEdit()">Os campos acima ja podem ser
+                            alterados.</p> -->
+
+                        @if(mensagem().texto){
+
+                        @switch (mensagem().tipo) {
+                        @case ('sucesso') {
+                        <div class="sucesso">
+                            {{mensagem().texto}}
+                        </div>
+                        }
+                        }
+                        }
+
+                        <div class="cont-btn-editar">
+                            <button [hidden]="estadoEdicao().IA" class="btn btn-primary" (click)="editarEvento('IA')">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                Editar</button>
+
+                            <div class="cont-botoes-acoes" [hidden]="!estadoEdicao().IA">
+                                <button class="btn btn-primary" (click)="cancelarEdit('IA')">Cancelar</button>
+                                <button class="btn btn-primary">Salvar</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    }@else {
                     <div [class]="getClasseCard(estadoIA())" class="card-etapa-protocolo">
                         <div class="card-titulo">
                             <div class="card-icone">
@@ -639,6 +736,7 @@
                         }
 
                     </div>
+                    }
 
                     @if(abrirForm().tipo == 'IA' && abrirForm().aberto){
                     <div class="cont-formulario">
@@ -741,14 +839,111 @@
 
                 <!-- conteudo registro DG -->
                 <div class="card-form-etapa-protocolo mt-4">
+                    @if(estadoDG() == 'Concluido' && dadosEventoDGRegistrado()){
 
-                    <div [class]="getClasseCard(estadoDG())" class="card-etapa-protocolo">
+                    <div class="card-evento-registrado card-concluido">
                         <div class="card-titulo">
                             <div class="card-icone">
                                 <span class="icone"><i class="fa-solid fa-syringe"></i></span>
                                 <div>
-                                    <p>IA</p>
-                                    @if(estadoIA() == 'Bloqueado'){
+                                    <p>DG</p>
+                                    <span>Registro concluído com resumo dos dados aplicados.</span>
+                                </div>
+                            </div>
+
+                            <div class="status-estapa-protocolo">
+                                <span>{{estadoDG()}}</span>
+                            </div>
+                        </div>
+
+                        <div class="cont-card-evento-registrado">
+
+                            <div class="card-input">
+                                <label for="">Data</label>
+                                <input type="date" [(ngModel)]="dadosEventoDGRegistrado().data"
+                                    [disabled]="(desabilitarCampos('DG'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Hora</label>
+                                <input type="time" [(ngModel)]="dadosEventoDGRegistrado().hora_inicio"
+                                    [disabled]="(desabilitarCampos('DG'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Peso</label>
+                                <input type="number" [(ngModel)]="dadosEventoDGRegistrado().evento_dg.peso"
+                                    [disabled]="(desabilitarCampos('DG'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label for="">Ecc</label>
+                                <input type="text" [(ngModel)]="dadosEventoDGRegistrado().evento_dg.ecc"
+                                    [disabled]="(desabilitarCampos('DG'))">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Avaliação ov</label>
+                                <input type="text" [(ngModel)]="dadosEventoDGRegistrado().evento_dg.avaliacao_ov"
+                                    [disabled]="desabilitarCampos('DG')">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Resultado IA</label>
+                                <input type="text" [(ngModel)]="dadosEventoDGRegistrado().evento_dg.resultado_dg_ia"
+                                    [disabled]="desabilitarCampos('DG')">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Resultado MN</label>
+                                <input type="text" [(ngModel)]="dadosEventoDGRegistrado().evento_dg.resultado_dg_mn"
+                                    [disabled]="desabilitarCampos('DG')">
+                            </div>
+
+                            <div class="card-input">
+                                <label>Novo implante</label>
+                                <input type="text" [(ngModel)]="dadosEventoDGRegistrado().evento_dg.novo_implante"
+                                    [disabled]="desabilitarCampos('DG')">
+                            </div>
+
+                        </div>
+
+                        <!--  <p class="msg-editar-liberado" [hidden]="esconderMsgEdit()">Os campos acima ja podem ser
+                            alterados.</p> -->
+
+                        @if(mensagem().texto){
+
+                        @switch (mensagem().tipo) {
+                        @case ('sucesso') {
+                        <div class="sucesso">
+                            {{mensagem().texto}}
+                        </div>
+                        }
+                        }
+                        }
+
+                        <div class="cont-btn-editar">
+                            <button [hidden]="estadoEdicao().DG" class="btn btn-primary" (click)="editarEvento('DG')">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                Editar</button>
+
+                            <div class="cont-botoes-acoes" [hidden]="!estadoEdicao().DG">
+                                <button class="btn btn-primary" (click)="cancelarEdit('DG')">Cancelar</button>
+                                <button class="btn btn-primary">Salvar</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    }@else {
+                    <div [class]="getClasseCard(estadoDG())" class="card-etapa-protocolo">
+                        <div class="card-titulo">
+                            <div class="card-icone">
+                                <span class="icone"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <div>
+                                    <p>DG</p>
+                                    @if(estadoDG() == 'Bloqueado'){
                                     <span>Etapa futura com liberação condicionada à conclusão anterior.</span>
                                     }@else {
                                     <span>Próxima etapa disponível para registro no protocolo.</span>
@@ -762,7 +957,7 @@
                         </div>
                         <div class="descricao-etapa-protocolo">
                             <div class="card-icone">
-                                @if(estadoIA() == 'Bloqueado'){
+                                @if(estadoDG() == 'Bloqueado'){
                                 <i class="fas fa-regular fa-lock"></i>
                                 <p>Aguardando etapa anterior</p>
                                 }@else {
@@ -770,7 +965,7 @@
                                 <p>Cadastro pendente</p>
                                 }
                             </div>
-                            @if(estadoIA() == 'Bloqueado'){
+                            @if(estadoDG() == 'Bloqueado'){
                             <p>Aguardando a conclusão da etapa anterior para liberar este registro.</p>
                             }@else {
                             <p>Esta é a próxima etapa liberada. Ao registrar este evento, as próximas etapas serão
@@ -779,63 +974,136 @@
 
                         </div>
 
-                        @if(estadoIA() != 'Bloqueado'){
+                        @if(estadoDG() != 'Bloqueado'){
                         <div class="cont-btn-abrir-form-cadastro-evento">
-                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('D0')"
+                            <button class="btn btn-primary" (click)="abrirFormCadastrarEventoProtocolo('DG')"
                                 [hidden]="esconderBtn()"> <i class="fas fa-regular fa-circle-plus"></i>
                                 Cadastrar</button>
                         </div>
                         }
 
                     </div>
+                    }
 
-                    @if(abrirForm().tipo == 'D7' && abrirForm().aberto){
+                    @if(abrirForm().tipo == 'DG' && abrirForm().aberto){
                     <div class="cont-formulario">
-                        <!-- <form>
+                        <form>
+
+                            <h5 class="mb-3">Informações do evento</h5>
+
                             <div class="row">
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="data" class="form-label">Data</label>
-                                    <input type="date" class="form-control" id="data"
-                                        [(ngModel)]="evento_protocolo().data_realizacao" name="data_inicio">
+                                    <label class="form-label">Data</label>
+                                    <input type="date" class="form-control" [(ngModel)]="evento_protocolo().data"
+                                        name="data">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="hora" class="form-label">Hora de início</label>
-                                    <input type="time" class="form-control" id="hora"
-                                        [(ngModel)]="evento_protocolo().hora_inicio" name="hora_inicio">
+                                    <label class="form-label">Hora</label>
+                                    <input type="time" class="form-control" [(ngModel)]="evento_protocolo().hora_inicio"
+                                        name="hora_inicio">
+                                </div>
+
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Observações</label>
+                                <textarea class="form-control" rows="3" [(ngModel)]="evento_protocolo().observacoes"
+                                    name="observacoes">
+                                </textarea>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h5 class="mb-3">Diagnóstico de gestação</h5>
+
+                            <div class="row">
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Peso (kg)</label>
+                                    <input type="number" class="form-control" [(ngModel)]="evento_dg().peso"
+                                        name="peso">
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">ECC</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_dg().ecc" name="ecc">
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Avaliação OV</label>
+                                    <input type="text" class="form-control" [(ngModel)]="evento_dg().avaliacao_ov"
+                                        name="avaliacao_ov">
                                 </div>
 
                             </div>
 
                             <div class="row">
 
-                                <div class="col-12 mb-3">
-                                    <label for="observacoes" class="form-label">Observações</label>
-                                    <textarea id="observacoes" class="form-control" rows="4"
-                                        [(ngModel)]="evento_protocolo().observacoes" name="observacoes">
-                                </textarea>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Resultado DG IA</label>
+
+                                    <select class="form-select" [(ngModel)]="evento_dg().resultado_dg_ia"
+                                        name="resultado_dg_ia">
+
+                                        <option value="">Selecione</option>
+                                        <option value="Prenhe">Prenhe</option>
+                                        <option value="Vazia">Vazia</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Resultado DG MN</label>
+
+                                    <select class="form-select" [(ngModel)]="evento_dg().resultado_dg_mn"
+                                        name="resultado_dg_mn">
+
+                                        <option value="">Selecione</option>
+                                        <option value="Prenhe">Prenhe</option>
+                                        <option value="Vazia">Vazia</option>
+                                        <option value="Não se aplica">Não se aplica</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Novo implante</label>
+
+                                    <select class="form-select" [(ngModel)]="evento_dg().novo_implante"
+                                        name="novo_implante">
+
+                                        <option [ngValue]="null">Selecione</option>
+                                        <option [ngValue]="true">Sim</option>
+                                        <option [ngValue]="false">Não</option>
+
+                                    </select>
                                 </div>
 
                             </div>
 
                             <div class="d-flex justify-content-end gap-3 mt-4">
+
                                 <button type="button" class="btn btn-danger"
-                                    (click)="fecharFormCadastrarEventoProtocolo('D7')">
+                                    (click)="fecharFormCadastrarEventoProtocolo('DG')">
                                     Cancelar
                                 </button>
 
-                                <button type="button" class="btn btn-success" (click)="cadastrarNovoEventoProtocolo()">
+                                <button type="button" class="btn btn-success" (click)="cadastrarNovoEventoDG()">
                                     Salvar
                                 </button>
                             </div>
 
-                        </form> -->
+                        </form>
                     </div>
                     }
 
                 </div>
-
 
             </div>
         </div>

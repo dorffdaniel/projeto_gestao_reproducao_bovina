@@ -24,6 +24,7 @@ export class GerenciarProtocolos implements OnInit {
   dadosProtocolo = signal<any>(null);
   esconderBtn = signal(false);
   barraProgresso = signal(0);
+  protocoloConcluido = signal(false); 
   abrirForm = signal({
     tipo: '',
     aberto: false
@@ -43,6 +44,7 @@ export class GerenciarProtocolos implements OnInit {
   evento_d0 = signal(this.colunasEventoD0())
   evento_d7 = signal(this.colunasEventoD7());
   evento_ia = signal(this.colunasEventoIA());
+  evento_dg = signal(this.colunasEventoDG());
   isLoading = signal(false);
   nomeResponsavel = signal<string | null>(null);
   estadoD0 = signal('Disponivel');
@@ -52,6 +54,7 @@ export class GerenciarProtocolos implements OnInit {
   dadosEventoD0Registrado = signal<any | null>(null);
   dadosEventoD7Registrado = signal<any | null>(null);
   dadosEventoIARegistrado = signal<any | null>(null);
+  dadosEventoDGRegistrado = signal<any | null>(null);
   esconderMsgEdit = signal(true);
   // mensagem alerta canto superior
   mostrarAlerta = signal({
@@ -105,8 +108,17 @@ export class GerenciarProtocolos implements OnInit {
       gnrh: '',
       resultado: ''
     }
+  }
 
-
+  private colunasEventoDG() {
+    return {
+      peso: '',
+      ecc: '',
+      avaliacao_ov: '',
+      resultado_dg_ia: '',
+      resultado_dg_mn: '',
+      novo_implante: '',
+    }
   }
 
 
@@ -117,7 +129,8 @@ export class GerenciarProtocolos implements OnInit {
     this.mostrarEventosRegistrados();
     this.mostrarEventoD0();
     this.mostrarEventoD7();
-    this.mostrarEventoIA(); 
+    this.mostrarEventoIA();
+    this.mostrarEventoDG();
   }
 
   voltarPaginaAnterior() {
@@ -233,6 +246,7 @@ export class GerenciarProtocolos implements OnInit {
 
   }
 
+  // resposavel pela barra de progresso e motor do estado das etapas
   async mostrarEventosRegistrados() {
 
     const eventos = await this.serv.obterEventosProtocolo(this.idProtocolo);
@@ -252,15 +266,42 @@ export class GerenciarProtocolos implements OnInit {
     if (dg) progresso += 25
 
     this.barraProgresso.set(progresso);
+
+    if (d0) {
+      this.estadoD0.set('Concluido');
+      this.estadoD7.set('Disponivel');
+    } else {
+      this.estadoD0.set('Disponivel');
+      this.estadoD7.set('Bloqueado');
+    }
+
+    if (d7) {
+      this.estadoD7.set('Concluido');
+      this.estadoIA.set('Disponivel');
+    } else {
+      this.estadoD7.set('Disponivel');
+      this.estadoIA.set('Bloqueado');
+    }
+
+    if (ia) {
+      this.estadoIA.set('Concluido');
+      this.estadoDG.set('Disponivel');
+    } else {
+      this.estadoIA.set('Disponivel');
+      this.estadoDG.set('Bloqueado');
+    }
+
+    if (dg) {
+      this.estadoDG.set('Concluido');
+      this.protocoloConcluido.set(true); 
+    }
+
   }
 
   async mostrarEventoD0() {
 
     try {
       const data = await this.serv.obterEventoD0Registrado(this.idProtocolo)
-
-      this.estadoD0.set('Concluido');
-      this.estadoD7.set('Disponivel')
 
       const evento = {
         ...data,
@@ -400,9 +441,6 @@ export class GerenciarProtocolos implements OnInit {
     try {
       const data = await this.serv.obterEventoD7Registrado(this.idProtocolo)
 
-      this.estadoD7.set('Concluido');
-      this.estadoIA.set('Disponivel')
-
       const evento = {
         ...data,
         evento_retirada_implante: data.evento_retirada_implante[0]
@@ -443,7 +481,7 @@ export class GerenciarProtocolos implements OnInit {
       this.limparCampos('IA')
       this.fecharFormCadastrarEventoProtocolo('IA')
       this.mostrarEventosRegistrados();
-      this.mostrarEventoIA(); 
+      this.mostrarEventoIA();
 
     } catch (error) {
       console.log(error);
@@ -456,15 +494,10 @@ export class GerenciarProtocolos implements OnInit {
     try {
       const data = await this.serv.obterEventoIARegistrado(this.idProtocolo)
 
-      this.estadoIA.set('Concluido');
-      this.estadoDG.set('Disponivel')
-
       const evento = {
         ...data,
         evento_ia: data.evento_ia[0]
       }
-
-      console.log("IA", evento); 
 
       this.dadosEventoIARegistrado.set(evento);
 
@@ -474,11 +507,65 @@ export class GerenciarProtocolos implements OnInit {
 
   }
 
+  // FALTA EDITAR DADOS DA IA
 
 
+  async cadastrarNovoEventoDG() {
+
+    const payload = {
+      ... this.evento_protocolo(),
+      protocolo_id: this.idProtocolo,
+      status: 'Em andamento',
+      tipo_evento: 'DG'
+    }
+
+    try {
+      const evento = await this.serv.registrarEvento(payload);
+
+      if (!evento) return;
+
+      const payloadDG = {
+        ...this.evento_dg(),
+        evento_protocolo_id: evento.id
+      }
+
+      await this.serv.registrarDadosDG(payloadDG);
+      this.limparCampos('DG')
+      this.fecharFormCadastrarEventoProtocolo('DG')
+      this.mostrarEventosRegistrados();
+      this.mostrarEventoDG();
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  async mostrarEventoDG() {
+
+    try {
+      const data = await this.serv.obterEventoDGRegistrado(this.idProtocolo)
+
+      if (!data) {
+        return
+      }
+
+      console.log(data); 
+
+      const evento = {
+        ...data,
+        evento_dg: data.evento_dg[0]
+      }
+      this.dadosEventoDGRegistrado.set(evento);
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
 
-  limparCampos(tipo: 'D0' | 'D7' | 'IA') {
+  limparCampos(tipo: 'D0' | 'D7' | 'IA' | 'DG') {
 
     switch (tipo) {
       case 'D0':
@@ -494,7 +581,10 @@ export class GerenciarProtocolos implements OnInit {
         this.evento_protocolo.set(this.colunasProtocolo());
         this.evento_ia.set(this.colunasEventoIA());
         break;
-
+      case 'DG':
+        this.evento_protocolo.set(this.colunasProtocolo());
+        this.evento_dg.set(this.colunasEventoDG());
+        break;
 
       default:
         break;
