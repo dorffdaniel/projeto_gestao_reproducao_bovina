@@ -15,34 +15,95 @@
     <div class="row">
         <div class="col-12">
             <div class="conteudo-detalhe-lote">
-                <div class="card-lote">
-                    <p>Nome: <span>{{dadosLote()?.nome}}</span></p>
-                    <p>Categoria: <span>{{dadosLote()?.categoria}}</span> </p>
-                    <p>Animais: <span>{{dadosLote()?.total_animais}}</span></p>
-                    <p>Observações: <span>{{dadosLote()?.observacoes}}</span></p>
+
+                <div class="card-detalhe-lote">
+                    <div class="cont-titulo-lote">
+                        <h2>Gerenciamento de lote</h2>
+
+                        <div class="cont-icon-lote">
+                            <h1>{{dadosLote().nome}}</h1>
+                            <div class="cont-status-lote status-andamento">
+                                <i class="fas fa-regular fa-heart-pulse"></i>
+                                <span>Lote ativo</span>
+                            </div>
+                        </div>
+
+                        <p>Visão centralizada do lote, com dados principais sempre acessíveis e acompanhamento simples
+                            dos
+                            protocolos vinculados.</p>
+                    </div>
+
+                    <div class="cont-botoes-lote">
+                        @if(mostrarCardEdit()){
+                        <div class="card-btns">
+                            <button type="button" class="btn btn-primary" (click)="editarLote()"> <i
+                                    class="fa-regular fa-pen-to-square"></i> Editar
+                                lote</button>
+                            <button type="button" class="btn btn-primary"> <i class="fas fa-trash"></i> Apagar
+                                lote</button>
+                        </div>
+                        }@else {
+                        <div class="card-btns">
+                            <button type="button" class="btn btn-primary" (click)="cancelarEditLote()"
+                                [disabled]="desabilitarBtn()"> <i class="fas fa-times"></i> Cancelar</button>
+
+                            <button type="button" class="btn btn-primary" (click)="salvarAlteracaoLote()"
+                                [disabled]="desabilitarBtn()"> <i class="fas fa-save"></i> Salvar
+                                alterações</button>
+                        </div>
+                        }
+                    </div>
+
                 </div>
 
-                <div class="cont-botoes">
-                    <button class="btn btn-warning" (click)="editarLote()">editar</button>
+                @if(!isLoading() && dadosLote()){
+                <div class="conteudo-inputs-lote">
+                    <div class="cont-cards-lotes">
+                        <div class="card-input">
+                            <label for="">Nome do lote</label>
+                            <input type="text" [(ngModel)]="dadosLote().nome" [disabled]="(desabilitarCampos())"
+                                name="nome">
+                        </div>
+
+                        <div class="card-input">
+                            <label for="">Categoria</label>
+                            <input type="text" [(ngModel)]="dadosLote().categoria" [disabled]="(desabilitarCampos())"
+                                name="categoria">
+                        </div>
+
+                        <div class="card-input">
+                            <label for="">Quantidade de animais</label>
+                            <input type="number" [(ngModel)]="dadosLote().total_animais"
+                                [disabled]="(desabilitarCampos())" name="total_animais">
+                        </div>
+
+                    </div>
+
+                    <div class="card-input">
+                        <label for="">Observacoes</label>
+                        <input type="text" [(ngModel)]="dadosLote().observacoes" [disabled]="(desabilitarCampos())"
+                            name="observacoes">
+                    </div>
+
+                    @if(mensagem().texto){
+
+                    @switch (mensagem().tipo) {
+                    @case ('sucesso') {
+                    <div class="sucesso">
+                        {{mensagem().texto}}
+                    </div>
+                    }
+                    }
+                    }
+
                 </div>
+                }
 
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-
-            @if(mensagem().texto){
-
-            @switch (mensagem().tipo) {
-            @case ('sucesso') {
-            <div class="sucesso">
-                {{mensagem().texto}}
-            </div>
-            }
-            }
-
-            }
 
             <div class="conteudo-protocolo">
                 <div class="cont-titulo">
@@ -75,9 +136,13 @@
                         <div class="row">
 
                             <div class="col-md-6 mb-3">
+                                <small class="text-muted">
+                                    Máximo permitido: {{ dadosLote().total_animais }} animais
+                                </small>
                                 <label for="animais" class="form-label">Quantidade de animais</label>
                                 <input type="number" class="form-control" id="animais" min="1"
-                                    [(ngModel)]="protocolo().total_animais" name="total_animais">
+                                    [(ngModel)]="protocolo().total_animais" name="total_animais"
+                                    [max]="dadosLote().total_animais">
                             </div>
 
                         </div>
@@ -131,8 +196,8 @@
                         <!-- <p>Status: <span>{{prot?.status}}</span></p> -->
 
                         <div class="cont-botao">
-                        <button class="btn btn-primary" (click)="gerenciarProtocolo(prot.id)">Gerenciar</button>
-                    </div>
+                            <button class="btn btn-primary" (click)="gerenciarProtocolo(prot.id)">Gerenciar</button>
+                        </div>
 
                     </div>
                     }

@@ -15,17 +15,29 @@ export class GerenciarLotes implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private naveg: Router,
-    private serv: GerenciarLoteService, 
+    private serv: GerenciarLoteService,
     private router: Router
   ) { }
 
   idLote!: number;
-  dadosLote = signal<any | null>(null);
   esconderBtn = signal(false);
   mostrarFormProtocolo = signal(false);
   protocolo = signal(this.criarProtocoloVazio());
-  protocolosRegistrados = signal<any>([]); 
-  isLoading = signal(false); 
+  protocolosRegistrados = signal<any>([]);
+  isLoading = signal(false);
+  desabilitarCampos = signal(true);
+  desabilitarBtn = signal(false);
+  mostrarCardEdit = signal(true);
+
+  dadosLote = signal({
+    id: 0,
+    nome: '',
+    categoria: '',
+    total_animais: 0,
+    observacoes: '',
+    fazenda_id: 0
+  });
+
 
   ngOnInit(): void {
     this.getIdlote();
@@ -48,15 +60,13 @@ export class GerenciarLotes implements OnInit {
   });
 
   voltarPaginaAnterior() {
-    
-    const pag = sessionStorage.getItem("gerenciar_detalhe_fazenda"); 
+    const pag = sessionStorage.getItem("gerenciar_detalhe_fazenda");
 
     if (pag) {
-      this.router.navigateByUrl(pag); 
+      this.router.navigateByUrl(pag);
     }
 
   }
-
 
   getIdlote() {
     const id = Number(this.route.snapshot.paramMap.get('id'))
@@ -70,27 +80,76 @@ export class GerenciarLotes implements OnInit {
 
   async mostrarDadosLote() {
 
-    this.isLoading.set(true); 
+    this.isLoading.set(true);
 
     try {
-      const data = await this.serv.getDadaosLote(this.idLote);
+      const data = await this.serv.getDadosLote(this.idLote);
 
-      console.log(data);
       this.dadosLote.set(data);
 
       await this.obterProtocolosRegistrados();
 
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+
+      if (error.code === 'PGRST116') {
+        this.naveg.navigate(['/fazendas']);
+        return;
+      }
+
     } finally {
-      this.isLoading.set(false); 
+      this.isLoading.set(false);
     }
 
   }
 
   editarLote() {
-    alert("falta desenvolver");
+    this.desabilitarCampos.set(false);
+    this.mostrarCardEdit.set(false);
+
   }
+
+  cancelarEditLote() {
+    this.desabilitarCampos.set(true);
+    this.mostrarCardEdit.set(true);
+  }
+
+
+  async salvarAlteracaoLote() {
+
+    const payload = {
+      ... this.dadosLote()
+    }
+
+    this.desabilitarBtn.set(true);
+
+    try {
+
+      await this.serv.atualizarLote(payload);
+
+      this.mensagem.set({
+        texto: 'Editado com sucesso',
+        tipo: 'sucesso'
+      })
+
+      this.desabilitarCampos.set(true);
+      this.mostrarCardEdit.set(true);
+      this.desabilitarBtn.set(false);
+
+      setTimeout(() => {
+        this.mensagem.set({
+          texto: '',
+          tipo: ''
+        })
+      }, 1500);
+
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
 
   abrirFormCadastrarProtocolo() {
     this.mostrarFormProtocolo.set(true);
@@ -113,7 +172,7 @@ export class GerenciarLotes implements OnInit {
 
     const payload = {
       ... this.protocolo(),
-      fazenda_id: this.dadosLote()!.fazenda_id,
+      fazenda_id: this.dadosLote().fazenda_id,
       lote_id: this.dadosLote()!.id,
       status: "Em andamento"
     }
@@ -146,16 +205,16 @@ export class GerenciarLotes implements OnInit {
   }
 
   async obterProtocolosRegistrados() {
-    
+
     try {
       const loteId = this.dadosLote()!.id
 
-      const data = await this.serv.getDadosProtocolos(loteId); 
-      this.protocolosRegistrados.set(data); 
-      console.log("prot", data); 
+      const data = await this.serv.getDadosProtocolos(loteId);
+      this.protocolosRegistrados.set(data);
+      console.log("prot", data);
 
     } catch (error) {
-      console.log(error); 
+      console.log(error);
     }
 
   }
@@ -175,10 +234,10 @@ export class GerenciarLotes implements OnInit {
   }
 
   gerenciarProtocolo(protocolo_id: number) {
-    const url = this.router.url; 
-    sessionStorage.setItem("gerenciar_detalhe_lote", url); 
+    const url = this.router.url;
+    sessionStorage.setItem("gerenciar_detalhe_lote", url);
 
-    this.router.navigate(['/protocolo', protocolo_id]); 
+    this.router.navigate(['/protocolo', protocolo_id]);
   }
 
 }

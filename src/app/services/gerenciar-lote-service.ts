@@ -7,7 +7,7 @@ import { supabase } from '../core/supabase.client';
 export class GerenciarLoteService {
   
 
-  async getDadaosLote(idlote: number) {
+  async getDadosLote(idlote: number) {
     
     const { data, error } = await supabase.from('lotes').select('*').eq('id', idlote).single(); 
 
@@ -41,6 +41,17 @@ export class GerenciarLoteService {
 
     return data; 
   }
+
+
+  async atualizarLote(payload: any) {
+
+    const { id, ...dados } = payload;
+    
+    const { error } = await supabase.from('lotes').update(dados).eq('id', id); 
+
+    if (error) throw error;  
+  }
+
 
 
 }

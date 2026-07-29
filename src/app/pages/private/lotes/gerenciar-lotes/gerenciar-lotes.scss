@@ -1,3 +1,5 @@
+@use '../../../../styles/variaveis' as c;
+
 .conteudo {
     display: flex;
     flex-direction: column;
@@ -19,15 +21,151 @@
     }
 
     .conteudo-detalhe-lote {
-        /* border-bottom: 1px solid #0a1b0d;
-        padding-bottom: 8px; */
+        display: flex;
+        flex-direction: column;
+        padding: 25px;
+        border: 1px solid c.$border;
+        border-radius: 20px;
+        gap: 10px;
+        background: #fff;
 
-        .cont-botoes {
+        .card-detalhe-lote {
             display: flex;
-            justify-content: end;
-        }
-    }
+            align-items: center;
+            justify-content: space-between;
 
+            .cont-titulo-lote {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+
+                h2 {
+                    font-size: 17px;
+                    margin: 0;
+                    color: #7d8b9e;
+                }
+
+                .cont-icon-lote {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+
+                    h1 {
+                        font-size: 28px;
+                        font-weight: 800;
+                        margin: 0;
+                    }
+
+                    .cont-status-lote {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 12px;
+                        border-radius: 25px;
+
+                        span {
+                            font-weight: 600;
+                        }
+                    }
+
+                    .status-andamento {
+                        background: #e8f1ff;
+                        border: 1px solid #4f7bff;
+                        color: #4f7bff;
+                    }
+
+                }
+
+                p {
+                    margin: 0;
+                    color: #6c757d;
+                }
+            }
+
+            .cont-botoes-lote {
+                display: flex;
+                flex-direction: column;
+
+                .card-btns {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+
+                    button {
+                        padding: 10px 25px;
+                        min-width: 200px;
+                        font-size: 18px;
+                        background: none;
+                        border: 1px solid #70859e;
+                        color: #243042;
+                        border-radius: 20px;
+                    }
+
+                }
+
+            }
+
+
+        }
+
+        .conteudo-inputs-lote {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            .cont-cards-lotes {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .card-input {
+                display: flex;
+                flex-direction: column;
+                padding: 15px;
+                border: 1px solid #6f8096;
+                border-radius: 20px;
+                background: #fafcff;
+
+                label {
+                    font-weight: 500;
+                    font-size: 17px;
+                    color: #70859e;
+                }
+
+                input {
+                    height: 55px;
+                    border: none;
+                    outline: none;
+                    background: #fafcff;
+                    font-size: 19px;
+                    font-weight: 700;
+                }
+
+            }
+
+            .sucesso,
+            .erro {
+                padding: 10px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 17px;
+            }
+
+            .sucesso {
+                background: #d1e7dd;
+                color: #0f5132;
+            }
+
+            .erro {
+                background: #f8d7da;
+                color: #842029;
+            }
+
+        }
+
+    }
+/* 
     .sucesso,
     .erro {
         padding: 10px;
@@ -45,7 +183,7 @@
         background: #f8d7da;
         color: #842029;
     }
-
+ */
     .conteudo-protocolo {
         background: #233824;
         border-radius: 8px;
