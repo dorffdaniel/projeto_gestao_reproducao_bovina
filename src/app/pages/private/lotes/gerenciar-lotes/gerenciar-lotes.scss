@@ -165,7 +165,8 @@
         }
 
     }
-/* 
+
+    /* 
     .sucesso,
     .erro {
         padding: 10px;
@@ -185,9 +186,10 @@
     }
  */
     .conteudo-protocolo {
-        background: #233824;
-        border-radius: 8px;
-        padding: 5px;
+        background: #fff;
+        padding: 25px;
+        border: 1px solid c.$border;
+        border-radius: 20px;
         margin-top: 30px;
 
         .cont-titulo {
@@ -197,17 +199,80 @@
             padding: 10px 0;
             margin: 0px 5px;
 
-            h2 {
-                font-size: 18px;
-                color: #f5f4f4;
-                margin: 0;
+            .cont-descricao-titulo {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                h3 {
+                    font-size: 17px;
+                    color: #7d8b9e;
+                }
+
+                h2 {
+                    font-size: 25px;
+                    color: #243042;
+                    margin: 0;
+                }
+
+                p {
+                    margin: 0;
+                    color: #6c757d;
+                }
             }
+
+            button {
+                padding: 10px 25px;
+                min-width: 200px;
+                font-size: 18px;
+                background: none;
+                border: 1px solid #70859e;
+                color: #243042;
+                border-radius: 20px;
+            }
+
         }
 
         .cont-formulario {
-            background: #ccc;
-            padding: 16px;
+            background: linear-gradient(135deg,
+                    #ffffff 0%,
+                    #f7fbff 40%,
+                    #eef7ff 100%);
+            border: 1px solid c.$border;
+            padding: 20px;
             border-radius: 8px;
+
+            h2 {
+                font-size: 20px;
+            }
+
+            p {
+                margin-bottom: 15px;
+            }
+
+            label {
+                color: #7a8796;
+                font-weight: 600;
+            }
+
+            input {
+                height: 55px;
+            }
+
+            textarea {
+                resize: none;
+            }
+
+            button {
+                padding: 10px 25px;
+                min-width: 200px;
+                font-size: 18px;
+                background: none;
+                border: 1px solid #70859e;
+                color: #243042;
+                border-radius: 20px;
+            }
+
         }
     }
 
@@ -217,37 +282,44 @@
         flex-direction: column;
         gap: 8px;
 
-        h3 {
-            font-size: 17px;
-        }
-
         .conteudo-cards-protocolos {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
 
             .card-protocolo {
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
+                gap: 20px;
+                background: #fff;
                 padding: 20px 15px;
-                border: 1px solid #e9ecef;
+                border: 1px solid c.$border;
                 border-radius: 8px;
 
 
                 .card-titulo {
                     display: flex;
                     align-items: center;
-                    gap: 10px;
+                    justify-content: space-between;
 
-                    .bolinha {
-                        width: 15px;
-                        height: 15px;
-                        border-radius: 50%;
-                        display: inline-block;
+                    h2 {
+                        font-size: 17px;
+                        color: #243042;
+                        margin: 0;
                     }
 
-                    .andamento {
+                    span {
+                        padding: 10px;
+                        border: 1px solid #e2931c;
+                        color: #e2931c;
+                        background: #f5f2da;
+                        border-radius: 25px;
+                        font-size: 13px;
+                    }
+
+                    margin-bottom: 15px;
+
+                    /* .andamento {
                         background: #198754;
                     }
 
@@ -257,25 +329,50 @@
 
                     .cancelado {
                         background: #dc3545;
-                    }
-
-                    p {
-                        margin: 0;
-                    }
+                    }  */
                 }
 
-                p {
-                    margin: 0;
-                    color: #6c757d;
-                }
+                .cont-cards {
+                    gap: 25px;
+                    justify-content: center;
 
-                span {
-                    color: #212529;
+                    .card-input {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 15px;
+                        border: 1px solid #6f8096;
+                        border-radius: 20px;
+                        background: #f1f4f8;
+                        min-width: 230px;
+
+                        label {
+                            font-weight: 500;
+                            font-size: 17px;
+                            color: #70859e;
+                        }
+
+                        p {
+                            margin: 0;
+                            color: #6c757d;
+                        }
+
+                    }
                 }
 
                 .cont-botao {
                     display: flex;
                     justify-content: end;
+
+                    button {
+                        padding: 10px 25px;
+                        min-width: 150px;
+                        font-size: 18px;
+                        background: none;
+                        border: 1px solid #70859e;
+                        color: #243042;
+                        border-radius: 20px;
+                    }
+
                 }
 
             }

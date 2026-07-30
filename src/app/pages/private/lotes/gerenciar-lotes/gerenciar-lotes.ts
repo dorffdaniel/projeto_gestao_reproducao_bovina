@@ -28,6 +28,7 @@ export class GerenciarLotes implements OnInit {
   desabilitarCampos = signal(true);
   desabilitarBtn = signal(false);
   mostrarCardEdit = signal(true);
+  limiteAnimais: number = 0; 
 
   dadosLote = signal({
     id: 0,
@@ -46,9 +47,10 @@ export class GerenciarLotes implements OnInit {
 
   private criarProtocoloVazio() {
     return {
+      nome: '',
       data_inicio: '',
       hora_inicio: '',
-      total_animais: '',
+      total_animais: 0,
       status: '',
       observacoes: ''
     };
@@ -86,6 +88,13 @@ export class GerenciarLotes implements OnInit {
       const data = await this.serv.getDadosLote(this.idLote);
 
       this.dadosLote.set(data);
+
+      this.limiteAnimais = data.total_animais; 
+
+      this.protocolo.update(p => ({
+        ...p,
+        total_animais: data.total_animais
+      }));
 
       await this.obterProtocolosRegistrados();
 
@@ -167,6 +176,15 @@ export class GerenciarLotes implements OnInit {
 
     if (!this.verificartCamposProtocolo()) {
       console.log("erro campos em falta");
+      return
+    }
+
+    if (this.protocolo().nome.trim() == '') {
+      this.protocolo().nome = 'Protocolo IATF'
+    }
+
+    if (this.protocolo().total_animais > this.limiteAnimais) {
+      console.log(" Erro Nao pode registrar numero de animais maiores"); 
       return
     }
 
