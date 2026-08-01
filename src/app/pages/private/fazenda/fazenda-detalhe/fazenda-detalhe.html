@@ -12,47 +12,96 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="conteudo-descricao-detalhe-fazenda">
+                <h2>Gestão pecuaria</h2>
+                <h1>Detalhes da fazenda</h1>
+                <p>Visualize e administre as principais informações da fazenda e acompanhe os lotes cadastrados.</p>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-12">
-            <div class="row g-3 conteudo-inputs">
+            <div class="conteudo-inputs">
 
+                <div class="cont-detalhe-fazenda">
+                    <div class="cont-titulo-detalhe-fazenda">
+                        <h3>INFORMAÇÕES DA FAZENDA</h3>
+
+                        <div class="cont-icon-detalhe-fazenda">
+                            <h2>{{fazenda().nome}}</h2>
+                            <div class="cont-status-fazenda status-andamento">
+                                <i class="fa-solid fa-tractor"></i>
+                                <span>Operação ativa</span>
+                            </div>
+                        </div>
+
+                        <p>Dados consolidados da propriedade para consulta rápida, administração e organização dos lotes
+                            vinculados</p>
+                    </div>
+
+                    <!-- button auqi  -->
+                    <div class="conteudo-botoes">
+                        @if(isOpen){
+                        <button class="btn btn-warning" (click)="editarDadosFazenda()"> <i
+                                class="fa-regular fa-pen-to-square"></i> Editar</button>
+                        <button class="btn btn-danger" (click)="abrirModal()"> <i class="fas fa-trash"></i>
+                            Apagar</button>
+                        }
+
+                        @if(!isOpen){
+                        <button class="btn btn-primary" (click)="salvarEditDadosFazenda()"> <i class="fas fa-save"></i>
+                            Salvar</button>
+                        <button class="btn btn-danger" (click)="cancelarEditFazenda()"> <i class="fas fa-times"></i>
+                            Cancelar</button>
+                        }
+                    </div>
+
+                </div>
+
+
+                @if(fazenda()){
                 <form>
                     <div class="row">
                         <div class="col-md-6">
+                            <div class="conte-input">
+                                <div class="card-input">
+                                    <label class="form-label">Fazenda</label>
+                                    <input class="form-control" [(ngModel)]="fazenda().nome"
+                                        [disabled]="desabilitarCampos()" name="nome">
+                                </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Fazenda</label>
-                                <input class="form-control" [(ngModel)]="fazenda().nome" [disabled]="ativado"
-                                    name="nome">
-                            </div>
+                                <div class="card-input">
+                                    <label class="form-label">Proprietário</label>
+                                    <input class="form-control" [(ngModel)]="fazenda().proprietario"
+                                        [disabled]="desabilitarCampos()" name="proprietario">
+                                </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Proprietário</label>
-                                <input class="form-control" [(ngModel)]="fazenda().proprietario" [disabled]="ativado"
-                                    name="proprietario">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Telefone</label>
-                                <input class="form-control" [(ngModel)]="fazenda().telefone" [disabled]="ativado"
-                                    name="telefone">
+                                <div class="card-input">
+                                    <label class="form-label">Telefone</label>
+                                    <input class="form-control" [(ngModel)]="fazenda().telefone"
+                                        [disabled]="desabilitarCampos()" name="telefone">
+                                </div>
                             </div>
 
                         </div>
 
                         <div class="col-md-6">
+                            <div class="conte-input">
+                                <div class="card-input">
+                                    <label class="form-label">Cidade</label>
+                                    <input class="form-control" [(ngModel)]="fazenda().cidade"
+                                        [disabled]="desabilitarCampos()" name="cidade">
+                                </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Cidade</label>
-                                <input class="form-control" [(ngModel)]="fazenda().cidade" [disabled]="ativado"
-                                    name="cidade">
-                            </div>
+                                <div class="card-input">
+                                    <label class="form-label">Estado</label>
+                                    <input class="form-control" [(ngModel)]="fazenda().estado"
+                                        [disabled]="desabilitarCampos()" name="estado">
+                                </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Estado</label>
-                                <input class="form-control" [(ngModel)]="fazenda().estado" [disabled]="ativado"
-                                    name="estado">
                             </div>
 
                             <!-- <div class="mb-3">
@@ -77,32 +126,26 @@
                     }
 
                 </form>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="conteudo-botoes">
-                @if(isOpen){
-                <button class="btn btn-warning" (click)="editarDadosFazenda()">Editar</button>
-                <button class="btn btn-danger" (click)="abrirModal()">Apagar</button>
+
                 }
 
-                @if(!isOpen){
-                <button class="btn btn-primary" (click)="salvarEditDadosFazenda()">Salvar</button>
-                <button class="btn btn-danger" (click)="cancelarEditFazenda()">Cancelar</button>
-                }
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <div class="conteudo-lote">
                 <div class="cont-titulo">
-                    <h2>Lotes</h2>
+                    <div class="cont-descricao-titulo">
+                        <h3>OPERAÇÃO</h3>
+                        <h2>Lotes cadastrados</h2>
+                        <p>Cadastre novos lotes e gerencie os existentes sem perder o contexto visual da fazenda e da
+                            rotina operacional.</p>
+                    </div>
 
-                    <button class="btn btn-primary" (click)="abrirFormCadastrarLote()"
-                        [hidden]="esconderBtn()">Cadastrar</button>
+                    <button class="btn btn-primary" (click)="abrirFormCadastrarLote()" [hidden]="esconderBtn()"> + Novo
+                        Lote</button>
                 </div>
 
                 @if(mostrarFormLote()){
@@ -145,9 +188,12 @@
                                 name="observacao"></textarea>
                         </div>
 
-                        <div class="d-flex justify-content-end mt-4 gap-4">
-                            <button class="btn btn-success" (click)="cadastrarNovoLote()">Salvar</button>
-                            <button class="btn btn-danger" (click)="fecharFormCadastrarLote()">Cancelar</button>
+                        <div class="d-flex justify-content-end mt-4 gap-4 conteudo-botoes">
+                            <button class="btn btn-danger" (click)="fecharFormCadastrarLote()"><i
+                                    class="fas fa-times"></i> Cancelar</button>
+
+                            <button class="btn btn-success" (click)="cadastrarNovoLote()"><i class="fas fa-save"></i>
+                                Salvar</button>
                         </div>
 
                     </form>

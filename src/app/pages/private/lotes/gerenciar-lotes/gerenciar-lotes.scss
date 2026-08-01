@@ -140,6 +140,19 @@
                     background: #fafcff;
                     font-size: 19px;
                     font-weight: 700;
+
+                    &:disabled {
+                        color: #8a96a8;
+                        cursor: not-allowed;
+                    }
+
+                    &:focus {
+                        outline: none;
+                        box-shadow: none;
+                        border: none;
+                    }
+
+
                 }
 
             }
@@ -166,25 +179,7 @@
 
     }
 
-    /* 
-    .sucesso,
-    .erro {
-        padding: 10px;
-        border-radius: 8px;
-        text-align: center;
-        font-size: 17px;
-    }
 
-    .sucesso {
-        background: #d1e7dd;
-        color: #0f5132;
-    }
-
-    .erro {
-        background: #f8d7da;
-        color: #842029;
-    }
- */
     .conteudo-protocolo {
         background: #fff;
         padding: 25px;

@@ -61,19 +61,19 @@
                     <div class="cont-cards-lotes">
                         <div class="card-input">
                             <label for="">Nome do lote</label>
-                            <input type="text" [(ngModel)]="dadosLote().nome" [disabled]="(desabilitarCampos())"
+                            <input class="form-control" type="text" [(ngModel)]="dadosLote().nome" [disabled]="(desabilitarCampos())"
                                 name="nome">
                         </div>
 
                         <div class="card-input">
                             <label for="">Categoria</label>
-                            <input type="text" [(ngModel)]="dadosLote().categoria" [disabled]="(desabilitarCampos())"
+                            <input class="form-control" type="text" [(ngModel)]="dadosLote().categoria" [disabled]="(desabilitarCampos())"
                                 name="categoria">
                         </div>
 
                         <div class="card-input">
                             <label for="">Quantidade de animais</label>
-                            <input type="number" [(ngModel)]="dadosLote().total_animais"
+                            <input class="form-control" type="number" [(ngModel)]="dadosLote().total_animais"
                                 [disabled]="(desabilitarCampos())" name="total_animais">
                         </div>
 
@@ -81,7 +81,7 @@
 
                     <div class="card-input">
                         <label for="">Observacoes</label>
-                        <input type="text" [(ngModel)]="dadosLote().observacoes" [disabled]="(desabilitarCampos())"
+                        <input class="form-control" type="text" [(ngModel)]="dadosLote().observacoes" [disabled]="(desabilitarCampos())"
                             name="observacoes">
                     </div>
 
@@ -104,7 +104,6 @@
     </div>
     <div class="row">
         <div class="col-12">
-
             <div class="conteudo-protocolo">
                 <div class="cont-titulo">
                     <div class="cont-descricao-titulo">

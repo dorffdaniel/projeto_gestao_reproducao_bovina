@@ -39,7 +39,7 @@ export class FazendaDetalhe implements OnInit {
     tipo: ''
   });
 
-  ativado: boolean = true;
+  desabilitarCampos = signal(true);
   isOpen: boolean = true;
   idFazenda!: number;
   mostrarModal = false;
@@ -89,12 +89,12 @@ export class FazendaDetalhe implements OnInit {
   }
 
   editarDadosFazenda() {
-    this.ativado = !this.ativado;
+    this.desabilitarCampos.set(false); 
     this.isOpen = !this.isOpen;
   }
 
   cancelarEditFazenda() {
-    this.ativado = !this.ativado;
+    this.desabilitarCampos.set(true)
     this.isOpen = !this.isOpen;
 
     this.getIdDetalheFazenda();
@@ -107,7 +107,7 @@ export class FazendaDetalhe implements OnInit {
       const data = await this.serv.salvarEdicaoFazenda(this.idFazenda, this.fazenda());
 
       this.fazenda.set(data);
-      this.ativado = true;
+      this.desabilitarCampos.set(true)
       this.isOpen = !this.isOpen;
 
       this.mensagem.set({
@@ -201,10 +201,10 @@ export class FazendaDetalhe implements OnInit {
   }
 
   gerenciarLote(loteId: number) {
-    const url = this.naveg.url; 
-    sessionStorage.setItem("gerenciar_detalhe_fazenda", url); 
+    const url = this.naveg.url;
+    sessionStorage.setItem("gerenciar_detalhe_fazenda", url);
     this.naveg.navigate(['/lote', loteId]);
-    
+
   }
 
 }
