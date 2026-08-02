@@ -24,7 +24,7 @@ export class GerenciarProtocolos implements OnInit {
   dadosProtocolo = signal<any>(null);
   esconderBtn = signal(false);
   barraProgresso = signal(0);
-  protocoloConcluido = signal(false); 
+  protocoloConcluido = signal(false);
   abrirForm = signal({
     tipo: '',
     aberto: false
@@ -293,10 +293,34 @@ export class GerenciarProtocolos implements OnInit {
 
     if (dg) {
       this.estadoDG.set('Concluido');
-      this.protocoloConcluido.set(true); 
+      this.protocoloConcluido.set(true);
+
+      if (this.dadosProtocolo().status !== 'Concluido') {
+        this.atualizarProtocoloFinalizado()
+      }
+
     }
 
   }
+
+  async atualizarProtocoloFinalizado() {
+
+    const payload = {
+      id: this.idProtocolo,
+      status: 'Concluido'
+    }
+
+    await this.serv.finalizarProtocolo(payload);
+
+    this.dadosProtocolo.update(p => ({
+      ...p,
+      status: 'Concluido'
+    }));
+
+  }
+
+
+
 
   async mostrarEventoD0() {
 
@@ -550,7 +574,7 @@ export class GerenciarProtocolos implements OnInit {
         return
       }
 
-      console.log(data); 
+      console.log(data);
 
       const evento = {
         ...data,

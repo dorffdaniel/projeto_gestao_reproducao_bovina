@@ -22,7 +22,8 @@ export const routes: Routes = [
             { path: 'fazendas/nova', component: FazendaNova },
             { path: 'perfil', component: PerfilUser },
             { path: 'lote/:id', component: GerenciarLotes },
-            { path: 'protocolo/:id', component: GerenciarProtocolos}
+            { path: 'protocolo/:id', component: GerenciarProtocolos }, 
+            { path: '**', redirectTo: 'dashboard'}
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

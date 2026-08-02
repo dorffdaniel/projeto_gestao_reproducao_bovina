@@ -6,18 +6,33 @@
         </button>
     </div>
 
-    <h2>logo</h2>
+    <div class="conteudo-card-titulo">
 
+        <span>
+            <i class="fa-solid fa-seedling"></i>
+        </span>
+
+        <div class="cont-desc-titulo">
+            <p>Gestão reprodutiva bovina</p>
+            <p class="titulo">Repro MT
+            </p>
+        </div>
+    </div>
+
+    <p>Navegação</p>
     <aside class="sidebar">
         <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+
+            <li class="nav-item" routerLink="/dashboard" routerLinkActive="ativo">
+                <span><i class="fa-solid fa-chart-line"></i></span>
+                <a class="nav-link">Dashboard</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/fazendas">Fazendas</a>
+            <li class="nav-item" routerLink="/fazendas" routerLinkActive="ativo">
+                <span><i class="fa-solid fa-tractor"></i></span>
+                <a class="nav-link">Fazendas</a>
             </li>
-            
+
         </ul>
     </aside>
 

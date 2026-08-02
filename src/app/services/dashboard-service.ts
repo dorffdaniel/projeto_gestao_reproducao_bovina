@@ -25,21 +25,55 @@ export class DashboardService {
       return;
     }
 
-    return data; 
+    return data;
 
   }
 
   async getProtocolosAtivo() {
-    
-    const {data, error} = await supabase.from('protocolos').select('*'); 
 
-    if(error){
-      throw error; 
+    const { data, error } = await supabase.from('protocolos').select('*');
+
+    if (error) {
+      throw error;
     }
 
-    return data; 
+    return data;
 
   }
+  async obterProtocolosEmAndamento() {
+
+    const { data, error } = await supabase
+      .from('protocolos')
+      .select(`*, eventos_protocolo(*)`)
+      .eq('status', 'Em andamento');
+
+    if (error) throw error;
+
+    return data;
+  }
+
+  async obterDGPendentes() {
+
+    const protocolos = await this.obterProtocolosEmAndamento();
+
+    return protocolos.filter(protocolo => {
+
+      const temIA = protocolo.eventos_protocolo.some(
+        (e: any) => e.tipo_evento === 'IA'
+      );
+
+      const temDG = protocolo.eventos_protocolo.some(
+        (e: any) => e.tipo_evento === 'DG'
+      );
+
+      return temIA && !temDG;
+
+    });
+
+  }
+
+
+
 
 
 }

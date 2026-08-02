@@ -24,12 +24,14 @@ export class Dashboard implements OnInit {
   dataHj = signal<null | string>(null);
   totalFazendas = signal<null | number | undefined>(null);
   totalProtocolos = signal<null | number | undefined>(null);
+  totalDgs = signal<null | number | undefined>(null);
 
   ngOnInit(): void {
     this.getDadosUser();
     this.saudacao();
     this.mostrarTotalFazendas(); 
     this.mostrarTotalProtocolos(); 
+    this.mostrarDgPendentes(); 
   }
 
   async getDadosUser() {
@@ -75,6 +77,14 @@ export class Dashboard implements OnInit {
     
     const data = await this.dashServ.getProtocolosAtivo(); 
     this.totalProtocolos.set(data?.length); 
+  }
+
+  async mostrarDgPendentes() {
+    
+    const data = await this.dashServ.obterDGPendentes();
+
+    this.totalDgs.set(data?.length); 
+
   }
 
 

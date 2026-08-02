@@ -151,8 +151,17 @@ export class GerenciarProtocoloService {
 
   }
 
+  async finalizarProtocolo(payload: any) {
 
+    const {id, ...dados} = payload
+    
+    const { data, error } = await supabase.from('protocolos').update(dados).eq('id', id)
+    
+    if (error) throw error; 
 
+    return data; 
+
+  }
 
 
 }
