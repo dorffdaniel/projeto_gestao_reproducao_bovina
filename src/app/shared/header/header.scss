@@ -11,7 +11,7 @@
         display: flex;
 
         h2 {
-            font-size: 14px;
+            font-size: 17px;
             margin: 0;
         }
 
@@ -20,6 +20,56 @@
     .botoes {
         display: flex;
         gap: 25px;
+
+        .cont-dados-pessoais{
+            padding: 5px 7px;
+            background: #fff;
+            border-radius: 25px;
+            border: 1px solid #6b7a61;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 130px;
+            width: 100%;
+
+            span{
+                height: 40px;
+                width: 40px;
+                background: #aeb6a8;
+                padding: 15px;
+                border-radius: 100%;
+                display: flex; 
+                align-items: center;
+                justify-content: center;
+            }
+
+            .usuario{
+                font-size: 11px;
+            }
+
+            .nome{
+                font-weight: 600;
+            }
+
+            p{
+                margin: 0;
+            }
+
+        }
+
+        .botao-sair{
+            background: #fff;
+            border: 1px solid #6b7a61;
+            border-radius: 20px;
+            width: 100px;
+            color: #000;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
     }
 
 }

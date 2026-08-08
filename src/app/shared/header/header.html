@@ -8,11 +8,15 @@
                 <i [class]="icone"></i>
             </button> -->
 
-            <button type="button" class="btn btn-warning" routerLink="/perfil">
-                <i class="fa-regular fa-user"></i>
+            <button type="button" class="btn btn-warning cont-dados-pessoais" routerLink="/perfil">
+                <span>n</span>
+                <div>
+                    <p class="usuario">Usuário</p>
+                    <p class="nome">nome</p>
+                </div>
             </button>
 
-            <button type="button" class="btn btn-danger" (click)="logout()">sair</button>
+            <button type="button" class="btn btn-danger botao-sair" (click)="logout()"> <i class="fas fa-sign-out-alt"></i> sair</button>
 
         </div>
 

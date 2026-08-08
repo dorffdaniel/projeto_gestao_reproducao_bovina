@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col-12">
             <div class="conteudo-saudacao">
+                <h2>DASHBOARD</h2>
                 <h1>{{msgSaudacao()}}, {{nome()}}</h1>
                 <p>Hoje, {{dataHj()}}</p>
             </div>
@@ -13,34 +14,41 @@
                 <div class="card">
                     <div class="card-icone">
                         <h2>Total Fazendas</h2>
-                        <i class="fa-solid fa-tractor"></i>
+                        <span>
+                            <i class="fa-solid fa-tractor"></i>
+                        </span>
                     </div>
-                    <span>{{totalFazendas()}}</span>
-
+                    <span class="numero">{{totalFazendas()}}</span>
                 </div>
 
                 <div class="card">
                     <div class="card-icone">
                         <h2>Protocolos Ativos</h2>
-                        <i class="fa-solid fa-file-lines"></i>
+                        <span>
+                            <i class="fa-solid fa-file-lines"></i>
+                        </span>
                     </div>
-                    <span>{{totalProtocolos()}}</span>
+                    <span class="numero">{{totalProtocolos()}}</span>
                 </div>
 
                 <div class="card">
                     <div class="card-icone">
                         <h2>DG Pendentes</h2>
-                        <i class="fa-solid fa-hourglass-end"></i>
+                        <span>
+                            <i class="fa-solid fa-hourglass-end"></i>
+                        </span>
                     </div>
-                    <span>{{totalDgs()}}</span>
+                    <span class="numero">{{totalDgs()}}</span>
                 </div>
 
                 <div class="card">
                     <div class="card-icone">
                         <h2>Taxa Média</h2>
-                        <i class="fa-solid fa-chart-line"></i>
+                        <span>
+                            <i class="fa-solid fa-chart-line"></i>
+                        </span>
                     </div>
-                    <span>75%</span>
+                    <span class="numero">75%</span>
                 </div>
             </div>
         </div>
@@ -48,43 +56,100 @@
     <div class="row">
         <div class="col-12">
             <div class="conteudo-dgs-atendimentos">
-                <div class="card">
-                    <h3>DG Pendentes</h3>
+                <div class="card dg-pendente">
+                    <div class="header-dg-pendente">
+                        <div>
+                            <h3>DG Pendentes</h3>
+                            <p>Protocolos que exigem atenção nos proximos dias</p>
+                        </div>
+
+                        <span> 11 itens</span>
+                    </div>
 
                     <div class="desc-pendentes">
-                        <p class="descricao">Fazenda São João — Lote A — 30 vacas</p>
-                        <p>DG previsto: 28/06 — em 9 dias</p>
+                        <div class="card-pendente">
 
-                        <p class="descricao">Fazenda Boa Esperança — Lote B — 18 vacas</p>
-                        <p>DG previsto: 20/06 — <span class="atraso">atraso ( 1 dia )</span></p>
+                            <div class="card-pendente-icone">
+                                <span>
+                                    <i class="fa-solid fa-hourglass-end"></i>
+                                </span>
 
-                        <p class="descricao">Fazenda São João — Lote A — 30 vacas</p>
-                        <p>DG previsto: 28/06 — em 9 dias</p>
+                                <div>
+                                    <h3>Fazenda Santa Helena</h3>
+                                    <p>Lote Recptoras 2026 - 128 animais - faltam 2 dias para o DG</p>
+                                </div>
+                            </div>
+
+                            <span class="desc-passos">Monitorar</span>
+                        </div>
                     </div>
 
-                    <div class="cont-botao">
+                    <div class="desc-pendentes">
+                        <div class="card-pendente">
+
+                            <div class="card-pendente-icone">
+                                <span>
+                                    <i class="fa-solid fa-hourglass-end"></i>
+                                </span>
+
+                                <div>
+                                    <h3>Fazenda Santa Helena</h3>
+                                    <p>Lote Recptoras 2026 - 128 animais - faltam 2 dias para o DG</p>
+                                </div>
+                            </div>
+
+                            <span class="desc-passos">Monitorar</span>
+                        </div>
+
+                    </div>
+
+                    <div class="desc-pendentes">
+                        <div class="card-pendente">
+
+                            <div class="card-pendente-icone">
+                                <span>
+                                    <i class="fa-solid fa-hourglass-end"></i>
+                                </span>
+
+                                <div>
+                                    <h3>Fazenda Santa Helena</h3>
+                                    <p>Lote Recptoras 2026 - 128 animais - faltam 2 dias para o DG</p>
+                                </div>
+                            </div>
+
+                            <span class="desc-passos">Monitorar</span>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="cont-botao">
                         <button class="btn btn-primary">ver mais</button>
-                    </div>
+                    </div> -->
 
                 </div>
 
-                <div class="card">
-                    <h3>Proximos atendimentos</h3>
+                <div class="card proximo-atendimento">
+                    <div class="header-prox-atendimento">
+                        <div>
+                            <h3>Próximos atendimentos</h3>
+                            <p>Compromissos previstos para os proximos dias.</p>
+                        </div>
 
-                    <div class="cont-info">
-                        <p>Hoje:</p>
-                        <span>-Nenhum</span>
+                        <span> <i class="far fa-calendar-alt"></i> Agenda</span>
                     </div>
 
-                    <div class="cont-info">
-                        <p>Próximos 7 dias:</p>
-                        <span>20/06 — Fazenda São João — IA</span>
-                        <span>22/06 — Fazenda Boa Esperança — DG</span>
-                    </div>
+                    <div class="card-prox-atendimento">
 
-                    <div class="cont-info">
-                        <p>Atrasados: </p>
-                        <span>18/06 — Fazenda Santa Rita — DG</span>
+                        <div class="card-icone">
+                            <span>
+                                <i class="fa-solid fa-hourglass-end"></i>
+                            </span>
+
+                            <div>
+                                <h3> 05 ago. Fazenda Santa Helena</h3>
+                                <p>Aplicação D7/D9 no lote Receptoras 2026</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

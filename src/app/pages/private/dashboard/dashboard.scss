@@ -6,8 +6,14 @@
     gap: 16px;
 
     .conteudo-saudacao {
+        h2 {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
         h1 {
-            font-size: 22px;
+            font-size: 24px;
+            font-weight: 700;
         }
 
         p {
@@ -26,17 +32,37 @@
             gap: 10px;
             padding: 25px;
             border: 1px solid c.$border;
+            border-radius: 20px;
 
-            .card-icone{
+            h2 {
+                font-size: 17px;
+                color: #5c5e5c;
+                margin: 0;
+            }
+
+            .card-icone {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+
+                span {
+                    height: 40px;
+                    width: 40px;
+                    background: #dfe7d8;
+                    color: #30532c;
+                    padding: 15px;
+                    border-radius: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
             }
 
-            h2 {
-                font-size: 19px;
-                margin: 0;
+            .numero {
+                font-weight: 700;
+                font-size: 25px;
             }
+
         }
 
     }
@@ -49,38 +75,146 @@
         .card {
             display: flex;
             flex-direction: column;
+            border-radius: 20px;
             gap: 10px;
             padding: 25px;
 
-            h3 {
-                font-size: 18px;
+            //inicio card dg pendente
+            &.dg-pendente {
+                .header-dg-pendente {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    h3 {
+                        font-size: 18px;
+                    }
+
+                    span {
+                        width: 80px;
+                        background: #fdd784;
+                        color: #ca8f0f;
+                        border-radius: 25px;
+                        padding: 10px;
+                    }
+
+                }
+
+                .desc-pendentes {
+                    display: flex;
+                    flex-direction: column;
+
+                    .card-pendente {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        background: #ebf3eb;
+                        border: 1px solid #5c5e5c;
+                        border-radius: 20px;
+                        padding: 10px;
+
+                        .card-pendente-icone {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            span {
+                                width: 50px;
+                                height: 50px;
+                                background: #fdd784;
+                                color: #b47e09;
+                                border-radius: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+
+                            h3 {
+                                font-size: 18px;
+                                font-weight: 600;
+                            }
+
+                            p {
+                                margin: 0;
+                                font-size: 15px;
+                            }
+
+                        }
+
+                        .desc-passos {
+                            background: #fdd784;
+                            color: #b47e09;
+                            padding: 5px 11px;
+                            border-radius: 25px;
+                        }
+                    }
+
+                }
+
             }
 
-            .desc-pendentes {
-                display: flex;
-                flex-direction: column;
+            &.proximo-atendimento {
+                .header-prox-atendimento {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
 
-                .descricao {
-                    margin: 0;
-                    color: c.$text-dark;
+                    h3 {
+                        font-size: 18px;
+                    }
+
+                    span {
+                        width: 120px;
+                        background: #dcf3d3;
+                        color: #264e32;
+                        border-radius: 25px;
+                        padding: 10px;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        font-weight: 600;
+                    }
                 }
 
-                p {
-                    margin-bottom: 12px;
-                    color: #929666;
+                .card-prox-atendimento {
+                    .card-icone {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        background: #ebf3eb;
+                        border: 1px solid #5c5e5c;
+                        border-radius: 20px;
+                        padding: 10px;
+
+                        span {
+                            width: 50px;
+                            height: 50px;
+                            background: #dcf3d3;
+                            color: #264e32;
+                            border-radius: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        h3 {
+                            font-size: 18px;
+                            font-weight: 600;
+                        }
+
+                        p {
+                            margin: 0;
+                            font-size: 15px;
+                        }
+
+                    }
                 }
 
-                p:last-child {
-                    margin-bottom: 0px;
-                }
 
-                .atraso {
-                    color: red;
-                }
 
             }
 
-            .cont-botao {
+            /*  .cont-botao {
                 display: flex;
                 justify-content: end;
 
@@ -94,15 +228,15 @@
                     justify-content: center;
                     align-items: center;
                 }
-            }
+            } */
 
             .cont-info {
-
                 p {
                     margin: 0;
                     font-weight: 600;
                 }
             }
+
 
         }
 
@@ -124,14 +258,14 @@
                 font-size: 18px;
             }
 
-            .cont-fazenda{
-                p{
+            .cont-fazenda {
+                p {
                     margin: 0;
                 }
             }
 
-            .cont-recentes{
-                p{
+            .cont-recentes {
+                p {
                     margin: 0;
                 }
             }
